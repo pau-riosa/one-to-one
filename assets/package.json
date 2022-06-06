@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css"
+  }
+}
