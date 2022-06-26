@@ -1,10 +1,14 @@
 /* This file is for your main application CSS */
 
-/* @import "tailwindcss/base"; */
-/* @import "tailwindcss/components"; */
-/* @import "tailwindcss/utilities"; */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-@import "./phoenix.css";
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
 /* Alerts and form errors used by phx.new */
 .alert {
