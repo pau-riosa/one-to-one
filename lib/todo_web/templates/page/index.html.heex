@@ -1,0 +1,16 @@
+<div class="w-full flex flex-row justify-center align-center">
+  <div class="flex flex-col justify-center align-center">
+    <h1 class="text-4xl lg:text-6xl font-bold text-slate-800 p-5 m-5">Manage your students <br> and everything with <span class="text-indigo-600 underline">gawain.</span></h1>
+    <div class="flex flex-row justify-start align-center px-10">
+      <h3 class="text-lg text-gray-500 font-semibold">Teach and manage your students with ease.</h3> 
+    </div>
+    <div class="flex flex-row justify-start align-center p-5 m-5">
+      <%= link "Get Started", class: "bg-gray-800 text-white px-5 py-3 rounded-md text-lg font-medium", to: Routes.user_registration_path(@conn, :new) %>
+
+      <%# <a href="#" class="bg-gray-800 text-white px-5 py-3 rounded-md text-lg font-medium" aria-current="page">Get Started</a> %>
+    </div>
+  </div>
+  <div class="hidden lg:block h-5/6 w-1/2 p-5 m-5">  
+    <img class="h-full w-full" src={Routes.static_path(@conn, "/images/undraw_completing_re_i7ap.svg")} alt="">
+  </div>
+</div>

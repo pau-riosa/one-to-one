@@ -21,9 +21,10 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-between"> 
+    <div class="flex items-center justify-start"> 
+      <p class="text-sm pr-2 text-gray-700">Already have an account?</p>
       <div class="text-sm">
-        <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
+        <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "font-medium text-indigo-600 hover:text-indigo-500" %>
       </div>
     </div>
 
