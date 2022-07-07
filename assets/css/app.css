@@ -10,6 +10,33 @@
   box-sizing: border-box;
 }
 
+.grid-column-1 {
+  grid-column: 1;
+}
+
+.grid-column-2 {
+  grid-column: 2;
+}
+
+.grid-column-3 {
+  grid-column: 3;
+}
+
+.grid-column-4 {
+  grid-column: 4;
+}
+
+.grid-column-5 {
+  grid-column: 5;
+}
+
+.grid-column-6 {
+  grid-column: 6;
+}
+
+.grid-column-7 {
+  grid-column: 7;
+}
 /* Alerts and form errors used by phx.new */
 .alert {
   padding: 15px;
