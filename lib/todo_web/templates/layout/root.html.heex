@@ -9,13 +9,7 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="h-full w-full">
+  <body class="h-screen">
     <%= @inner_content %>
-    <footer>
-      <div class="text-center p-6 bg-gray-200">
-        <span>2022 Copyright:</span>
-        <a class="text-gray-600 font-semibold" href="https://paugramming.com">Made with ❤️  by Pau Riosa</a>
-      </div>
-    </footer>
   </body>
 </html>

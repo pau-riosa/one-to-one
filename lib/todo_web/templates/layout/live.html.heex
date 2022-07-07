@@ -1,5 +1,5 @@
 <TodoWeb.Components.nav socket={@socket} current_user={@current_user} />
-<main class="flex justify-center align-center">
+<main class="mb-auto flex justify-center align-center">
   <p class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
     phx-value-key="info"><%= live_flash(@flash, :info) %></p>
@@ -10,3 +10,9 @@
 
   <%= @inner_content %>
 </main>
+<footer class="">
+  <div class="text-center p-6 bg-gray-200">
+    <span>2022 Copyright:</span>
+    <a class="text-gray-600 font-semibold" href="https://paugramming.com">Made with ❤️  by Pau Riosa</a>
+  </div>
+</footer>
