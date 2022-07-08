@@ -14,21 +14,21 @@
                 /> 
         </div>
 
-        <%# <div class="py-2 px-8 border-l border-gray-100"> %>
-        <%#     <header class="mb-8"> %>
-        <%#         <h3 class="text-lg font-semibold text-gray-900">Profile</h3> %> 
-        <%#     </header> %>
-        <%#     <TodoWeb.Components.calendar_months %>
-        <%#         id="calendar" %>
-        <%#         current_path={Routes.live_path(@socket, TodoWeb.DashboardLive)} %>
-        <%#         previous_month={@previous_month} %>
-        <%#         next_month={@next_month} %>
-        <%#         end_of_month={@end_of_month} %>
-        <%#         beginning_of_month={@beginning_of_month} %>
-        <%#         timezone={@timezone} %>
-        <%#         current={@current} %>
-        <%#         socket={@socket} %>
-        <%#         /> %> 
-        <%# </div> %>
+        <div class="py-2 px-8 border-l border-gray-100">
+            <header class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-900">Calendar</h3> 
+            </header>
+            <TodoWeb.Components.calendar_months
+                id="calendar"
+                current_path={Routes.live_path(@socket, TodoWeb.DashboardLive)}
+                previous_month={@previous_month}
+                next_month={@next_month}
+                end_of_month={@end_of_month}
+                beginning_of_month={@beginning_of_month}
+                timezone={@timezone}
+                current={@current}
+                socket={@socket}
+                /> 
+        </div>
     </div>
 </div>
