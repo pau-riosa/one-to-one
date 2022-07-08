@@ -42,8 +42,8 @@ defmodule TodoWeb.Components do
                     <TodoWeb.Components.time
                       date={date}
                       datetime={time}
-                      timezone={@timezone}
-                      current_path="/" 
+                      timezone={timezone}
+                      current_path={current_path} 
                     />
                   <% end %>
               </div> 
@@ -196,8 +196,9 @@ defmodule TodoWeb.Components do
                 <div class="hidden sm:block sm:ml-6">
                   <div class="flex space-x-4">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                      <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
-                    </div>
+                    <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.DashboardLive ), class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"  %>
+                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.ScheduleLive ), class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" %>
+                </div>
                   </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
