@@ -1,7 +1,34 @@
 defmodule TodoWeb.Components do
   use TodoWeb, :component
 
-  def calendar(
+  def calendar_weeks(%{current_week: current_week} = assigns) do
+    ~H"""
+        <div class="flex flex-row px-6 justify-between align-center">
+                <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+                    <i><%= Heroicons.icon("arrow-circle-left", type: "solid", class: "h-10 w-10 fill-indigo-500") %></i>
+                </button>
+            <div class="flex flex-row items-center mb-2 text-gray-500 gap-2">
+                <h1 class="my-3 text-xl text-black"><%= Timex.format!(@beginning_of_week, "%B %d", :strftime) %> - <%= Timex.format!(@end_of_week, "%d %Y", :strftime)%></h1>
+            </div>
+            <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+                <i><%= Heroicons.icon("arrow-circle-right", type: "solid", class: "h-10 w-10 fill-indigo-500") %></i>
+            </button>
+        </div>
+
+        <div class="py-2 px-5 text-center uppercase grid grid-cols-8 gap-2">
+          <%= for {date, list_of_time} <- @current_week do %>
+              <div class="flex flex-col gap-2">
+                <div class="text-md"><%= if date == "time", do: "time", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
+                  <%= for time <- list_of_time do %>
+                    <button class="w-full h-full p-3 justify-center items-center flex bg-blue-50 text-blue-600 font-bold hover:bg-blue-200 "><%= if date == "time", do:  Timex.format!(time, "%l:%M %P", :strftime), else: ""%></button>
+                  <% end %>
+              </div> 
+          <% end %>
+        </div>
+    """
+  end
+
+  def calendar_months(
         %{
           current_path: current_path,
           previous_month: previous_month,
