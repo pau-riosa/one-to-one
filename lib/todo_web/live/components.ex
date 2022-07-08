@@ -97,7 +97,7 @@ defmodule TodoWeb.Components do
             <%= for i <- 0..(@end_of_month.day - 1) do %>
                 <TodoWeb.Components.day
                     index={i}
-                    current_path={Routes.live_path(@socket, TodoWeb.DashboardLive)}
+                    current_path={current_path}
                     date={Timex.shift(@beginning_of_month, days: i)}
                     timezone={@timezone}
                 />
