@@ -52,41 +52,6 @@ defmodule TodoWeb.Components do
     """
   end
 
-  def time(
-        %{
-          current_path: current_path,
-          timezone: timezone,
-          date: date,
-          datetime: datetime
-        } = assigns
-      ) do
-    datetime_path = build_path(current_path, %{datetime: datetime})
-    disabled = Timex.compare(datetime, Timex.today(timezone)) == -1
-    weekday = Timex.weekday(datetime, :monday)
-
-    class =
-      class_list([
-        {"w-full h-full p-3 justify-center items-center flex", true},
-        {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200", not disabled},
-        {"text-gray-300 cursor-default pointer-events-none", disabled}
-      ])
-
-    text = if date == "time", do: Timex.format!(datetime, "%l:%M %P", :strftime), else: ""
-
-    assigns =
-      assigns
-      |> assign(disabled: disabled)
-      |> assign(text: text)
-      |> assign(datetime_path: datetime_path)
-      |> assign(class: class)
-
-    ~H"""
-    <%= live_patch to: @datetime_path, class: @class, disabled: @disabled  do %>
-      <%= @text %> 
-      <% end %>
-    """
-  end
-
   def calendar_months(
         %{
           current_path: current_path,
@@ -143,6 +108,42 @@ defmodule TodoWeb.Components do
             <%= @timezone %> 
         </div>
     </div>
+    """
+  end
+
+  def time(
+        %{
+          current_path: current_path,
+          timezone: timezone,
+          date: date,
+          datetime: datetime
+        } = assigns
+      ) do
+    datetime_path = build_path(current_path, %{datetime: datetime})
+    disabled = Timex.compare(datetime, Timex.today(timezone)) == -1
+    weekday = Timex.weekday(datetime, :monday)
+    pointer = if date == "time", do: "pointer-events-none", else: ""
+
+    class =
+      class_list([
+        {"w-full h-full p-3 justify-center items-center flex", true},
+        {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200 #{pointer}", not disabled},
+        {"text-gray-300 cursor-default pointer-events-none", disabled}
+      ])
+
+    text = if date == "time", do: Timex.format!(datetime, "%l:%M %P", :strftime), else: ""
+
+    assigns =
+      assigns
+      |> assign(disabled: disabled)
+      |> assign(text: text)
+      |> assign(datetime_path: datetime_path)
+      |> assign(class: class)
+
+    ~H"""
+    <%= live_patch to: @datetime_path, class: @class, disabled: @disabled  do %>
+      <%= @text %> 
+      <% end %>
     """
   end
 
