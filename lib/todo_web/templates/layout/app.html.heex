@@ -8,7 +8,7 @@
       x-transition:leave-start="opacity-100"
       x-transition:leave-end="opacity-0"
       class="alert bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" 
-      role="alert"><%= get_flash(@conn, :error) %></p>
+      role="alert"><%= get_flash(@conn, :info) %></p>
    <p x-show="show" 
       x-transition:enter="transition ease-out duration-300"
       x-transition:enter-start="opacity-0"
