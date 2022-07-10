@@ -35,7 +35,7 @@ defmodule TodoWeb.Router do
     scope "/" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: TodoWeb.Telemetry
+      live_dashboard "/telemetry", metrics: TodoWeb.Telemetry
     end
   end
 
