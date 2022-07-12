@@ -197,7 +197,7 @@ defmodule TodoWeb.Components do
                   <div class="flex space-x-4">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.DashboardLive ), class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"  %>
-                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.ScheduleLive ), class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" %>
+                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.ScheduleLive ), class: "text-gray-300 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" %>
                 </div>
                   </div>
                 </div>
