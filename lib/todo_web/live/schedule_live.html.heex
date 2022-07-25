@@ -4,7 +4,7 @@
             <h3 class="self-center text-center text-lg font-semibold text-gray-900">Select schedule</h3>
             <TodoWeb.Components.calendar_weeks
                 id="weeks"
-                current_path={Routes.live_path(@socket, TodoWeb.ScheduleLive)}
+                current_path={Routes.live_path(@socket, ScheduleLive)}
                 current_week={@current_week}
                 beginning_of_week={@beginning_of_week}
                 end_of_week={@end_of_week}
@@ -20,7 +20,7 @@
             </header>
             <TodoWeb.Components.calendar_months
                 id="calendar"
-                current_path={Routes.live_path(@socket, TodoWeb.ScheduleLive)}
+                current_path={Routes.live_path(@socket, ScheduleLive)}
                 previous_month={@previous_month}
                 next_month={@next_month}
                 end_of_month={@end_of_month}

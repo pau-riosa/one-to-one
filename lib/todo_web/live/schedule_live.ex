@@ -1,6 +1,7 @@
 defmodule TodoWeb.ScheduleLive do
   use TodoWeb, :live_view
 
+  alias __MODULE__
   alias Todo.Accounts
   alias Timex
   alias Timex.Duration

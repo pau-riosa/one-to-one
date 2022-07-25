@@ -34,17 +34,20 @@ defmodule TodoWeb.Components do
         <% end %>
         </div>
 
-        <div class="py-2 px-5 text-center uppercase grid grid-cols-8 gap-2">
-          <%= for {date, list_of_time} <- @current_week do %>
+        <div class="py-2 px-5 text-center grid grid-cols-8 gap-2">
+          <%= for {{date, list_of_time}, date_index} <- Enum.with_index(@current_week) do %>
               <div class="flex flex-col gap-2">
-                <div class="text-md"><%= if date == "time", do: "time", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
-                  <%= for time <- list_of_time do %>
+                <div class="text-md uppercase"><%= if date == "time", do: "time", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
+                  <%= for {time, time_index} <- Enum.with_index(list_of_time) do %>
                     <TodoWeb.Components.time
                       date={date}
                       datetime={time}
                       timezone={timezone}
-                      current_path={current_path} 
-                    />
+                      current_path={current_path}
+                      datetime_index={"modal-#{date_index}-#{time_index}"} 
+            />
+
+            <.live_component module={TodoWeb.CreateScheduleLiveComponent} id={"modal-#{date_index}-#{time_index}"} />
                   <% end %>
               </div> 
           <% end %>
@@ -116,7 +119,8 @@ defmodule TodoWeb.Components do
           current_path: current_path,
           timezone: timezone,
           date: date,
-          datetime: datetime
+          datetime: datetime,
+          datetime_index: datetime_index
         } = assigns
       ) do
     datetime_path = build_path(current_path, %{datetime: datetime})
@@ -126,7 +130,7 @@ defmodule TodoWeb.Components do
 
     class =
       class_list([
-        {"w-full h-full p-3 justify-center items-center flex", true},
+        {"w-full h-full p-3 justify-center items-center flex uppercase", true},
         {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200 #{pointer}", not disabled},
         {"text-gray-300 cursor-default pointer-events-none", disabled}
       ])
@@ -141,9 +145,9 @@ defmodule TodoWeb.Components do
       |> assign(class: class)
 
     ~H"""
-    <%= live_patch to: @datetime_path, class: @class, disabled: @disabled  do %>
-      <%= @text %> 
-      <% end %>
+    <a href="#" phx-click={Phoenix.LiveView.JS.toggle(to: "##{@datetime_index}")} class={@class} disabled={@disabled}>
+      <%= @text %>
+    </a>
     """
   end
 
