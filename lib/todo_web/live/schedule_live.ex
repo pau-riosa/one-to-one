@@ -20,8 +20,16 @@ defmodule TodoWeb.ScheduleLive do
 
   @impl true
   def handle_event("select-time", %{"timeslot" => timeslot, "id" => button_id}, socket) do
-    socket = assign(socket, :selected_timeslots, [timeslot | socket.assigns.selected_timeslots])
-    send_update(Time, id: button_id, selected_timeslots: socket.assigns.selected_timeslots)
+    selected_timeslots =
+      if Enum.member?(socket.assigns.selected_timeslots, timeslot) do
+        socket.assigns.selected_timeslots -- [timeslot]
+      else
+        [timeslot | socket.assigns.selected_timeslots]
+      end
+
+    send_update(Time, id: button_id, selected_timeslots: selected_timeslots)
+    socket = assign(socket, :selected_timeslots, selected_timeslots)
+
     {:noreply, socket}
   end
 
