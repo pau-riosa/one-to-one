@@ -1,36 +1,43 @@
-<div class="w-screen mx-auto py-5">
-    <div class="flex flex-auto">
-        <div class="flex-1">
-            <h3 class="self-center text-center text-lg font-semibold text-gray-900">Open a Schedule</h3>
-            <CalendarWeeks.calendar_weeks
-                id="weeks"
-                socket={@socket}
-                current_path={Routes.live_path(@socket, ScheduleLive)}
-                current_week={@current_week}
-                beginning_of_week={@beginning_of_week}
-                end_of_week={@end_of_week}
-                next_week={@next_week}
-                previous_week={@previous_week}
-                timezone={@timezone}
-                selected_timeslots={@selected_timeslots}
-                /> 
-        </div>
+<div class="flex  justify-center align-center">
+    <div class="w-full max-w-7xl mx-auto py-5 ">
+        
+        <div class="flex lg:flex-row flex-col">
+            <div class="w-2/6  py-2 px-8 border-r border-gray-300">
+                <a href="/dashboard" class="flex align-baseline mb-8">
+                    <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-5 w-5 fill-gray-400") %></i>
+                    <h3 class="text-sm font-semibold text-gray-400">Dashboard</h3> 
+                </a>
+                <header class="text-center mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900">Create a Schedule</h3> 
+                </header>
+                <form class="w-full">
+                    <div class="my-5">
+                        <input placeholder="Topic" class="appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm"/> 
+                        <textarea rows="10" placeholder="Description" class="resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm"/> 
+                        <button class="w-3/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue">Choose File</button> 
+                    </div>
+                        <button class="w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue">Create</button> 
 
-        <div class="py-2 px-8 border-l border-gray-100">
-            <header class="mb-8">
-                <h3 class="text-lg font-semibold text-gray-900">Calendar</h3> 
-            </header>
-            <CalendarMonths.calendar_months
-                id="calendar"  
-                current_path={Routes.live_path(@socket, ScheduleLive)}
-                previous_month={@previous_month}
-                next_month={@next_month}
-                end_of_month={@end_of_month}
-                beginning_of_month={@beginning_of_month}
-                timezone={@timezone}
-                current={@current}
-                socket={@socket}
-                /> 
+                </form>
+            </div>
+
+            <div class="flex-1 max-h-screen overflow-y-auto">
+                <h3 class="self-center text-center text-lg font-semibold text-gray-900">Open a Schedule</h3>
+                <CalendarWeeks.calendar_weeks
+                    id="weeks"
+                    socket={@socket}
+                    current_path={Routes.live_path(@socket, ScheduleLive)}
+                    current_week={@current_week}
+                    beginning_of_week={@beginning_of_week}
+                    end_of_week={@end_of_week}
+                    next_week={@next_week}
+                    previous_week={@previous_week}
+                    timezone={@timezone}
+                    selected_timeslots={@selected_timeslots}
+                    /> 
+            </div>
+
         </div>
     </div>
 </div>
+
