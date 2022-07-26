@@ -10,12 +10,12 @@
       <% end %>
       <div class="mb-10 w-full">
         <div class="flex-shrink-0 flex items-center">
-          <i><%= Heroicons.icon("check-circle", type: "outline", class: "h-7 w-7 mr-1 stroke-blue") %></i>
-          <a href="/" class="text-2xl font-bold text-blue mb-1">gawain</a>
+          <i><%= Heroicons.icon("check-circle", type: "outline", class: "h-7 w-7 mr-1 stroke-blue-900") %></i>
+          <a href="/" class="text-2xl font-bold text-blue-900 mb-1">gawain</a>
         </div>
       </div>
       <div class="my-10 w-full">
-        <h2 class="text-left text-3xl font-bold text-blue">Sign up here</h2>
+        <h2 class="text-left text-3xl font-bold text-blue-900">Sign up here</h2>
         <h2 class="text-left text-md font-semibold text-gray-400">Hope you can make it!</h2>
       </div>
       <div class="my-20">
@@ -28,12 +28,12 @@
         <div class="flex items-center justify-end mt-3"> 
           <p class="text-sm pr-2 text-gray-700">Already have an account?</p>
           <div class="text-sm">
-            <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "font-medium text-blue hover:text-yellow" %>
+            <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "font-medium text-blue-900 hover:text-yellow" %>
           </div>
         </div>
       </div>
       <div class="flex flex-col items-center">
-        <%= submit "Sign up", class: "w-2/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue bg-yellow hover:bg-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
+        <%= submit "Sign up", class: "w-2/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
       </div>
       </.form>
     </div>
