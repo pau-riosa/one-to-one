@@ -19,7 +19,7 @@ defmodule TodoWeb.Components.CalendarMonths do
     ~H"""
     <div>
         <div class="flex items-center mb-8">
-            <div class="flex-1 text-blue">
+            <div class="flex-1 text-blue-900">
                 <%= Timex.format!(@current, "%B %Y", :strftime)%> 
             </div>
             <div class="flex justify-end flex-1 text-right">
@@ -35,7 +35,7 @@ defmodule TodoWeb.Components.CalendarMonths do
                 <% end %>
             </div>
         </div>
-        <div class="mb-6 text-center text-blue uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
+        <div class="mb-6 text-center text-blue-900 uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
             <div class="text-xs">Mon</div>
             <div class="text-xs">Tue</div>
             <div class="text-xs">Wed</div>
