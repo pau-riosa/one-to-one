@@ -17,8 +17,8 @@ defmodule TodoWeb.Components.Navigation do
               </div>
               <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex-shrink-0 flex items-center">
-                  <i><%= Heroicons.icon("check-circle", type: "solid", class: "h-7 w-7 mr-1 fill-indigo-500") %></i>
-                  <a href="/" class="text-2xl font-bold text-indigo-500">gawain</a>
+                  <i><%= Heroicons.icon("check-circle", type: "solid", class: "h-7 w-7 mr-1 fill-white") %></i>
+                  <a href="/" class="text-2xl font-bold text-white">gawain</a>
                 </div>
                 <div class="hidden sm:block sm:ml-6">
                   <div class="flex space-x-4">
