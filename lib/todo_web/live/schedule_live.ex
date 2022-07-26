@@ -91,6 +91,7 @@ defmodule TodoWeb.ScheduleLive do
     |> assign(current_week: current_week)
     |> assign(previous_week: previous_week)
     |> assign(next_week: next_week)
+    |> assign(page_title: "Schedule")
   end
 
   defp current_from_params(socket, %{"datetime" => datetime}) do
