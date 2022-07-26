@@ -23,10 +23,10 @@ defmodule TodoWeb.Components.CalendarWeeks do
       |> assign(selected_timeslots: selected_timeslots)
 
     ~H"""
-        <div class="flex flex-row px-6 justify-between align-center">
+        <div class="flex flex-row px-6 justify-center align-center gap-x-5">
           <%= live_patch to: @previous_week_path do %> 
         <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
-                    <i><%= Heroicons.icon("arrow-circle-left", type: "solid", class: "h-10 w-10 fill-indigo-500") %></i>
+                    <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-10 w-10 fill-blue-900") %></i>
         </button>
         <% end %>
             <div class="flex flex-row items-center mb-2 text-gray-500 gap-2">
@@ -34,7 +34,7 @@ defmodule TodoWeb.Components.CalendarWeeks do
             </div>
           <%= live_patch to: @next_week_path do %> 
             <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
-                <i><%= Heroicons.icon("arrow-circle-right", type: "solid", class: "h-10 w-10 fill-indigo-500") %></i>
+                <i><%= Heroicons.icon("chevron-right", type: "solid", class: "h-10 w-10 fill-blue-900") %></i>
             </button>
         <% end %>
         </div>
@@ -42,7 +42,7 @@ defmodule TodoWeb.Components.CalendarWeeks do
         <div class="py-2 px-5 text-center uppercase grid grid-cols-8 gap-2" id={@id}>
           <%= for {{date, list_of_time}, date_index} <- Enum.with_index(@current_week) do %>
               <div class="flex flex-col gap-2">
-                <div class="text-md"><%= if date == "time", do: "time", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
+                <div class="text-md text-blue-900"><%= if date == "time", do: "-", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
                   <%= for {time, time_index} <- Enum.with_index(list_of_time) do %>
                     <.live_component module={TodoWeb.Components.Time}
                       id={"time-#{date_index}-#{time_index}"}
