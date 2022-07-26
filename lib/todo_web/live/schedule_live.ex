@@ -5,12 +5,24 @@ defmodule TodoWeb.ScheduleLive do
   alias Todo.Accounts
   alias Timex
   alias Timex.Duration
+  alias TodoWeb.Components.{CalendarWeeks, CalendarMonths, Time}
 
   @impl true
   def mount(_params, %{"user_token" => user_token}, socket) do
     current_user = Accounts.get_user_by_session_token(user_token)
-    socket = assign(socket, current_user: current_user)
+
+    socket =
+      socket
+      |> assign(current_user: current_user)
+
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("select-time", %{"timeslot" => timeslot, "id" => button_id}, socket) do
+    socket = assign(socket, :selected_timeslots, [timeslot | socket.assigns.selected_timeslots])
+    send_update(Time, id: button_id, selected_timeslots: socket.assigns.selected_timeslots)
+    {:noreply, socket}
   end
 
   @impl true
@@ -60,6 +72,7 @@ defmodule TodoWeb.ScheduleLive do
       |> date_to_week
 
     socket
+    |> assign(selected_timeslots: [])
     |> assign(current: current)
     |> assign(beginning_of_month: beginning_of_month)
     |> assign(end_of_month: end_of_month)

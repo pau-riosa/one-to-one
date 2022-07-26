@@ -2,8 +2,9 @@
     <div class="flex flex-auto">
         <div class="flex-1">
             <h3 class="self-center text-center text-lg font-semibold text-gray-900">Select schedule</h3>
-            <TodoWeb.Components.calendar_weeks
+            <CalendarWeeks.calendar_weeks
                 id="weeks"
+                socket={@socket}
                 current_path={Routes.live_path(@socket, ScheduleLive)}
                 current_week={@current_week}
                 beginning_of_week={@beginning_of_week}
@@ -11,6 +12,7 @@
                 next_week={@next_week}
                 previous_week={@previous_week}
                 timezone={@timezone}
+                selected_timeslots={@selected_timeslots}
                 /> 
         </div>
 
@@ -18,8 +20,8 @@
             <header class="mb-8">
                 <h3 class="text-lg font-semibold text-gray-900">Calendar</h3> 
             </header>
-            <TodoWeb.Components.calendar_months
-                id="calendar"
+            <CalendarMonths.calendar_months
+                id="calendar"  
                 current_path={Routes.live_path(@socket, ScheduleLive)}
                 previous_month={@previous_month}
                 next_month={@next_month}

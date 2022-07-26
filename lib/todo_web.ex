@@ -54,6 +54,7 @@ defmodule TodoWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
+      import TodoWeb.Components.Helpers
 
       unquote(view_helpers())
     end
@@ -62,7 +63,7 @@ defmodule TodoWeb do
   def component do
     quote do
       use Phoenix.Component
-
+      import TodoWeb.Components.Helpers
       unquote(view_helpers())
     end
   end
