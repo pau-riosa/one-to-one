@@ -29,8 +29,8 @@ defmodule TodoWeb.Components.Time do
     class =
       class_list([
         {"w-full h-full p-3 justify-center items-center flex", true},
-        {"bg-blue-200", selected},
-        {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200 #{pointer}", not disabled},
+        {"bg-blue-100", selected},
+        {"bg-blue-50 text-blue-900 font-bold hover:bg-blue-900 #{pointer}", not disabled},
         {"text-gray-300 cursor-default pointer-events-none", disabled}
       ])
 

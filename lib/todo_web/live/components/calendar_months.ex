@@ -19,23 +19,23 @@ defmodule TodoWeb.Components.CalendarMonths do
     ~H"""
     <div>
         <div class="flex items-center mb-8">
-            <div class="flex-1">
+            <div class="flex-1 text-blue">
                 <%= Timex.format!(@current, "%B %Y", :strftime)%> 
             </div>
             <div class="flex justify-end flex-1 text-right">
                 <%= live_patch to: @previous_month_path do %>
                     <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
-                        <i><%= Heroicons.icon("arrow-circle-left", type: "solid", class: "h-10 w-10  fill-indigo-500") %></i>
+                        <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-10 w-10  fill-blue-900") %></i>
                     </button>
                 <% end %>
                 <%= live_patch to: @next_month_path do %>
                 <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
-                    <i><%= Heroicons.icon("arrow-circle-right", type: "solid", class: "h-10 w-10 fill-indigo-500") %></i>
+                    <i><%= Heroicons.icon("chevron-right", type: "solid", class: "h-10 w-10 fill-blue-900") %></i>
                 </button>
                 <% end %>
             </div>
         </div>
-        <div class="mb-6 text-center uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
+        <div class="mb-6 text-center text-blue uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
             <div class="text-xs">Mon</div>
             <div class="text-xs">Tue</div>
             <div class="text-xs">Wed</div>
@@ -52,8 +52,8 @@ defmodule TodoWeb.Components.CalendarMonths do
                 />
             <% end %>
         </div>
-        <div class="flex items-center gap-x-1">
-            <i><%= Heroicons.icon("globe", type: "solid", class: "h-7 w-7 fill-indigo-500") %></i>
+        <div class="flex items-center gap-x-1 text-blue">
+            <i><%= Heroicons.icon("globe", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
             <%= @timezone %> 
         </div>
     </div>

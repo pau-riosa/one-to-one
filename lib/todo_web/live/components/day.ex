@@ -10,7 +10,7 @@ defmodule TodoWeb.Components.Day do
       class_list([
         {"grid-column-#{weekday}", index == 0},
         {"content-center w-10 h-10 rounded-full justify-center items-center flex", true},
-        {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200", not disabled},
+        {"bg-blue-50 text-blue-900 font-bold hover:bg-yellow-900", not disabled},
         {"text-gray-200 cursor-default pointer-events-none", disabled}
       ])
 

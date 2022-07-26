@@ -4,7 +4,7 @@ defmodule TodoWeb.Components.Navigation do
   def nav(assigns) do
     ~H"""
       <!-- This example requires Tailwind CSS v2.0+ -->
-      <nav x-data="{ isOpen: false }" class="h-auto w-full bg-gray-800">
+      <nav x-data="{ isOpen: false }" class="h-auto w-full bg-blue-900">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div class="relative flex items-center justify-between h-16">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -23,20 +23,19 @@ defmodule TodoWeb.Components.Navigation do
                 <div class="hidden sm:block sm:ml-6">
                   <div class="flex space-x-4">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.DashboardLive ), class: "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"  %>
-                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.ScheduleLive ), class: "text-gray-300 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" %>
+                    <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.DashboardLive ), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
+                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.ScheduleLive ), class: "text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" %>
                 </div>
                   </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                    <span class="sr-only">View notifications</span>
+                  <button type="button" class="bg-yellow-900 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                     <!-- Heroicon name: outline/bell -->
-                      <i><%= Heroicons.icon("bell", type: "outline", class: "block h-6 w-6 mr-1") %></i>
+                      <i><%= Heroicons.icon("bell", type: "outline", class: "block h-6 w-6 stroke-blue-900") %></i>
                     </button>
 
                     <!-- Profile dropdown -->
-                      <div class="ml-3 relative">
+                      <div class="ml-3 relative flex justify-end">
                         <div
                           x-data="{
                           open: false,
