@@ -78,12 +78,12 @@ defmodule TodoWeb.Components.Navigation do
                               x-on:click.outside="close($refs.button)"
                               :id="$id('dropdown-button')"
                               style="display: none;"
-                              class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                              class=" origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                <p class="block px-4 py-2 text-sm text-gray-700"><%= @current_user.email %></p>
-                <div class="border-2 border-gray-200 border-b-gray-200 mx-1"></div>
-                <%= link "Settings", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_settings_path(@socket, :edit) %>
-                <%= link "Log out", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_session_path(@socket, :delete), method: :delete %>
+                <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
+                <div class="border-2  border-b-blue-900 mx-2"></div>
+                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@socket, :edit) %>
+                <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@socket, :delete), method: :delete %>
                 </div>
                 </div>
                 </div>
