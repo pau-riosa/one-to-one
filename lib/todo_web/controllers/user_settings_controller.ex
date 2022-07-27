@@ -30,7 +30,12 @@ defmodule TodoWeb.UserSettingsController do
         |> redirect(to: Routes.user_settings_path(conn, :edit))
 
       {:error, changeset} ->
-        render(conn, "edit.html", email_changeset: changeset)
+        conn
+        |> put_flash(
+          :error,
+          "Oops, something went wrong! Please check the errors below."
+        )
+        |> render("edit.html", email_changeset: changeset)
     end
   end
 
@@ -46,7 +51,12 @@ defmodule TodoWeb.UserSettingsController do
         |> UserAuth.log_in_user(user)
 
       {:error, changeset} ->
-        render(conn, "edit.html", password_changeset: changeset)
+        conn
+        |> put_flash(
+          :error,
+          "Oops, something went wrong! Please check the errors below."
+        )
+        |> render("edit.html", password_changeset: changeset)
     end
   end
 

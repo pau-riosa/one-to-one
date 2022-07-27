@@ -11,30 +11,26 @@
           <p>Oops, something went wrong! Please check the errors below.</p>
         </div>
       <% end %>
-      <div class="my-20">
+      <div class="my-10">
         <%= email_input f, :email, required: true, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", placeholder: "Email" %>
-        <%= error_tag f, :email %>
+        <%# <%= error_tag f, :email %1> %>
 
         <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", placeholder: "Current password" %>
         <%= error_tag f, :current_password %>
       </div>
       <div class="flex flex-col items-center ">
-        <%= submit "Change email", class: " flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
+        <%= submit "Change email", class: "w-full flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
       </div>
       </.form>
       <div class="border-2 border-b-gray-300 w-full mx-2"></div>
       <.form let={f} for={@password_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_password" class="w-full px-12">
       <h3 class="font-semibold text-lg text-center text-blue-900">Change password</h3>
       <%= hidden_input f, :action, name: "action", value: "update_password" %>
-      <%= if @password_changeset.action do %>
-        <div class="alert alert-danger">
-          <p>Oops, something went wrong! Please check the errors below.</p>
-        </div>
-      <% end %>
 
-      <div class="my-20">
+      <div class="my-10">
         <%= password_input f, :password, required: true, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", placeholder: "New Password" %>
-        <%= error_tag f, :password %>
+        <%# <%= error_tag f, :password %1> %>
+        <span class="invalid-feedback">should be at least 12 character</span>
 
         <%= password_input f, :password_confirmation, required: true, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", placeholder: "Confirm new Password" %>
         <%= error_tag f, :password_confirmation %>
@@ -44,7 +40,7 @@
 
       </div>
       <div class="flex flex-col items-center">
-        <%= submit "Change password", class: " flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
+        <%= submit "Change password", class: "w-full flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
       </div>
       </.form>
     </div>
