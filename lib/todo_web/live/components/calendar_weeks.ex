@@ -39,10 +39,10 @@ defmodule TodoWeb.Components.CalendarWeeks do
         <% end %>
         </div>
 
-        <div class="py-2 px-5 text-center uppercase grid grid-cols-8 gap-2" id={@id}>
+        <div class="py-2 px-5 text-center grid grid-cols-8 gap-2" id={@id}>
           <%= for {{date, list_of_time}, date_index} <- Enum.with_index(@current_week) do %>
               <div class="flex flex-col gap-2">
-                <div class="text-md text-blue-900"><%= if date == "time", do: "-", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
+                <div class="text-xs font-semibold text-blue-900"><%= if date == "time", do: "-", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
                   <%= for {time, time_index} <- Enum.with_index(list_of_time) do %>
                     <.live_component module={TodoWeb.Components.Time}
                       id={"time-#{date_index}-#{time_index}"}
