@@ -1,0 +1,55 @@
+<div class="flex justify-center align-center">
+    <div class="w-full max-w-7xl mx-auto py-5 "> 
+        <div class="w-full flex lg:flex-row flex-col">
+            <div class="lg:w-2/6 w-full bg-gray-100 rounded-md py-2 px-3 border-r border-gray-300">
+                <a href="/dashboard" class="flex align-baseline mb-8">
+                    <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-5 w-5 fill-gray-400") %></i>
+                    <h3 class="text-sm font-semibold text-gray-400">Dashboard</h3> 
+                </a>
+                <header class="text-center mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900">Book a Schedule</h3> 
+                </header>
+                <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10">
+                    <div class="my-5 space-y-5"> 
+                        <div class="flex flex-row space-x-3 align-baseline"> 
+                            <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <div class="flex flex-col justify-center"> 
+                                <h1 class="text-md text-blue-900 font-semibold">Juan Dela Cruz</h1>
+                                <%= hidden_input f, :created_by_id, value: "1" %>
+                            </div>
+                        </div>
+                        <%= text_input f, :name, placeholder: "Topic", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
+                        <%= error_tag f, :name %>
+
+                        <%= textarea f, :description, placeholder: "Description", class: "resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", rows: "10" %>
+                        <%= error_tag f, :description %>
+                        <%= hidden_input f, :schedules, values: @selected_timeslots %>
+                        <%= error_tag f, :schedules %>
+                        <!-- file upload to follow -->
+                        <button class="w-3/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue">Choose File</button> 
+                        <!-- end of file upload to follow -->
+                    </div>
+                    <%= submit "Create", class: "w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"%>
+                </.form>
+            </div>
+
+            <div class="flex-1 max-h-screen overflow-y-auto">
+                <h3 class="self-center text-center text-lg font-semibold text-gray-900">Open a Schedule</h3>
+                <CalendarWeeks.calendar_weeks
+                    id="weeks"
+                    socket={@socket}
+                    current_path={Routes.live_path(@socket, ScheduleLive)}
+                    current_week={@current_week}
+                    beginning_of_week={@beginning_of_week}
+                    end_of_week={@end_of_week}
+                    next_week={@next_week}
+                    previous_week={@previous_week}
+                    timezone={@timezone}
+                    selected_timeslots={@selected_timeslots}
+                    /> 
+            </div>
+
+        </div>
+    </div>
+</div>
+

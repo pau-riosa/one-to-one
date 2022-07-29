@@ -66,16 +66,25 @@ defmodule TodoWeb.Router do
     put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
-  live_session :private, on_mount: TodoWeb.Live.InitAssigns do
-    scope "/", TodoWeb do
+  live_session :instructor, on_mount: {TodoWeb.Live.InitAssigns, :instructor} do
+    scope "/instructor", TodoWeb do
       pipe_through [:browser, :require_authenticated_user]
 
-      live "/dashboard", DashboardLive
-      live "/schedule", ScheduleLive
+      live "/dashboard", Instructor.DashboardLive
+      live "/schedule", Instructor.ScheduleLive
       live "/schedule/:time_slot", ScheduleEventLive
       get "/users/settings", UserSettingsController, :edit
       put "/users/settings", UserSettingsController, :update
       get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+    end
+  end
+
+  live_session :student, on_mount: {TodoWeb.Live.InitAssigns, :student} do
+    scope "/student", TodoWeb do
+      pipe_through [:browser, :require_authenticated_user]
+
+      live "/dashboard", Student.DashboardLive
+      live "/schedule", Student.ScheduleLive
     end
   end
 

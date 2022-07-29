@@ -23,8 +23,8 @@ defmodule TodoWeb.Components.Navigation do
                 <div class="hidden sm:block sm:ml-6">
                   <div class="flex space-x-4">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.DashboardLive ), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
-                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.ScheduleLive ), class: "text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" %>
+                    <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive ), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
+                    <%= live_patch "Schedule", to: Routes.live_path(@socket, TodoWeb.Instructor.ScheduleLive ), class: "text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" %>
                 </div>
                   </div>
                 </div>

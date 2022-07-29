@@ -15,11 +15,6 @@ defmodule TodoWeb.Components.Time do
       ) do
     slot_string = NaiveDateTime.to_iso8601(datetime)
 
-    datetime_path =
-      socket
-      |> Routes.live_path(TodoWeb.ScheduleEventLive, slot_string)
-      |> URI.decode()
-
     disabled = Timex.compare(datetime, Timex.today(timezone)) == -1
     weekday = Timex.weekday(datetime, :monday)
     pointer = if date == "time", do: "pointer-events-none", else: ""
@@ -40,7 +35,6 @@ defmodule TodoWeb.Components.Time do
       assigns
       |> assign(disabled: disabled)
       |> assign(text: text)
-      |> assign(datetime_path: datetime_path)
       |> assign(class: class)
       |> assign(datetime: datetime)
       |> assign(button_id: button_id)

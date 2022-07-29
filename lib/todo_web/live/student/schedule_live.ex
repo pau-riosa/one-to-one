@@ -1,17 +1,30 @@
-defmodule TodoWeb.DashboardLive do
+defmodule TodoWeb.Student.ScheduleLive do
   use TodoWeb, :live_view
 
   alias __MODULE__
   alias Todo.Accounts
   alias Timex
   alias Timex.Duration
-  alias TodoWeb.Components.{CalendarMonths}
+  alias TodoWeb.Components.{CalendarWeeks, CalendarMonths, Time}
 
   @impl true
-  def mount(_params, %{"user_token" => user_token}, socket) do
-    current_user = Accounts.get_user_by_session_token(user_token)
-    socket = assign(socket, current_user: current_user)
+  def mount(_params, _session, socket) do
     {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("select-time", %{"timeslot" => timeslot, "id" => button_id}, socket) do
+    selected_timeslots =
+      if Enum.member?(socket.assigns.selected_timeslots, timeslot) do
+        socket.assigns.selected_timeslots -- [timeslot]
+      else
+        [timeslot | socket.assigns.selected_timeslots]
+      end
+
+    send_update(Time, id: button_id, selected_timeslots: selected_timeslots)
+    socket = assign(socket, :selected_timeslots, selected_timeslots)
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -72,7 +85,7 @@ defmodule TodoWeb.DashboardLive do
     |> assign(current_week: current_week)
     |> assign(previous_week: previous_week)
     |> assign(next_week: next_week)
-    |> assign(page_title: "Dashboard")
+    |> assign(page_title: "Schedule")
   end
 
   defp current_from_params(socket, %{"datetime" => datetime}) do
