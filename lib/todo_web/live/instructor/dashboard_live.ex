@@ -8,13 +8,7 @@ defmodule TodoWeb.Instructor.DashboardLive do
   alias Todo.Schedules
 
   @impl true
-  def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
-    schedules = Schedules.get_schedules_by_created_by_id(current_user.id)
-
-    socket =
-      socket
-      |> assign(:schedules, schedules)
-
+  def mount(_params, _session, socket) do
     {:ok, socket}
   end
 
@@ -26,6 +20,13 @@ defmodule TodoWeb.Instructor.DashboardLive do
 
   defp assign_dates(socket, params) do
     current = current_from_params(socket, params)
+
+    schedules =
+      Schedules.get_schedules_by_created_by_id(
+        socket.assigns.current_user.id,
+        Timex.to_naive_datetime(current)
+      )
+
     beginning_of_month = Timex.beginning_of_month(current)
     end_of_month = Timex.end_of_month(current)
 
@@ -65,6 +66,7 @@ defmodule TodoWeb.Instructor.DashboardLive do
       |> date_to_week
 
     socket
+    |> assign(schedules: schedules)
     |> assign(selected_timeslots: [])
     |> assign(current: current)
     |> assign(beginning_of_month: beginning_of_month)
