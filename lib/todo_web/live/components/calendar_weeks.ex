@@ -9,7 +9,8 @@ defmodule TodoWeb.Components.CalendarWeeks do
           previous_week: previous_week,
           next_week: next_week,
           timezone: timezone,
-          selected_timeslots: selected_timeslots
+          selected_timeslots: selected_timeslots,
+          existing_timeslots: existing_timeslots
         } = assigns
       ) do
     previous_week_path = build_path(current_path, %{week: previous_week})
@@ -52,7 +53,8 @@ defmodule TodoWeb.Components.CalendarWeeks do
                       timezone={timezone}
                       current_path={current_path}
                       button_id={"button-#{date_index}-#{time_index}"}
-                      selected_timeslots={selected_timeslots}
+            selected_timeslots={selected_timeslots}
+            existing_timeslots={existing_timeslots}
                     />
                   <% end %>
               </div> 

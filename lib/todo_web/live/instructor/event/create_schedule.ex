@@ -62,7 +62,11 @@ defmodule TodoWeb.Instructor.Event.CreateSchedule do
         [timeslot | socket.assigns.selected_timeslots]
       end
 
-    send_update(Time, id: button_id, selected_timeslots: selected_timeslots)
+    send_update(Time,
+      id: button_id,
+      selected_timeslots: selected_timeslots
+    )
+
     socket = assign(socket, :selected_timeslots, selected_timeslots)
 
     {:noreply, socket}

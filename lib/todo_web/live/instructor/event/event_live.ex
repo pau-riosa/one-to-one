@@ -10,7 +10,7 @@ defmodule TodoWeb.Instructor.EventLive do
   alias Todo.ChangesetErrorBuilder
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
     event_changeset = Event.changeset(%Event{})
     schedule_changeset = Schedule.changeset(%Schedule{})
 
@@ -18,6 +18,7 @@ defmodule TodoWeb.Instructor.EventLive do
       socket
       |> assign(:event_changeset, event_changeset)
       |> assign(:schedule_changeset, schedule_changeset)
+      |> assign(:existing_timeslots, Todo.Schedules.get_all_schedules(current_user.id))
 
     {:ok, socket}
   end

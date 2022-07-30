@@ -14,7 +14,7 @@
             previous_week={@previous_week}
             timezone={@timezone}
             selected_timeslots={@selected_timeslots}
-            flash={@flash}
+            existing_timeslots={@existing_timeslots}
         />
     <%= @live_action == :new -> %>
         <.live_component module={TodoWeb.Instructor.Event.New} 

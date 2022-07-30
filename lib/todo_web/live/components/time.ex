@@ -11,12 +11,24 @@ defmodule TodoWeb.Components.Time do
           datetime: datetime,
           button_id: button_id,
           selected_timeslots: selected_timeslots,
+          existing_timeslots: existing_timeslots,
           parent_id: parent_id
         } = assigns
       ) do
     slot_string = NaiveDateTime.to_iso8601(datetime)
 
-    disabled = Timex.compare(datetime, Timex.today(timezone)) == -1
+    existing_timeslots =
+      existing_timeslots
+      |> Enum.map(fn t ->
+        Timex.format!(t, "%A %B %e, %Y %l:%M %p", :strftime)
+      end)
+
+    formatted_datetime = Timex.format!(datetime, "%A %B %e, %Y %l:%M %p", :strftime)
+
+    disabled =
+      Timex.compare(datetime, Timex.today(timezone)) == -1 or
+        (formatted_datetime in existing_timeslots and date != "time")
+
     weekday = Timex.weekday(datetime, :monday)
     pointer = if date == "time", do: "pointer-events-none", else: ""
 

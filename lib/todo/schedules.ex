@@ -6,6 +6,30 @@ defmodule Todo.Schedules do
   alias Todo.Schedules.Schedule
   alias Todo.Repo
 
+  def get_all_schedules(created_by_id) do
+    Schedule
+    |> join(:left, [s], e in assoc(s, :event), as: :event)
+    |> where([event: e], e.created_by_id == ^created_by_id)
+    |> select([s], s.scheduled_for)
+    |> Repo.all()
+  end
+
+  def get_schedules_by_event_ids(event_ids) when is_list(event_ids) do
+    Schedule
+    |> join(:inner, [s], e in assoc(s, :event), as: :event)
+    |> where([event: e], e.id in ^event_ids)
+    |> order_by([s], desc: s.scheduled_for)
+    |> Repo.all()
+  end
+
+  def get_schedules_by_event_id(event_id) when is_binary(event_id) do
+    Schedule
+    |> join(:inner, [s], e in assoc(s, :event), as: :event)
+    |> where([event: e], e.id == ^event_id)
+    |> order_by([s], desc: s.scheduled_for)
+    |> Repo.all()
+  end
+
   def get_schedules_by_created_by_id(created_by_id) when is_binary(created_by_id) do
     Schedule
     |> join(:inner, [s], e in assoc(s, :event), as: :event)
