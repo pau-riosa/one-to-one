@@ -9,18 +9,19 @@
             <div class="flex flex-row space-x-10">
                 <h1 class="text-xl font-bold text-blue-900 mb-4">Upcoming Classes</h1>
                 <h1 class="text-xl font-bold text-gray-400 mb-4">Past Classes</h1>
-            </div> 
-            <div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
+            </div>
+            <%= for schedule <- @schedules do %>
+           <div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
                 <div class="p-10">
                     <div class="flex flex-row mb-5">
                         <p class="text-sm mr-2">Instructor</p>
                         <img class="h-5 w-5 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                     </div>
-                    <h2 class="text-2xl text-blue-900 font-bold">ThriveKid Class A</h2>
-                    <p class="text-sm">If a dog chews shoes whose shoes does he choose?</p>
+                    <h2 class="text-2xl text-blue-900 font-bold uppercase"><%= schedule.event.name %></h2>
+                    <p class="text-sm"><%= schedule.event.description %></p>
                     <div class="flex flex-row my-5 align-center text-blue-900">
                         <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5") %></i>
-                        <p class="text-sm mx-2">Monday July 27, 2022 7:00 PM</p>
+                        <p class="text-sm mx-2"><%= Timex.format!(schedule.scheduled_for, "%A %B %e, %Y %l:%M %p", :strftime) %></p>
                     </div>
 
                     <div class="flex justify-end space-x-3">
@@ -29,48 +30,11 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
-                <div class="p-10">
-                    <div class="flex flex-row mb-5">
-                        <p class="text-sm mr-2">Instructor</p>
-                        <img class="h-5 w-5 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                    </div>
-                    <h2 class="text-2xl text-blue-900 font-bold">ThriveKid Class A</h2>
-                    <p class="text-sm">If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="flex flex-row my-5 align-center text-blue-900">
-                        <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5") %></i>
-                        <p class="text-sm mx-2">Monday July 27, 2022 7:00 PM</p>
-                    </div>
-
-                    <div class="flex justify-end space-x-3">
-                        <button class="py-2 px-4 rounded rounded-md bg-white text-blue-900 border border-blue hover:bg-blue-900 hover:text-white">Cancel</button>
-                        <button class="py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow">Start</button>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
-                <div class="p-10">
-                    <div class="flex flex-row mb-5">
-                        <p class="text-sm mr-2">Instructor</p>
-                        <img class="h-5 w-5 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                    </div>
-                    <h2 class="text-2xl text-blue-900 font-bold">ThriveKid Class A</h2>
-                    <p class="text-sm">If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="flex flex-row my-5 align-center text-blue-900">
-                        <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5") %></i>
-                        <p class="text-sm mx-2">Monday July 27, 2022 7:00 PM</p>
-                    </div>
-
-                    <div class="flex justify-end space-x-3">
-                        <button class="py-2 px-4 rounded rounded-md bg-white text-blue-900 border border-blue hover:bg-blue-900 hover:text-white">Cancel</button>
-                        <button class="py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow">Start</button>
-                    </div>
-                </div>
-            </div> 
+            <% end %> 
         </div>
         <div class="lg:w-5/12 w-full flex flex-col">
             <div class="flex flex-row justify-end text-center mb-10">
-                <%= live_patch "Create Schedule",  to: Routes.live_path(@socket, TodoWeb.Instructor.ScheduleLive ), class: "w-3/5 py-2 px-4 rounded rounded-md bg-yellow-900 text-blue-900 font-semibold border border-yellow hover:bg-blue-900 hover:text-white hover:border-blue"  %>
+                <%= live_patch "Create Event", to: Routes.event_path(@socket, :new), class: "w-3/5 py-2 px-4 rounded rounded-md bg-yellow-900 text-blue-900 font-semibold border border-yellow hover:bg-blue-900 hover:text-white hover:border-blue"  %>
             </div> 
             <header class="mb-8">
                 <h3 class="text-lg font-semibold text-blue-900">Calendar</h3> 

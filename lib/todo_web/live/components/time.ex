@@ -10,7 +10,8 @@ defmodule TodoWeb.Components.Time do
           date: date,
           datetime: datetime,
           button_id: button_id,
-          selected_timeslots: selected_timeslots
+          selected_timeslots: selected_timeslots,
+          parent_id: parent_id
         } = assigns
       ) do
     slot_string = NaiveDateTime.to_iso8601(datetime)
@@ -24,7 +25,7 @@ defmodule TodoWeb.Components.Time do
     class =
       class_list([
         {"w-full h-full p-3 justify-center items-center text-xs flex rounded-md shadow-md", true},
-        {"bg-blue-100", selected},
+        {"bg-blue-900", selected},
         {"bg-blue-50 text-blue-900 font-bold hover:bg-blue-900 #{pointer}", not disabled},
         {"text-gray-300 cursor-default pointer-events-none", disabled}
       ])
@@ -38,9 +39,10 @@ defmodule TodoWeb.Components.Time do
       |> assign(class: class)
       |> assign(datetime: datetime)
       |> assign(button_id: button_id)
+      |> assign(parent_id: parent_id)
 
     ~H"""
-    <button  phx-value-id={@id} id={@id} class={@class} disabled={@disabled} phx-click="select-time" phx-value-timeslot={@datetime} >
+    <button  phx-value-id={@id} id={@id} class={@class} disabled={@disabled} phx-click="select-time" phx-value-timeslot={@datetime} phx-target={"##{@parent_id}"} >
       <%= @text %> 
     </button>
     """

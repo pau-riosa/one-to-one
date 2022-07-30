@@ -1,6 +1,5 @@
 defmodule Todo.Accounts.UserToken do
-  use Ecto.Schema
-  import Ecto.Query
+  use Todo.Schema
   alias Todo.Accounts.UserToken
 
   @hash_algorithm :sha256

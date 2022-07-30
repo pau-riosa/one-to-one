@@ -1,6 +1,5 @@
 defmodule Todo.Accounts.User do
-  use Ecto.Schema
-  import Ecto.Changeset
+  use Todo.Schema
 
   schema "users" do
     field :email, :string

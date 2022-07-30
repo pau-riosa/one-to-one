@@ -5,8 +5,7 @@ defmodule TodoWeb.Instructor.ScheduleLive do
   alias Timex
   alias Timex.Duration
   alias TodoWeb.Components.{CalendarWeeks, Time}
-  alias Todo.Events.Event
-  alias Todo.Repo
+  alias Todo.Events.{Event, Operation}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -35,25 +34,26 @@ defmodule TodoWeb.Instructor.ScheduleLive do
     changeset =
       %Event{}
       |> Event.changeset(event_params)
-      |> Map.put(:action, :insert)
-      |> Repo.insert()
+      |> Operation.call(event_params)
+      |> case do
+        {:ok, event} ->
+          socket =
+            socket
+            |> put_flash(:info, "Event created.")
+            |> push_redirect(to: Routes.live_path(socket, TodoWeb.Instructor.DashboardLive))
 
-    case changeset do
-      {:ok, _} ->
-        socket =
-          socket
-          |> put_flash(:info, "Oops something went wrong.")
+          {:noreply, socket}
 
-        {:noreply, socket}
+        {:error, changeset} ->
+          error_message = Todo.ChangesetErrorBuilder.call(changeset)
 
-      {:error, changeset} ->
-        socket =
-          socket
-          |> put_flash(:error, "Oops something went wrong.")
-          |> assign(:changeset, changeset)
+          socket =
+            socket
+            |> put_flash(:error, "Oops something went wrong. #{error_message}")
+            |> assign(:changeset, changeset)
 
-        {:noreply, socket}
-    end
+          {:noreply, socket}
+      end
   end
 
   def handle_event(

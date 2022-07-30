@@ -1,19 +1,23 @@
-defmodule TodoWeb.Instructor.DashboardLive do
+defmodule TodoWeb.Instructor.EventLive do
   use TodoWeb, :live_view
 
   alias __MODULE__
   alias Timex
   alias Timex.Duration
-  alias TodoWeb.Components.{CalendarMonths}
-  alias Todo.Schedules
+  alias TodoWeb.Components.{CalendarWeeks, Time}
+  alias Todo.Events.Event
+  alias Todo.Schedules.Schedule
+  alias Todo.ChangesetErrorBuilder
 
   @impl true
-  def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
-    schedules = Schedules.get_schedules_by_created_by_id(current_user.id)
+  def mount(_params, _session, socket) do
+    event_changeset = Event.changeset(%Event{})
+    schedule_changeset = Schedule.changeset(%Schedule{})
 
     socket =
       socket
-      |> assign(:schedules, schedules)
+      |> assign(:event_changeset, event_changeset)
+      |> assign(:schedule_changeset, schedule_changeset)
 
     {:ok, socket}
   end
@@ -66,6 +70,7 @@ defmodule TodoWeb.Instructor.DashboardLive do
 
     socket
     |> assign(selected_timeslots: [])
+    |> assign(event_id: params["event_id"])
     |> assign(current: current)
     |> assign(beginning_of_month: beginning_of_month)
     |> assign(end_of_month: end_of_month)
@@ -76,7 +81,7 @@ defmodule TodoWeb.Instructor.DashboardLive do
     |> assign(current_week: current_week)
     |> assign(previous_week: previous_week)
     |> assign(next_week: next_week)
-    |> assign(page_title: "Dashboard")
+    |> assign(page_title: "Schedule")
   end
 
   defp current_from_params(socket, %{"datetime" => datetime}) do

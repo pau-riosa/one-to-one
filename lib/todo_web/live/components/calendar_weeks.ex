@@ -46,6 +46,7 @@ defmodule TodoWeb.Components.CalendarWeeks do
                   <%= for {time, time_index} <- Enum.with_index(list_of_time) do %>
                     <.live_component module={TodoWeb.Components.Time}
                       id={"time-#{date_index}-#{time_index}"}
+                      parent_id={@id}
                       date={date}
                       datetime={time}
                       timezone={timezone}
@@ -53,7 +54,6 @@ defmodule TodoWeb.Components.CalendarWeeks do
                       button_id={"button-#{date_index}-#{time_index}"}
                       selected_timeslots={selected_timeslots}
                     />
-
                   <% end %>
               </div> 
           <% end %>

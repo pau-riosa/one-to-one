@@ -1,0 +1,24 @@
+<%= cond do %>
+    <%= @live_action == :create_schedule -> %>
+        <.live_component module={TodoWeb.Instructor.Event.CreateSchedule} 
+            id="event-create-schedule"  
+            changeset={@schedule_changeset} 
+            current_user={@current_user} 
+            event_id={@event_id}
+            socket={@socket}
+            current_path={Routes.event_path(@socket, :create_schedule, @event_id)}
+            current_week={@current_week}
+            beginning_of_week={@beginning_of_week}
+            end_of_week={@end_of_week}
+            next_week={@next_week}
+            previous_week={@previous_week}
+            timezone={@timezone}
+            selected_timeslots={@selected_timeslots}
+            flash={@flash}
+        />
+    <%= @live_action == :new -> %>
+        <.live_component module={TodoWeb.Instructor.Event.New} 
+            id="event-new"  
+            changeset={@event_changeset} 
+            current_user={@current_user}/>
+<% end %>
