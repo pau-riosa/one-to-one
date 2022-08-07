@@ -46,6 +46,12 @@ defmodule TodoWeb.Instructor.Event.Edit do
         {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
       end)
 
+    uploaded_files =
+      case uploaded_files do
+        [] -> socket.assigns.event.files
+        uploaded_files -> uploaded_files ++ socket.assigns.event.files
+      end
+
     event_params = Map.put(event_params, "files", uploaded_files)
 
     socket.assigns.event
