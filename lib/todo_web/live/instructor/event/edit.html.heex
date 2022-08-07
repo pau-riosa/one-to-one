@@ -46,13 +46,13 @@
                             </div>
                     <% end %>
                     </div>
-                    <a type="button" class="w-3/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" phx-drop-target={@uploads.file.ref} phx-click={Phoenix.LiveView.JS.dispatch("click", to: "##{@uploads.file.ref}", bubbles: false)}>Choose File
-
+                    <a type="button" class="w-3/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" phx-drop-target={@uploads.file.ref} phx-click={Phoenix.LiveView.JS.dispatch("click", to: "##{@uploads.file.ref}", bubbles: false)}>
+                        Choose File
                     <%= live_file_input @uploads.file, hidden: true %>
                     </a>
                     <!-- end of file upload to follow -->
                 </div>
-                <%= submit "Create", class: "w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"%>
+                <%= submit "Update", class: "w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"%>
                 </.form>
             </div>
         </div>

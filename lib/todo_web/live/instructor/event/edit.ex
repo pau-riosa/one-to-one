@@ -52,11 +52,11 @@ defmodule TodoWeb.Instructor.Event.Edit do
     |> Event.changeset(event_params)
     |> Operation.update()
     |> case do
-      {:ok, event} ->
+      {:ok, _event} ->
         socket =
           socket
           |> put_flash(:info, "Event update.")
-          |> push_redirect(to: Routes.event_path(socket, :create_schedule, event.id))
+          |> push_redirect(to: Routes.live_path(socket, TodoWeb.Instructor.DashboardLive))
 
         {:noreply, socket}
 
