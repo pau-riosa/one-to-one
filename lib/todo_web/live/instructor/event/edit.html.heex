@@ -28,6 +28,13 @@
                         <p class="alert alert-danger"><%= Phoenix.Naming.humanize(msg) %></p>
                     <% end %>
                     <div class="w-full grid grid-cols-4 gap-4">
+                        <%= for entry <- @event.files do %>
+                            <div class="flex flex-row w-full">
+                                <div class="w-full">
+                                    <img src={entry}/>
+                                </div>
+                            </div>
+                        <% end %>
                         <%= for entry <- @uploads.file.entries do %>
                             <div class="flex flex-row w-full">
 

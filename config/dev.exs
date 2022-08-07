@@ -65,7 +65,7 @@ config :todo, TodoWeb.Endpoint,
 config :todo, TodoWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/[^uploads].*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/todo_web/(live|views)/.*(ex)$",
       ~r"lib/todo_web/templates/.*(eex)$"

@@ -11,12 +11,10 @@ defmodule TodoWeb.Instructor.EventLive do
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_user: current_user}} = socket) do
-    event_changeset = Event.changeset(%Event{})
     schedule_changeset = Schedule.changeset(%Schedule{})
 
     socket =
       socket
-      |> assign(:event_changeset, event_changeset)
       |> assign(:schedule_changeset, schedule_changeset)
       |> assign(:existing_timeslots, Todo.Schedules.get_all_schedules(current_user.id))
 
@@ -69,7 +67,19 @@ defmodule TodoWeb.Instructor.EventLive do
       |> Timex.add(Duration.from_days(7))
       |> date_to_week
 
+    changeset =
+      case params["event_id"] do
+        event_id when is_binary(event_id) ->
+          Todo.Repo.get(Event, event_id)
+          |> Event.changeset()
+
+        _ ->
+          %Event{}
+          |> Event.changeset()
+      end
+
     socket
+    |> assign(event_changeset: changeset)
     |> assign(selected_timeslots: [])
     |> assign(event_id: params["event_id"])
     |> assign(current: current)

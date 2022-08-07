@@ -3,6 +3,8 @@
     "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css"
   },
   "dependencies": {
+    "alpinejs": "^3.10.3",
+    "autoprefixer": "^10.4.8",
     "daisyui": "^2.17.0"
   }
 }

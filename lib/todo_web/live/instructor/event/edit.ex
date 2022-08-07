@@ -1,4 +1,4 @@
-defmodule TodoWeb.Instructor.Event.New do
+defmodule TodoWeb.Instructor.Event.Edit do
   use TodoWeb, :live_component
 
   alias Todo.Events.{Event, Operation}
@@ -14,6 +14,14 @@ defmodule TodoWeb.Instructor.Event.New do
   end
 
   @impl true
+  def preload(list_of_assigns) do
+    Enum.map(list_of_assigns, fn assigns ->
+      event = Todo.Repo.get(Event, assigns.event_id)
+      Map.put(assigns, :event, event)
+    end)
+  end
+
+  @impl true
   def handle_event("cancel-entry", %{"ref" => ref} = _params, socket) do
     {:noreply, cancel_upload(socket, :file, ref)}
   end
@@ -21,7 +29,7 @@ defmodule TodoWeb.Instructor.Event.New do
   @impl true
   def handle_event("validate", %{"event" => event_params} = _params, socket) do
     changeset =
-      %Event{}
+      socket.assigns.event
       |> Event.changeset(event_params)
       |> Map.put(:action, :validate)
 
@@ -40,14 +48,14 @@ defmodule TodoWeb.Instructor.Event.New do
 
     event_params = Map.put(event_params, "files", uploaded_files)
 
-    %Event{}
+    socket.assigns.event
     |> Event.changeset(event_params)
-    |> Operation.insert()
+    |> Operation.update()
     |> case do
       {:ok, event} ->
         socket =
           socket
-          |> put_flash(:info, "Event created.")
+          |> put_flash(:info, "Event update.")
           |> push_redirect(to: Routes.event_path(socket, :create_schedule, event.id))
 
         {:noreply, socket}

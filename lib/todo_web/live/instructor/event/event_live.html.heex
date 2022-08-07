@@ -1,9 +1,9 @@
 <%= cond do %>
-    <%= @live_action == :create_schedule -> %>
-        <.live_component module={TodoWeb.Instructor.Event.CreateSchedule} 
-            id="event-create-schedule"  
-            changeset={@schedule_changeset} 
-            current_user={@current_user} 
+    <% @live_action == :create_schedule -> %>
+        <.live_component module={TodoWeb.Instructor.Event.CreateSchedule}
+            id="event-create-schedule"
+            changeset={@schedule_changeset}
+            current_user={@current_user}
             event_id={@event_id}
             socket={@socket}
             current_path={Routes.event_path(@socket, :create_schedule, @event_id)}
@@ -16,9 +16,15 @@
             selected_timeslots={@selected_timeslots}
             existing_timeslots={@existing_timeslots}
         />
-    <%= @live_action == :new -> %>
-        <.live_component module={TodoWeb.Instructor.Event.New} 
-            id="event-new"  
-            changeset={@event_changeset} 
+    <% @live_action == :new -> %>
+        <.live_component module={TodoWeb.Instructor.Event.New}
+            id="event-new"
+            changeset={@event_changeset}
+            current_user={@current_user}/>
+    <% @live_action == :edit -> %>
+        <.live_component module={TodoWeb.Instructor.Event.Edit}
+            id="event-edit"
+            event_id={@event_id}
+            changeset={@event_changeset}
             current_user={@current_user}/>
 <% end %>

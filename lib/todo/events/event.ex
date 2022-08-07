@@ -4,6 +4,7 @@ defmodule Todo.Events.Event do
   schema "events" do
     field :name, :string
     field :description, :string
+    field :files, {:array, :string}, default: []
     belongs_to(:created_by, Todo.Accounts.User)
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule Todo.Events.Event do
     :created_by_id
   ]
 
-  @optional_attrs [:description]
+  @optional_attrs [:description, :files]
 
   def changeset(event, attrs \\ %{}) do
     event

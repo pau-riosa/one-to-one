@@ -7,6 +7,18 @@ defmodule Todo.Schedules do
   alias Todo.Schedules.Schedule
   alias Todo.Repo
 
+  def get_all_past_schedules(created_by_id) do
+    Schedule
+    |> join(:left, [s], e in assoc(s, :event), as: :event)
+    |> where([event: e], e.created_by_id == ^created_by_id)
+    |> where([s], s.scheduled_for < ^Timex.now())
+    |> select([s, event: e], %{
+      event: e,
+      scheduled_for: s.scheduled_for
+    })
+    |> Repo.all()
+  end
+
   def get_all_schedules(created_by_id) do
     Schedule
     |> join(:left, [s], e in assoc(s, :event), as: :event)

@@ -22,10 +22,22 @@ defmodule TodoWeb.Instructor.DashboardLive do
     current = current_from_params(socket, params)
 
     schedules =
-      Schedules.get_schedules_by_created_by_id(
-        socket.assigns.current_user.id,
-        Timex.to_naive_datetime(current)
-      )
+      case params["class"] do
+        "upcoming" ->
+          Schedules.get_schedules_by_created_by_id(
+            socket.assigns.current_user.id,
+            Timex.to_naive_datetime(current)
+          )
+
+        "past" ->
+          Schedules.get_all_past_schedules(socket.assigns.current_user.id)
+
+        _ ->
+          Schedules.get_schedules_by_created_by_id(
+            socket.assigns.current_user.id,
+            Timex.to_naive_datetime(current)
+          )
+      end
 
     beginning_of_month = Timex.beginning_of_month(current)
     end_of_month = Timex.end_of_month(current)

@@ -3,7 +3,7 @@ defmodule Todo.Schedules.Operation do
   Operations for Event
   """
   alias Ecto.Multi
-  alias Todo.{Repo, Schedules.Schedule}
+  alias Todo.Repo
 
   def call(changesets) when is_list(changesets) do
     changesets
