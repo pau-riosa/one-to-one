@@ -87,7 +87,7 @@
               <%= if @current_user do %>
                 <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
                 <div class="border-2 border-b-blue-900 mx-2"></div>
-                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@conn, :edit) %>
+                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.instructor_user_settings_path(@conn, :edit) %>
                 <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@conn, :delete), method: :delete %>
               <% else %>
                 <%= link "Login", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_session_path(@conn, :new) %>
