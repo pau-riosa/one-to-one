@@ -2,8 +2,8 @@
     <div class="w-full max-w-7xl min-h-screen flex lg:flex-row flex-col py-5 gap-x-10">
         <div class="h-[96rem] w-full flex flex-col rounded-md space-y-3 bg-gray-100 p-5 overflow-y-auto overflow-hidden">
             <div class="flex flex-row space-x-10">
-                <%= live_patch "Upcoming Classes", to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive, %{"class" => "upcoming"}), class: "text-xl font-bold text-blue-900 mb-4" %>
-                <%= live_patch "Past Classes", to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive, %{"class" => "past"}), class: "text-xl font-bold text-gray-400 mb-4" %>
+                <%= live_patch "Upcoming Classes", to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive, %{"class" => "upcoming"}), class: "#{if @active_tab == "upcoming", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
+                <%= live_patch "Past Classes", to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive, %{"class" => "past"}), class: "#{if @active_tab == "past", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
             </div>
             <%= for schedule <- @schedules do %>
                 <div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
