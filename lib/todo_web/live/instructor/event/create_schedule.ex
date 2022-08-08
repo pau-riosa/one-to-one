@@ -21,33 +21,32 @@ defmodule TodoWeb.Instructor.Event.CreateSchedule do
   end
 
   def handle_event("save", %{"schedule" => schedule_params} = _params, socket) do
-    changeset =
-      socket.assigns.selected_timeslots
-      |> Enum.map(fn timeslot ->
-        schedule_params = Map.put(schedule_params, "scheduled_for", timeslot)
+    socket.assigns.selected_timeslots
+    |> Enum.map(fn timeslot ->
+      schedule_params = Map.put(schedule_params, "scheduled_for", timeslot)
 
-        Schedule.changeset(
-          %Schedule{},
-          schedule_params
-        )
-      end)
-      |> Operation.call()
-      |> case do
-        {:ok, _} ->
-          socket =
-            socket
-            |> put_flash(:info, "Schedule created.")
-            |> push_redirect(to: Routes.live_path(socket, TodoWeb.Instructor.DashboardLive))
+      Schedule.changeset(
+        %Schedule{},
+        schedule_params
+      )
+    end)
+    |> Operation.call()
+    |> case do
+      {:ok, _} ->
+        socket =
+          socket
+          |> put_flash(:info, "Schedule created.")
+          |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))
 
-          {:noreply, socket}
+        {:noreply, socket}
 
-        {:error, changeset} ->
-          socket =
-            socket
-            |> assign(:changeset, changeset)
+      {:error, changeset} ->
+        socket =
+          socket
+          |> assign(:changeset, changeset)
 
-          {:noreply, socket}
-      end
+        {:noreply, socket}
+    end
   end
 
   def handle_event(

@@ -62,7 +62,7 @@ defmodule TodoWeb.Instructor.Event.Edit do
         socket =
           socket
           |> put_flash(:info, "Event update.")
-          |> push_redirect(to: Routes.live_path(socket, TodoWeb.Instructor.DashboardLive))
+          |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))
 
         {:noreply, socket}
 

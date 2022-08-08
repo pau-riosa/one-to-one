@@ -29,17 +29,18 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-import "webrtc-adapter";
 import { Room } from "./room";
 
+if (window.location.pathname.split("/").includes("room")) {
+  let room = new Room();
+  room.init().then(() => room.join());
+}
 let Hooks = {};
-
-let room = new Room();
-room.init().then(() => room.join());
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
+
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,
   params: {
@@ -59,7 +60,6 @@ let liveSocket = new LiveSocket("/live", Socket, {
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
 window.addEventListener("phx:page-loading-start", (info) => topbar.show());
 window.addEventListener("phx:page-loading-stop", (info) => topbar.hide());
-
 // connect if there are any LiveViews on the page
 liveSocket.connect();
 

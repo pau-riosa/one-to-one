@@ -48,7 +48,7 @@
                 </div>
             </button>
         <% end %>
-        <%= link to: "/instructor/dashboard" do %>
+        <%= link to: Routes.instructor_dashboard_path(@socket, :index) do %>
             <button id="leave-control" class="mr-2 p-3 rounded-full transition duration-300 ease-in-out border-2 border-white bg-blue-900 hover:bg-white/50">
                 <img class="black-to-red transform rotate-135" height="26" width="26" src={Routes.static_path(@socket, "/svg/phone-fill.svg")} />
             </button>
