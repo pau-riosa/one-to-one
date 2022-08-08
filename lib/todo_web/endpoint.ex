@@ -9,6 +9,10 @@ defmodule TodoWeb.Endpoint do
     key: "_todo_key",
     signing_salt: "n9nrkmRf"
   ]
+  socket("/socket", TodoWeb.UserSocket,
+    websocket: true,
+    longpoll: false
+  )
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
@@ -20,7 +24,7 @@ defmodule TodoWeb.Endpoint do
     at: "/",
     from: :todo,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt uploads)
+    only: ~w(assets fonts images favicon.ico robots.txt uploads svg)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

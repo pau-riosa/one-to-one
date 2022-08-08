@@ -25,7 +25,7 @@
                         <div class="flex justify-end space-x-3">
                             <button class="py-2 px-4 rounded rounded-md bg-white text-blue-900 border border-blue hover:bg-blue-900 hover:text-white">Cancel</button>
                             <%= live_patch "Edit", to: Routes.instructor_event_path(@socket, :edit, schedule.event.id), class: "py-2 px-4 rounded rounded-md bg-white text-blue-900 border border-blue hover:bg-blue-900 hover:text-white" %>
-                            <button class="py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow">Start</button>
+                            <%= live_patch "Start", to: Routes.instructor_room_path(@socket, :index, schedule.event.id), class: "py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow" %>
                         </div>
                     </div>
                 </div>

@@ -29,8 +29,14 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
+import "webrtc-adapter";
+import { Room } from "./room";
 
 let Hooks = {};
+
+let room = new Room();
+room.init().then(() => room.join());
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
