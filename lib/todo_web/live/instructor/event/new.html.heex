@@ -1,6 +1,6 @@
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl mx-auto py-5 h-screen">
-        <%= live_patch to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive), class: "flex align-baseline mb-8"  do %>
+        <%= live_patch to: Routes.instructor_dashboard_path(@socket, :index), class: "flex align-baseline mb-8"  do %>
             <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-5 w-5 fill-gray-400") %></i>
             <h3 class="text-sm font-semibold text-gray-400">Dashboard</h3>
         <% end %>

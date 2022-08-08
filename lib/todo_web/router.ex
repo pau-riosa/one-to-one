@@ -67,10 +67,10 @@ defmodule TodoWeb.Router do
   end
 
   live_session :instructor, on_mount: {TodoWeb.Live.InitAssigns, :instructor} do
-    scope "/instructor", TodoWeb do
+    scope "/instructor", TodoWeb, as: :instructor do
       pipe_through [:browser, :require_authenticated_user]
 
-      live "/dashboard", Instructor.DashboardLive
+      live "/dashboard", Instructor.DashboardLive, :index
       live "/event/new", Instructor.EventLive, :new
       live "/event/:event_id", Instructor.EventLive, :edit
       live "/event/:event_id/create_schedule", Instructor.EventLive, :create_schedule

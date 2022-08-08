@@ -23,7 +23,7 @@ defmodule TodoWeb.Components.Navigation do
                 <div class="hidden sm:block sm:ml-6">
                   <div class="flex space-x-4">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <%= live_patch "Dashboard",  to: Routes.live_path(@socket, TodoWeb.Instructor.DashboardLive ), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
+    <%= live_patch "Dashboard",  to: Routes.instructor_dashboard_path(@socket, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
                 </div>
                   </div>
                 </div>
@@ -81,7 +81,7 @@ defmodule TodoWeb.Components.Navigation do
                 <!-- Active: "bg-gray-100", Not Active: "" -->
                 <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
                 <div class="border-2  border-b-blue-900 mx-2"></div>
-                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@socket, :edit) %>
+                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.instructor_user_settings_path(@socket, :edit) %>
                 <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@socket, :delete), method: :delete %>
                 </div>
                 </div>

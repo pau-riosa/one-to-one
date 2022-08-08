@@ -6,7 +6,7 @@
             current_user={@current_user}
             event_id={@event_id}
             socket={@socket}
-            current_path={Routes.event_path(@socket, :create_schedule, @event_id)}
+            current_path={Routes.instructor_event_path(@socket, :create_schedule, @event_id)}
             current_week={@current_week}
             beginning_of_week={@beginning_of_week}
             end_of_week={@end_of_week}

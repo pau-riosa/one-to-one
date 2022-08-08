@@ -1,8 +1,6 @@
 defmodule TodoWeb.Instructor.EventLive do
   use TodoWeb, :live_view
 
-  alias __MODULE__
-  alias TodoWeb.Components.{CalendarWeeks, Time}
   alias Todo.Events.Event
   alias Todo.Schedules.Schedule
   alias Todo.Schedules
@@ -15,6 +13,7 @@ defmodule TodoWeb.Instructor.EventLive do
       socket
       |> assign(:schedule_changeset, schedule_changeset)
       |> assign(:existing_timeslots, Schedules.get_all_schedules(current_user.id))
+      |> handle_page_title()
 
     {:ok, socket}
   end
@@ -39,5 +38,16 @@ defmodule TodoWeb.Instructor.EventLive do
       |> assign(event_id: params["event_id"])
 
     {:noreply, socket}
+  end
+
+  def handle_page_title(socket) do
+    page_title =
+      case socket.assigns.live_action do
+        :new -> "Create New Event"
+        :edit -> "Edit Event"
+        :create_schedule -> "Create Event Schedule"
+      end
+
+    assign(socket, :page_title, page_title)
   end
 end

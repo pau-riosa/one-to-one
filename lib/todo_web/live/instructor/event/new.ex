@@ -9,6 +9,7 @@ defmodule TodoWeb.Instructor.Event.New do
       socket
       |> assign(:uploaded_files, [])
       |> allow_upload(:file, accept: :any, max_entries: 3)
+      |> assign(:page_title, "Create New Event")
 
     {:ok, socket}
   end
@@ -48,7 +49,7 @@ defmodule TodoWeb.Instructor.Event.New do
         socket =
           socket
           |> put_flash(:info, "Event created.")
-          |> push_redirect(to: Routes.event_path(socket, :create_schedule, event.id))
+          |> push_redirect(to: Routes.instructor_event_path(socket, :create_schedule, event.id))
 
         {:noreply, socket}
 

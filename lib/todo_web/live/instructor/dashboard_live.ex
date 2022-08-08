@@ -17,11 +17,18 @@ defmodule TodoWeb.Instructor.DashboardLive do
       |> Schedules.assign_dates(params)
       |> Schedules.get_current_schedules(params)
       |> handle_tab(params)
+      |> assign(:page_title, "Dashboard")
 
     {:noreply, socket}
   end
 
   def handle_tab(socket, params) do
-    assign(socket, :active_tab, params["class"])
+    active_tab =
+      case params["class"] do
+        "past" -> "past"
+        _ -> "upcoming"
+      end
+
+    assign(socket, :active_tab, active_tab)
   end
 end
