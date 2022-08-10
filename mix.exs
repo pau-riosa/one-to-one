@@ -54,6 +54,9 @@ defmodule Todo.MixProject do
       {:ex_heroicons, "~> 0.6.0"},
       {:timex, "~> 3.0"},
 
+      # tailwindcss
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+
       # membrane_rtc_engine
       {:membrane_rtc_engine, github: "membraneframework/membrane_rtc_engine"},
 
@@ -79,7 +82,7 @@ defmodule Todo.MixProject do
       "ecto.seed": ["run priv/repo/seeds.exs"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
+        "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
       ]
