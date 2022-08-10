@@ -23,29 +23,33 @@
 
                     <%= textarea f, :description, placeholder: "Description", class: "resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", rows: "10" %>
                     <%= error_tag f, :description %>
-                    <!-- file upload to follow -->
-                    <%= for {_ref, msg} <- @uploads.file.errors do %>
-                        <p class="alert alert-danger"><%= Phoenix.Naming.humanize(msg) %></p>
-                    <% end %>
-                    <div class="w-full grid grid-cols-4 gap-4">
-                        <%= for entry <- @event.files do %>
-                            <div class="flex flex-row w-full">
-                                <div class="w-full">
-                                    <img src={entry}/>
-                                </div>
-                            </div>
-                        <% end %>
-                        <%= for entry <- @uploads.file.entries do %>
-                            <div class="flex flex-row w-full">
 
-                                <div class="w-5/6">
-                                    <%= live_img_preview entry %>
-                                    <progress max="100" value={entry.progress} class="w-full" />
+                    <!-- try to upload in S3 -->
+                    <%= if Mix.env() != :prod do %>
+                        <!-- file upload to follow -->
+                        <%= for {_ref, msg} <- @uploads.file.errors do %>
+                            <p class="alert alert-danger"><%= Phoenix.Naming.humanize(msg) %></p>
+                        <% end %>
+                        <div class="w-full grid grid-cols-4 gap-4">
+                            <%= for entry <- @event.files do %>
+                                <div class="flex flex-row w-full">
+                                    <div class="w-full">
+                                        <img src={entry}/>
+                                    </div>
                                 </div>
-                                <%= Heroicons.icon("x", type: "solid", class: "h-5 w-5 mr-3 fill-red-500 icon", phx_click: "cancel-entry", phx_value_ref: "#{entry.ref}", phx_target: @myself) %>
-                            </div>
+                            <% end %>
+                            <%= for entry <- @uploads.file.entries do %>
+                                <div class="flex flex-row w-full">
+
+                                    <div class="w-5/6">
+                                        <%= live_img_preview entry %>
+                                        <progress max="100" value={entry.progress} class="w-full" />
+                                    </div>
+                                    <%= Heroicons.icon("x", type: "solid", class: "h-5 w-5 mr-3 fill-red-500 icon", phx_click: "cancel-entry", phx_value_ref: "#{entry.ref}", phx_target: @myself) %>
+                                </div>
+                        <% end %>
+                        </div>
                     <% end %>
-                    </div>
                     <a type="button" class="w-3/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" phx-drop-target={@uploads.file.ref} phx-click={Phoenix.LiveView.JS.dispatch("click", to: "##{@uploads.file.ref}", bubbles: false)}>
                         Choose File
                     <%= live_file_input @uploads.file, hidden: true %>
