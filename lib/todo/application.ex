@@ -72,12 +72,11 @@ defmodule Todo.Application do
   defp delete_cert_file(), do: File.rm(@cert_file_path)
 
   defp config_common_dtls_key_cert() do
-    :ok
-    # {:ok, pid} = ExDTLS.start_link(client_mode: false, dtls_srtp: true)
-    # {:ok, pkey} = ExDTLS.get_pkey(pid)
-    # {:ok, cert} = ExDTLS.get_cert(pid)
-    # :ok = ExDTLS.stop(pid)
-    # Application.put_env(:todo, :dtls_pkey, pkey)
-    # Application.put_env(:todo, :dtls_cert, cert)
+    {:ok, pid} = ExDTLS.start_link(client_mode: false, dtls_srtp: true)
+    {:ok, pkey} = ExDTLS.get_pkey(pid)
+    {:ok, cert} = ExDTLS.get_cert(pid)
+    :ok = ExDTLS.stop(pid)
+    Application.put_env(:todo, :dtls_pkey, pkey)
+    Application.put_env(:todo, :dtls_cert, cert)
   end
 end

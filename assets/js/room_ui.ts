@@ -172,6 +172,10 @@ export function getRoomId(): string {
   return document.getElementById("room")!.dataset.roomId!;
 }
 
+export function getDisplayName(): string {
+  return document.getElementById("room")!.dataset.displayName!;
+}
+
 function elementId(
   peerId: string,
   type: "video" | "audio" | "feed" | "screensharing"

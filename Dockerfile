@@ -67,7 +67,15 @@ COPY priv priv
 
 COPY lib lib
 
-RUN npm install tailwindcss postcss autoprefixer postcss-import postcss-nested alpinejs @membraneframework/membrane-webrtc-js query-string
+RUN npm install \
+  tailwindcss \
+  postcss \
+  autoprefixer \
+  postcss-import \
+  postcss-nested \
+  alpinejs \
+  @membraneframework/membrane-webrtc-js \
+  query-string
 
 COPY assets assets
 
@@ -121,10 +129,6 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/todo ./
 USER nobody
 
 CMD ["/app/bin/server"]
-# Appended by flyctl
-ENV ECTO_IPV6 true
-ENV ERL_AFLAGS "-proto_dist inet6_tcp"
-
 # Appended by flyctl
 ENV ECTO_IPV6 true
 ENV ERL_AFLAGS "-proto_dist inet6_tcp"

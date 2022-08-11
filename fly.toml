@@ -1,4 +1,4 @@
-# fly.toml file generated for gawain on 2022-08-11T18:43:20+08:00
+# fly.toml file generated for gawain on 2022-08-11T21:12:12+08:00
 
 app = "gawain"
 kill_signal = "SIGTERM"
@@ -9,13 +9,13 @@ processes = []
   release_command = "/app/bin/migrate"
 
 [env]
-  CERT_FILE_PATH = ""
-  KEY_FILE_PATH = ""
   PHX_HOST = "gawain.fly.dev"
   PORT = "8080"
   USE_INTEGRATED_TURN = "false"
-  USE_TLS = "true"
+  USE_TLS = "false"
   VIRTUAL_HOST = "gawain.fly.dev"
+  CERT_FILE_PATH = ""
+  KEY_FILE_PATH = ""
 
 [experimental]
   allowed_public_ports = []

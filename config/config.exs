@@ -80,7 +80,8 @@ config :logger, :console, metadata: [:room, :peer]
 # ExDTLS can work both as a C node or as a NIF. 
 # By default C node implementation is used however, 
 # user can change it by passing proper option while starting ExDTLS or in config.exs by:
-# config :ex_dtls, impl: :NIF
+config :ex_dtls, impl: NIF
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

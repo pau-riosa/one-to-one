@@ -26,6 +26,7 @@ import {
   setMicIndicator,
   setCameraIndicator,
   toggleScreensharing,
+  getDisplayName,
 } from "./room_ui";
 
 import { parse } from "query-string";
@@ -51,7 +52,7 @@ export class Room {
   constructor() {
     this.socket = new Socket("/socket");
     this.socket.connect();
-    this.displayName = this.parseUrl();
+    this.displayName = getDisplayName();
     this.webrtcChannel = this.socket.channel(`room:${getRoomId()}`);
     this.webrtcChannel.onError(() => {
       this.socketOff();
@@ -302,15 +303,6 @@ export class Room {
     while (this.webrtcSocketRefs.length > 0) {
       this.webrtcSocketRefs.pop();
     }
-  };
-
-  private parseUrl = (): string => {
-    const { display_name: displayName } = parse(document.location.search);
-
-    // remove query params without reloading the page
-    window.history.replaceState(null, "", window.location.pathname);
-
-    return displayName as string;
   };
 
   private onAudioStatusChange = (status: boolean) => {
