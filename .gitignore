@@ -23,6 +23,7 @@ erl_crash.dump
 todo-*.tar
 
 # Ignore assets that are produced by build tools.
+/priv/cert/
 /priv/static/assets/
 /priv/static/uploads/
 
