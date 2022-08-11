@@ -21,18 +21,25 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
+
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y \
+  build-essential \
+  git \
   npm \
   python3 \
   make \
   cmake \
-  openssl \
+  openssl1.1 \
   libsrtp2-dev \
+  libavcodec-dev \
+  libavformat-dev \
+  libavutil-dev \
+  libnice-dev \
+  libopus-dev \
   ffmpeg \
   clang \
-  libavcodec-dev \
-    && apt-get clean && rm -f /var/lib/apt/lists/*_*
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
 WORKDIR /app
@@ -81,14 +88,17 @@ RUN mix release
 FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y && apt-get install -y libstdc++6 \
-  libncurses5 \
   locales \
-  openssl \
+  openssl1.1 \
   libncurses5-dev  \
   libsrtp2-dev \
+  libavcodec-dev \
+  libavformat-dev \
+  libavutil-dev \
+  libnice-dev \
+  libopus-dev \
   ffmpeg \
   clang \
-  libavcodec-dev \
   curl \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 

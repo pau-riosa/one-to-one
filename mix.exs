@@ -59,7 +59,7 @@ defmodule Todo.MixProject do
 
       # membrane_rtc_engine
       {:membrane_rtc_engine, github: "membraneframework/membrane_rtc_engine"},
-
+      {:ex_dtls, "~> 0.11.1"},
       # Otel
       {:opentelemetry, "~> 1.0"},
       {:opentelemetry_api, "~> 1.0"},

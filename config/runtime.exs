@@ -84,25 +84,25 @@ get_env = fn env, default ->
   end
 end
 
-host = get_env.("VIRTUAL_HOST", "localhost")
-port = 4000
+# host = get_env.("VIRTUAL_HOST", "localhost")
+# port = 4000
 
-args =
-  if protocol == :https do
-    [
-      keyfile: get_env.("KEY_FILE_PATH", "priv/certs/key.pem"),
-      certfile: get_env.("CERT_FILE_PATH", "priv/certs/certificate.pem"),
-      cipher_suite: :strong
-    ]
-  else
-    []
-  end
-  |> Keyword.merge(otp_app: :todo, port: port)
+# args =
+#   if protocol == :https do
+#     [
+#       keyfile: get_env.("KEY_FILE_PATH", "priv/cert/selfsigned_key.pem"),
+#       certfile: get_env.("CERT_FILE_PATH", "priv/cert/selfsigned.pem"),
+#       cipher_suite: :strong
+#     ]
+#   else
+#     []
+#   end
+#   |> Keyword.merge(otp_app: :todo, port: port)
 
-config :todo, VideoRoomWeb.Endpoint, [
-  {:url, [host: host]},
-  {protocol, args}
-]
+# config :todo, TodoWeb.Endpoint, [
+#   {:url, [host: host]},
+#   {protocol, args}
+# ]
 
 otel_state = :purge
 

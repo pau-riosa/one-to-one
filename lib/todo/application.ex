@@ -15,7 +15,7 @@ defmodule Todo.Application do
     create_integrated_turn_cert_file()
 
     children = [
-      {Reporter, [metrics: Membrane.RTC.Engine.Metrics.metrics(), name: VideoRoomReporter]},
+      {Reporter, [metrics: Membrane.RTC.Engine.Metrics.metrics(), name: TodoRoomReporter]},
       # Start the Ecto repository
       Todo.Repo,
       # Start the Telemetry supervisor
