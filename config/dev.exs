@@ -1,5 +1,12 @@
 import Config
 
+config :todo, :files,
+  uploads_dir: Path.expand("../priv/uploads", __DIR__),
+  host: [scheme: "http", host: "localhost", port: 4000],
+  server_ip: "127.0.0.1",
+  hostname: "localhost",
+  transport_opts: []
+
 # Configure your database
 config :todo, Todo.Repo,
   username: "postgres",
@@ -66,7 +73,7 @@ config :todo, TodoWeb.Endpoint,
 config :todo, TodoWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/[^uploads].*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/todo_web/(live|views)/.*(ex)$",
       ~r"lib/todo_web/templates/.*(eex)$"
@@ -74,7 +81,8 @@ config :todo, TodoWeb.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+# config :logger, :console, format: "[$level] $message\n"
+config :logger, level: :info
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.

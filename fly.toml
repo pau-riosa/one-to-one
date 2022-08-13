@@ -1,4 +1,4 @@
-# fly.toml file generated for gawain on 2022-08-11T21:12:12+08:00
+# fly.toml file generated for gawain on 2022-08-12T05:01:00+08:00
 
 app = "gawain"
 kill_signal = "SIGTERM"
@@ -6,19 +6,26 @@ kill_timeout = 5
 processes = []
 
 [deploy]
-  release_command = "/app/bin/migrate"
+  release_command = "/app/entry eval Todo.Release.migrate"
 
 [env]
+  CERT_FILE_PATH = ""
+  KEY_FILE_PATH = ""
   PHX_HOST = "gawain.fly.dev"
   PORT = "8080"
   USE_INTEGRATED_TURN = "false"
-  USE_TLS = "false"
+  USE_TLS = "true"
   VIRTUAL_HOST = "gawain.fly.dev"
-  CERT_FILE_PATH = ""
-  KEY_FILE_PATH = ""
+  INTEGRATED_TURN_IP="37.16.19.144"
+  INTEGRATED_TURN_PORT_RANGE="8082-8083"
+  SERVER_IP="37.16.19.144"
+
+[mounts]
+  source="data"
+  destination="/app/uploads"
 
 [experimental]
-  allowed_public_ports = []
+  allowed_public_ports = [80, 443, 8080, 8082, 8083]
   auto_rollback = true
 
 [[services]]
@@ -27,6 +34,7 @@ processes = []
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
+
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
@@ -41,8 +49,32 @@ processes = []
     handlers = ["tls", "http"]
     port = 443
 
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8080
+
   [[services.tcp_checks]]
     grace_period = "1s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+
+[[services]]
+  http_checks = []
+  internal_port = "8082"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "8082"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "8083"

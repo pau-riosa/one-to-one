@@ -41,7 +41,9 @@ defmodule TodoWeb.Instructor.Event.Edit do
   def handle_event("save", %{"event" => event_params} = _params, socket) do
     uploaded_files =
       consume_uploaded_entries(socket, :file, fn %{path: path}, entry ->
-        dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
+        dir = Todo.config([:files, :uploads_dir])
+        dest = Path.join(dir, "#{entry.uuid}.#{ext(entry)}")
+        File.mkdir_p!(Path.dirname(dest))
         File.cp!(path, dest)
         {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
       end)

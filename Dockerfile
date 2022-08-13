@@ -31,6 +31,7 @@ RUN apt-get update -y && apt-get install -y \
   make \
   cmake \
   openssl1.1 \
+  libncurses5-dev  \
   libsrtp2-dev \
   libavcodec-dev \
   libavformat-dev \
@@ -39,6 +40,7 @@ RUN apt-get update -y && apt-get install -y \
   libopus-dev \
   ffmpeg \
   clang \
+  curl \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -122,13 +124,23 @@ RUN chown nobody /app
 
 # set runner ENV
 ENV MIX_ENV="prod"
-
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/todo ./
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel ./
 
 USER nobody
 
-CMD ["/app/bin/server"]
+# Create a symlink to the application directory by extracting the directory name. This is required
+# since the release directory will be named after the application, and we don't know that name.
+RUN set -eux; \
+  ln -nfs /app/$(basename *)/bin/$(basename *) /app/entry
+
+
 # Appended by flyctl
 ENV ECTO_IPV6 true
 ENV ERL_AFLAGS "-proto_dist inet6_tcp"
+
+EXPOSE 8080
+EXPOSE 8082
+EXPOSE 8083
+
+CMD /app/entry start
