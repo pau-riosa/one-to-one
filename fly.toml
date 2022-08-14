@@ -1,4 +1,4 @@
-# fly.toml file generated for gawain on 2022-08-12T05:01:00+08:00
+# fly.toml file generated for gawain on 2022-08-15T00:59:59+08:00
 
 app = "gawain"
 kill_signal = "SIGTERM"
@@ -10,22 +10,16 @@ processes = []
 
 [env]
   CERT_FILE_PATH = ""
+  INTEGRATED_TURN_PORT_RANGE = "8081-8090"
   KEY_FILE_PATH = ""
   PHX_HOST = "gawain.fly.dev"
   PORT = "8080"
   USE_INTEGRATED_TURN = "false"
-  USE_TLS = "true"
+  USE_TLS = "false"
   VIRTUAL_HOST = "gawain.fly.dev"
-  INTEGRATED_TURN_IP="37.16.19.144"
-  INTEGRATED_TURN_PORT_RANGE="8082-8083"
-  SERVER_IP="37.16.19.144"
-
-[mounts]
-  source="data"
-  destination="/app/uploads"
 
 [experimental]
-  allowed_public_ports = [80, 443, 8080, 8082, 8083]
+  allowed_public_ports = []
   auto_rollback = true
 
 [[services]]
@@ -34,7 +28,6 @@ processes = []
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
-
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
@@ -49,10 +42,6 @@ processes = []
     handlers = ["tls", "http"]
     port = 443
 
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 8080
-
   [[services.tcp_checks]]
     grace_period = "1s"
     interval = "15s"
@@ -61,11 +50,10 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = "8082"
+  internal_port = "8081"
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
-
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
@@ -73,8 +61,139 @@ processes = []
 
   [[services.ports]]
     handlers = ["tls", "http"]
-    port = "8082"
+    port = 8081
+
+[[services]]
+  http_checks = []
+  internal_port = "8082"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
   [[services.ports]]
     handlers = ["tls", "http"]
-    port = "8083"
+    port = 8082
+
+[[services]]
+  http_checks = []
+  internal_port = "8083"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8083
+
+[[services]]
+  http_checks = []
+  internal_port = "8084"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8084
+
+[[services]]
+  http_checks = []
+  internal_port = "8085"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8085
+
+[[services]]
+  http_checks = []
+  internal_port = "8086"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8086
+
+[[services]]
+  http_checks = []
+  internal_port = "8087"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8087
+
+[[services]]
+  http_checks = []
+  internal_port = "8088"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8088
+
+[[services]]
+  http_checks = []
+  internal_port = "8089"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8089
+
+[[services]]
+  http_checks = []
+  internal_port = "8090"
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 8090

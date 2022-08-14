@@ -74,7 +74,7 @@ defmodule TodoWeb.Router do
       live "/event/new", Instructor.EventLive, :new
       live "/event/:event_id", Instructor.EventLive, :edit
       live "/event/:event_id/create_schedule", Instructor.EventLive, :create_schedule
-      live "/room/:event_id", Instructor.RoomLive, :index
+      get "/room/:event_id", RoomController, :index
       get "/users/settings", UserSettingsController, :edit
       put "/users/settings", UserSettingsController, :update
       get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email

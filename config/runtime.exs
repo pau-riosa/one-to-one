@@ -62,7 +62,7 @@ config :todo,
   integrated_turn_ip:
     System.get_env("INTEGRATED_TURN_IP", "127.0.0.1") |> ConfigParser.parse_integrated_turn_ip(),
   integrated_turn_port_range:
-    System.get_env("INTEGRATED_TURN_PORT_RANGE", "50000-59999")
+    System.get_env("INTEGRATED_TURN_PORT_RANGE", "8081-8090")
     |> ConfigParser.parse_integrated_turn_port_range(),
   integrated_tcp_turn_port:
     System.get_env("INTEGRATED_TCP_TURN_PORT")
@@ -73,36 +73,6 @@ config :todo,
   integrated_turn_pkey: System.get_env("INTEGRATED_TURN_PKEY"),
   integrated_turn_cert: System.get_env("INTEGRATED_TURN_CERT"),
   integrated_turn_domain: System.get_env("VIRTUAL_HOST")
-
-protocol = if System.get_env("USE_TLS") == "true", do: :https, else: :http
-
-get_env = fn env, default ->
-  if config_env() == :prod do
-    System.fetch_env!(env)
-  else
-    System.get_env(env, default)
-  end
-end
-
-host = get_env.("VIRTUAL_HOST", "localhost")
-port = 4000
-
-args =
-  if protocol == :https do
-    [
-      keyfile: get_env.("KEY_FILE_PATH", "priv/cert/selfsigned_key.pem"),
-      certfile: get_env.("CERT_FILE_PATH", "priv/cert/selfsigned.pem"),
-      cipher_suite: :strong
-    ]
-  else
-    []
-  end
-  |> Keyword.merge(otp_app: :todo, port: port)
-
-config :todo, TodoWeb.Endpoint, [
-  {:url, [host: host]},
-  {protocol, args}
-]
 
 otel_state = :purge
 
@@ -147,10 +117,6 @@ if otel_state != :purge,
         }
       ]
     )
-
-if System.get_env("PHX_SERVER") do
-  config :todo, TodoWeb.Endpoint, server: true
-end
 
 if config_env() == :prod do
   database_url =

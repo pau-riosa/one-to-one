@@ -77,7 +77,13 @@ RUN npm install \
   postcss-nested \
   alpinejs \
   @membraneframework/membrane-webrtc-js \
-  query-string
+  query-string \
+  webrtc-adapter
+
+RUN npm install -D \
+  @types/dom-screen-wake-lock \
+  @types/phoenix \
+  postcss
 
 COPY assets assets
 
@@ -124,23 +130,22 @@ RUN chown nobody /app
 
 # set runner ENV
 ENV MIX_ENV="prod"
+
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel ./
 
-USER nobody
 
 # Create a symlink to the application directory by extracting the directory name. This is required
 # since the release directory will be named after the application, and we don't know that name.
 RUN set -eux; \
   ln -nfs /app/$(basename *)/bin/$(basename *) /app/entry
 
+USER nobody
+
+EXPOSE 8081-8090
 
 # Appended by flyctl
 ENV ECTO_IPV6 true
 ENV ERL_AFLAGS "-proto_dist inet6_tcp"
-
-EXPOSE 8080
-EXPOSE 8082
-EXPOSE 8083
 
 CMD /app/entry start
