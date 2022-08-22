@@ -21,6 +21,7 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
+
 # install build dependencies
 RUN apt-get update -y && apt-get install -y \
   build-essential \
@@ -40,7 +41,6 @@ RUN apt-get update -y && apt-get install -y \
   ffmpeg \
   clang \
   curl \
-  net-tools \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -98,7 +98,8 @@ COPY config/runtime.exs config/
 COPY rel rel
 RUN mix release
 
-EXPOSE 8000-8999
+EXPOSE 8080
+EXPOSE 8081-8090
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
@@ -117,7 +118,6 @@ RUN apt-get update -y && apt-get install -y libstdc++6 \
   ffmpeg \
   clang \
   curl \
-  net-tools \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
@@ -133,15 +133,14 @@ RUN chown nobody /app
 # set runner ENV
 ENV MIX_ENV="prod"
 
-EXPOSE 8000-8999
-
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/todo ./
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel ./
+
+# Create a symlink to the application directory by extracting the directory name. This is required
+# since the release directory will be named after the application, and we don't know that name.
+RUN set -eux; \
+  ln -nfs /app/$(basename *)/bin/$(basename *) /app/entry
 
 USER nobody
 
-CMD ["/app/bin/server"]
-
-# Appended by flyctl
-ENV ECTO_IPV6 true
-ENV ERL_AFLAGS "-proto_dist inet6_tcp"
+CMD /app/entry start

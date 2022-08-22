@@ -62,7 +62,7 @@ config :todo,
   integrated_turn_ip:
     System.get_env("INTEGRATED_TURN_IP", "127.0.0.1") |> ConfigParser.parse_integrated_turn_ip(),
   integrated_turn_port_range:
-    System.get_env("INTEGRATED_TURN_PORT_RANGE", "8081-8090")
+    System.get_env("INTEGRATED_TURN_PORT_RANGE", "8000-8999")
     |> ConfigParser.parse_integrated_turn_port_range(),
   integrated_tcp_turn_port:
     System.get_env("INTEGRATED_TCP_TURN_PORT")
@@ -72,7 +72,7 @@ config :todo,
     |> ConfigParser.parse_port_number("INTEGRATED_TLS_TURN_PORT"),
   integrated_turn_pkey: System.get_env("INTEGRATED_TURN_PKEY"),
   integrated_turn_cert: System.get_env("INTEGRATED_TURN_CERT"),
-  integrated_turn_domain: System.get_env("VIRTUAL_HOST")
+  integrated_turn_domain: System.get_env("PHX_HOST")
 
 otel_state = :purge
 
