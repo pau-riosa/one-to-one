@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [deploy]
-  release_command = "/app/entry eval Todo.Release.migrate"
+  release_command = "/app/bin/migrate"
 
 [env]
   CERT_FILE_PATH = ""
@@ -20,7 +20,7 @@ processes = []
 
 [mounts]
   source = "data"
-  destination = "/app/uploads"
+  destination = "/app/bin/uploads"
 
 [experimental]
   allowed_public_ports = []

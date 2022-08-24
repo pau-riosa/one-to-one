@@ -164,7 +164,7 @@ if config_env() == :prod do
     server: true
 
   config :todo, :files,
-    uploads_dir: "/app/uploads",
+    uploads_dir: "/app/bin/uploads",
     host: [scheme: "https", host: host, port: 443]
 
   # ## Configuring the mailer

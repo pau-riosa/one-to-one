@@ -135,26 +135,12 @@ ENV MIX_ENV="prod"
 
 EXPOSE 8000-8999
 
-# # Only copy the final release from the build stage
-# COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/todo ./
-
-# USER nobody
-
-# CMD ["/app/bin/server"]
-
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/prod/rel ./
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/todo ./
 
 USER nobody
 
-# Create a symlink to the command that starts your application. This is required
-# since the release directory and start up script are named after the
-# application, and we don't know that name.
-RUN set -eux; \
-  ln -nfs /app/$(basename *)/bin/$(basename *) /app/entry
-
-CMD /app/entry start
-
+CMD ["/app/bin/server"]
 
 # Appended by flyctl
 ENV ECTO_IPV6 true
