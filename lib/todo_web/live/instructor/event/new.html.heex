@@ -7,7 +7,7 @@
         <div class="w-full flex flex-row justify-center">
             <div class="w-3/5 bg-gray-100 rounded-md py-2 px-3 border-r border-gray-300">
                 <header class="text-center mb-8">
-                    <h3 class="text-lg font-semibold text-gray-900">Book a Schedule</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Create Event</h3>
                 </header>
                 <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10" phx-target={@myself}>
                 <div class="my-5 space-y-5">
@@ -23,8 +23,6 @@
 
                     <%= textarea f, :description, placeholder: "Description", class: "resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", rows: "10" %>
                     <%= error_tag f, :description %>
-                    <!-- try to upload in S3 -->
-                        <!-- file upload to follow -->
                         <%= for {_ref, msg} <- @uploads.file.errors do %>
                             <p class="alert alert-danger"><%= Phoenix.Naming.humanize(msg) %></p>
                         <% end %>
@@ -44,7 +42,6 @@
 
                     <%= live_file_input @uploads.file, hidden: true %>
                     </a>
-                    <!-- end of file upload to follow -->
                 </div>
                 <%= submit "Create", class: "w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"%>
                 </.form>
