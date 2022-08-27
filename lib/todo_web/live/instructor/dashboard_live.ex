@@ -4,9 +4,17 @@ defmodule TodoWeb.Instructor.DashboardLive do
   alias __MODULE__
   alias Todo.Schedules
   alias TodoWeb.Components.CalendarMonths
+  alias TodoWeb.Presence
+  alias Todo.PubSub
+
+  @presence "todo:dashboard"
 
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket) do
+      TodoWeb.Endpoint.subscribe("events")
+    end
+
     {:ok, socket}
   end
 
@@ -20,6 +28,10 @@ defmodule TodoWeb.Instructor.DashboardLive do
       |> assign(:page_title, "Dashboard")
 
     {:noreply, socket}
+  end
+
+  def handle_info(%{event: "new_event", payload: %{event_id: _event_id}}, socket) do
+    {:noreply, Schedules.get_current_schedules(socket, %{})}
   end
 
   def handle_tab(socket, params) do

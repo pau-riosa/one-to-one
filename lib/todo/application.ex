@@ -22,6 +22,8 @@ defmodule Todo.Application do
       TodoWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Todo.PubSub},
+      # start presence 
+      TodoWeb.Presence,
       # Start the Endpoint (http/https)
       TodoWeb.Endpoint
       # Start a worker by calling: Todo.Worker.start_link(arg)

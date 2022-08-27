@@ -16,7 +16,7 @@ params = %{
   first_name: "admin",
   last_name: "admin",
   email: "admin@todo.com",
-  password: "Hol1d@y!123!"
+  password: "password!123!"
 }
 
 %User{}

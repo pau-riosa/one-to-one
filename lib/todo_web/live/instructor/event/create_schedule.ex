@@ -33,6 +33,10 @@ defmodule TodoWeb.Instructor.Event.CreateSchedule do
     |> Operation.call()
     |> case do
       {:ok, _} ->
+        TodoWeb.Endpoint.broadcast("events", "new_event", %{
+          event_id: schedule_params["event_id"]
+        })
+
         socket =
           socket
           |> put_flash(:info, "Schedule created.")

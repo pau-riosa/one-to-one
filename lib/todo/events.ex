@@ -6,6 +6,10 @@ defmodule Todo.Events do
   alias Todo.Events.Event
   alias Todo.Repo
 
+  def get(id) do
+    Repo.get(Event, id)
+  end
+
   def get_events_id(event_id) when is_binary(event_id) do
     Event
     |> where([e], e.id == ^event_id)
