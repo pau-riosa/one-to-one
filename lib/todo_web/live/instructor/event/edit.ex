@@ -28,7 +28,13 @@ defmodule TodoWeb.Instructor.Event.Edit do
   end
 
   def handle_event("save", %{"event" => event_params} = _params, socket) do
-    uploaded_files = Todo.upload_files(socket)
+    uploaded_files =
+      socket
+      |> Todo.upload_files()
+      |> case do
+        [] -> socket.assigns.event.files
+        uploaded_files -> uploaded_files ++ socket.assigns.event.files
+      end
 
     event_params = Map.put(event_params, "files", uploaded_files)
 
