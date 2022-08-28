@@ -30,6 +30,7 @@ defmodule TodoWeb.Instructor.DashboardLive do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_info(%{event: "new_event", payload: %{event_id: _event_id}}, socket) do
     {:noreply, Schedules.get_current_schedules(socket, %{})}
   end

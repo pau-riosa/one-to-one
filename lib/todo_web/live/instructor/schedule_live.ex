@@ -10,8 +10,7 @@ defmodule TodoWeb.Instructor.ScheduleLive do
   @impl true
   def mount(_params, _session, socket) do
     changeset = Event.changeset(%Event{})
-    socket = assign(socket, :changeset, changeset)
-    {:ok, socket}
+    {:ok, assign(socket, :changeset, changeset)}
   end
 
   @impl true
@@ -23,9 +22,7 @@ defmodule TodoWeb.Instructor.ScheduleLive do
       |> Event.changeset(event_params)
       |> Map.put(:action, :validate)
 
-    socket = assign(socket, :changeset, changeset)
-
-    {:noreply, socket}
+    {:noreply, assign(socket, :changeset, changeset)}
   end
 
   def handle_event("save", %{"event" => event_params} = _params, socket) do
@@ -36,22 +33,18 @@ defmodule TodoWeb.Instructor.ScheduleLive do
     |> Operation.insert()
     |> case do
       {:ok, _event} ->
-        socket =
-          socket
-          |> put_flash(:info, "Event created.")
-          |> push_redirect(to: Routes.live_path(socket, TodoWeb.Instructor.DashboardLive))
-
-        {:noreply, socket}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Event created.")
+         |> push_redirect(to: Routes.live_path(socket, TodoWeb.Instructor.DashboardLive))}
 
       {:error, changeset} ->
         error_message = Todo.ChangesetErrorBuilder.call(changeset)
 
-        socket =
-          socket
-          |> put_flash(:error, "Oops something went wrong. #{error_message}")
-          |> assign(:changeset, changeset)
-
-        {:noreply, socket}
+        {:noreply,
+         socket
+         |> put_flash(:error, "Oops something went wrong. #{error_message}")
+         |> assign(:changeset, changeset)}
     end
   end
 
@@ -68,14 +61,11 @@ defmodule TodoWeb.Instructor.ScheduleLive do
       end
 
     send_update(Time, id: button_id, selected_timeslots: selected_timeslots)
-    socket = assign(socket, :selected_timeslots, selected_timeslots)
-
-    {:noreply, socket}
+    {:noreply, assign(socket, :selected_timeslots, selected_timeslots)}
   end
 
   @impl true
   def handle_params(params, _uri, socket) do
-    socket = Schedules.assign_dates(socket, params)
-    {:noreply, socket}
+    {:noreply, Schedules.assign_dates(socket, params)}
   end
 end
