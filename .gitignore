@@ -35,3 +35,6 @@ todo-*.tar
 npm-debug.log
 /assets/node_modules/
 /assets/package.json
+
+Dockerfile_env
+mix.lock
