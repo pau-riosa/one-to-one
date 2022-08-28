@@ -15,41 +15,21 @@ defmodule TodoWeb.Instructor.Event.CreateSchedule do
       |> Schedule.changeset(schedule_params)
       |> Map.put(:action, :validate)
 
-    socket = assign(socket, :changeset, changeset)
-
-    {:noreply, socket}
+    {:noreply, assign(socket, :changeset, changeset)}
   end
 
   def handle_event("save", %{"schedule" => schedule_params} = _params, socket) do
     socket.assigns.selected_timeslots
-    |> Enum.map(fn timeslot ->
-      schedule_params = Map.put(schedule_params, "scheduled_for", timeslot)
-
-      Schedule.changeset(
-        %Schedule{},
-        schedule_params
-      )
-    end)
-    |> Operation.call()
+    |> Operation.call(schedule_params)
     |> case do
       {:ok, _} ->
-        TodoWeb.Endpoint.broadcast("events", "new_event", %{
-          event_id: schedule_params["event_id"]
-        })
-
-        socket =
-          socket
-          |> put_flash(:info, "Schedule created.")
-          |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))
-
-        {:noreply, socket}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Schedule created.")
+         |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))}
 
       {:error, changeset} ->
-        socket =
-          socket
-          |> assign(:changeset, changeset)
-
-        {:noreply, socket}
+        {:noreply, assign(socket, :changeset, changeset)}
     end
   end
 
@@ -70,8 +50,6 @@ defmodule TodoWeb.Instructor.Event.CreateSchedule do
       selected_timeslots: selected_timeslots
     )
 
-    socket = assign(socket, :selected_timeslots, selected_timeslots)
-
-    {:noreply, socket}
+    {:noreply, assign(socket, :selected_timeslots, selected_timeslots)}
   end
 end

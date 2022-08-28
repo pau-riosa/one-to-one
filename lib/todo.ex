@@ -29,4 +29,35 @@ defmodule Todo do
       end
     end)
   end
+
+  @doc """
+  Be able to upload files/media
+  """
+  def upload_files(socket) do
+    import Phoenix.LiveView, only: [consume_uploaded_entries: 3]
+    alias TodoWeb.Router.Helpers, as: Routes
+
+    socket
+    |> consume_uploaded_entries(:file, fn %{path: path}, entry ->
+      dir = Todo.config([:files, :uploads_dir])
+      dest = Path.join(dir, "#{entry.uuid}.#{ext(entry)}")
+      store_file(dest, path)
+
+      {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
+    end)
+    |> case do
+      [] -> socket.assigns.event.files
+      uploaded_files -> uploaded_files ++ socket.assigns.event.files
+    end
+  end
+
+  def store_file(destination, path) do
+    File.mkdir_p!(Path.dirname(destination))
+    File.cp!(path, destination)
+  end
+
+  def ext(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    ext
+  end
 end

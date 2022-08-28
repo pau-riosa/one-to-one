@@ -2,23 +2,14 @@ defmodule TodoWeb.Instructor.Event.Edit do
   use TodoWeb, :live_component
 
   alias Todo.Events.{Event, Operation}
+  alias Todo.Repo
 
   @impl true
   def mount(socket) do
-    socket =
-      socket
-      |> assign(:uploaded_files, [])
-      |> allow_upload(:file, accept: :any, max_entries: 3)
-
-    {:ok, socket}
-  end
-
-  @impl true
-  def preload(list_of_assigns) do
-    Enum.map(list_of_assigns, fn assigns ->
-      event = Todo.Repo.get(Event, assigns.event_id)
-      Map.put(assigns, :event, event)
-    end)
+    {:ok,
+     socket
+     |> assign(:uploaded_files, [])
+     |> allow_upload(:file, accept: :any, max_entries: 3)}
   end
 
   @impl true
@@ -33,52 +24,33 @@ defmodule TodoWeb.Instructor.Event.Edit do
       |> Event.changeset(event_params)
       |> Map.put(:action, :validate)
 
-    socket = assign(socket, :changeset, changeset)
-
-    {:noreply, socket}
+    {:noreply, assign(socket, :changeset, changeset)}
   end
 
   def handle_event("save", %{"event" => event_params} = _params, socket) do
-    uploaded_files =
-      consume_uploaded_entries(socket, :file, fn %{path: path}, entry ->
-        dir = Todo.config([:files, :uploads_dir])
-        dest = Path.join(dir, "#{entry.uuid}.#{ext(entry)}")
-        File.mkdir_p!(Path.dirname(dest))
-        File.cp!(path, dest)
-        {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
-      end)
-
-    uploaded_files =
-      case uploaded_files do
-        [] -> socket.assigns.event.files
-        uploaded_files -> uploaded_files ++ socket.assigns.event.files
-      end
+    uploaded_files = Todo.upload_files(socket)
 
     event_params = Map.put(event_params, "files", uploaded_files)
 
     socket.assigns.event
-    |> Event.changeset(event_params)
-    |> Operation.update()
+    |> Operation.update(event_params)
     |> case do
       {:ok, _event} ->
-        socket =
-          socket
-          |> put_flash(:info, "Event update.")
-          |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))
-
-        {:noreply, socket}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Event update.")
+         |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))}
 
       {:error, changeset} ->
-        socket =
-          socket
-          |> assign(:changeset, changeset)
-
-        {:noreply, socket}
+        {:noreply, assign(socket, :changeset, changeset)}
     end
   end
 
-  defp ext(entry) do
-    [ext | _] = MIME.extensions(entry.client_type)
-    ext
+  @impl true
+  def preload(list_of_assigns) do
+    Enum.map(list_of_assigns, fn assigns ->
+      event = Repo.get(Event, assigns.event_id)
+      Map.put(assigns, :event, event)
+    end)
   end
 end
