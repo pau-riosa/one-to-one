@@ -49,7 +49,7 @@ defmodule TodoWeb.Event.New do
   end
 
   @impl true
-  def handle_event("enter", %{"key" => "Enter", "value" => value} = _params, socket) do
+  def handle_event("space", %{"key" => " ", "value" => value} = _params, socket) do
     case validate_email(value) do
       {:ok, value} ->
         {:noreply, assign(socket, :invitees, [value | socket.assigns.invitees])}
@@ -60,7 +60,7 @@ defmodule TodoWeb.Event.New do
   end
 
   @impl true
-  def handle_event("enter", _params, socket) do
+  def handle_event("space", _params, socket) do
     {:noreply, socket}
   end
 

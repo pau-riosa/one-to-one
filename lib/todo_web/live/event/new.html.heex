@@ -7,7 +7,7 @@
         <div class="w-full flex flex-row justify-center">
             <div class="w-3/5 bg-gray-100 rounded-md py-2 px-3 border-r border-gray-300">
                 <header class="text-center mb-8">
-                    <h3 class="text-lg font-semibold text-gray-900">Create Event</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Create Session</h3>
                 </header>
                 <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10" phx-target={@myself}>
                 <div class="my-5 space-y-5">
@@ -21,7 +21,7 @@
                     <%= text_input f, :name, placeholder: "Topic", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
                     <%= error_tag f, :name %>
 
-                    <%= email_input f, :invitee, placeholder: "Invite through email", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_window_keyup: "enter", phx_target: @myself %>
+                    <%= email_input f, :invitee, placeholder: "Invite through email", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_window_keyup: "space", phx_target: @myself %>
                     <div class="grid grid-cols-6 gap-1"> 
                         <%= for invitee <- @invitees do %>
                             <div class="flex flex-row">
