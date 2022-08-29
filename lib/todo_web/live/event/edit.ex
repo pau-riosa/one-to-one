@@ -9,7 +9,8 @@ defmodule TodoWeb.Event.Edit do
     {:ok,
      socket
      |> assign(:uploaded_files, [])
-     |> allow_upload(:file, accept: :any, max_entries: 3)}
+     |> allow_upload(:file, accept: :any, max_entries: 3)
+     |> assign(:invitees, [])}
   end
 
   @impl true
@@ -45,10 +46,34 @@ defmodule TodoWeb.Event.Edit do
         {:noreply,
          socket
          |> put_flash(:info, "Event update.")
-         |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))}
+         |> push_redirect(to: Routes.dashboard_path(socket, :index))}
 
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
+  def handle_event("enter", %{"key" => "Enter", "value" => value} = _params, socket) do
+    case validate_email(value) do
+      {:ok, value} ->
+        {:noreply, assign(socket, :invitees, [value | socket.assigns.invitees])}
+
+      _ ->
+        {:noreply, socket}
+    end
+  end
+
+  def handle_event("enter", _params, socket) do
+    {:noreply, socket}
+  end
+
+  def validate_email(value) do
+    case Regex.run(~r/^[^\s]+@[^\s]+$/, value) do
+      nil ->
+        {:error, nil}
+
+      [email] ->
+        {:ok, email}
     end
   end
 

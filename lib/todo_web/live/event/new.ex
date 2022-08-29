@@ -9,7 +9,8 @@ defmodule TodoWeb.Event.New do
      socket
      |> assign(:uploaded_files, [])
      |> allow_upload(:file, accept: :any, max_entries: 3)
-     |> assign(:page_title, "Create New Event")}
+     |> assign(:page_title, "Create New Event")
+     |> assign(:invitees, [])}
   end
 
   @impl true
@@ -27,6 +28,7 @@ defmodule TodoWeb.Event.New do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
+  @impl true
   def handle_event("save", %{"event" => event_params} = _params, socket) do
     uploaded_files = Todo.upload_files(socket)
 
@@ -43,6 +45,32 @@ defmodule TodoWeb.Event.New do
 
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
+  @impl true
+  def handle_event("enter", %{"key" => "Enter", "value" => value} = _params, socket) do
+    case validate_email(value) do
+      {:ok, value} ->
+        {:noreply, assign(socket, :invitees, [value | socket.assigns.invitees])}
+
+      _ ->
+        {:noreply, socket}
+    end
+  end
+
+  @impl true
+  def handle_event("enter", _params, socket) do
+    {:noreply, socket}
+  end
+
+  def validate_email(value) do
+    case Regex.run(~r/^[^\s]+@[^\s]+$/, value) do
+      nil ->
+        {:error, nil}
+
+      [email] ->
+        {:ok, email}
     end
   end
 end
