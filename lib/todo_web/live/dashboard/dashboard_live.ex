@@ -1,4 +1,4 @@
-defmodule TodoWeb.Instructor.DashboardLive do
+defmodule TodoWeb.DashboardLive do
   use TodoWeb, :live_view
 
   alias __MODULE__

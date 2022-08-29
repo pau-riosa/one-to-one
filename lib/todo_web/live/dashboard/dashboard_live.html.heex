@@ -2,8 +2,8 @@
     <div class="w-full max-w-7xl min-h-screen flex lg:flex-row flex-col py-5 gap-x-10">
         <div class="h-[96rem] w-full flex flex-col rounded-md space-y-3 bg-gray-100 p-5 overflow-y-auto overflow-hidden">
             <div class="flex flex-row space-x-10">
-                <%= live_patch "Upcoming Classes", to: Routes.instructor_dashboard_path(@socket, :index, %{"class" => "upcoming"}), class: "#{if @active_tab == "upcoming", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
-                <%= live_patch "Past Classes", to: Routes.instructor_dashboard_path(@socket, :index, %{"class" => "past"}), class: "#{if @active_tab == "past", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
+                <%= live_patch "Upcoming Classes", to: Routes.dashboard_path(@socket, :index, %{"class" => "upcoming"}), class: "#{if @active_tab == "upcoming", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
+                <%= live_patch "Past Classes", to: Routes.dashboard_path(@socket, :index, %{"class" => "past"}), class: "#{if @active_tab == "past", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
             </div>
             <%= for schedule <- @schedules do %>
                 <div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
@@ -22,7 +22,7 @@
                                 x-transition:leave-start="opacity-100"
                                 x-transition:leave-end="opacity-0"
                                 class="absolute top-3 right-3 bg-white rounded rounded-md text-blue-900 border border-blue p-3 space-y-2">
-                              <li><%= live_patch "Edit", to: Routes.instructor_event_path(@socket, :edit, schedule.event.id) %></li>
+                              <li><%= live_patch "Edit", to: Routes.event_path(@socket, :edit, schedule.event.id) %></li>
                               <li><a href="#">Cancel</a></li>
                               <li><a href="#">Delete</a></li>        
                             </ul>
@@ -34,7 +34,7 @@
                             <p class="text-sm mx-2"><%= Timex.format!(schedule.scheduled_for, "%A %B %e, %Y %l:%M %p", :strftime) %></p>
                         </div>
                         <div class="flex justify-end space-x-3">
-                            <%= Phoenix.HTML.Link.link "Start", to: Routes.instructor_room_path(@socket, :index, schedule.event.id),  class: "py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
+                            <%= Phoenix.HTML.Link.link "Start", to: Routes.room_path(@socket, :index, schedule.event.id),  class: "py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
                         </div>
                     </div>
                 </div>
@@ -42,14 +42,14 @@
         </div>
         <div class="lg:w-5/12 w-full flex flex-col">
             <div class="flex flex-row justify-end text-center mb-10">
-                <%= live_patch "Create Event", to: Routes.instructor_event_path(@socket, :new), class: "w-3/5 py-2 px-4 rounded rounded-md bg-yellow-900 text-blue-900 font-semibold border border-yellow hover:bg-blue-900 hover:text-white hover:border-blue"  %>
+                <%= live_patch "Create Event", to: Routes.event_path(@socket, :new), class: "w-3/5 py-2 px-4 rounded rounded-md bg-yellow-900 text-blue-900 font-semibold border border-yellow hover:bg-blue-900 hover:text-white hover:border-blue"  %>
             </div>
             <header class="mb-8">
                 <h3 class="text-lg font-semibold text-blue-900">Calendar</h3>
             </header>
             <CalendarMonths.calendar_months
                 id="calendar"
-                current_path={Routes.instructor_dashboard_path(@socket, :index)}
+                current_path={Routes.dashboard_path(@socket, :index)}
                 previous_month={@previous_month}
                 next_month={@next_month}
                 end_of_month={@end_of_month}

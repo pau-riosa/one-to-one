@@ -19,7 +19,7 @@
           <div class="flex space-x-4">
             <%= if @current_user do %>
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <%= link "Dashboard", to: Routes.instructor_dashboard_path(@conn, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             <% end %>
           </div>
         </div>
@@ -87,7 +87,7 @@
               <%= if @current_user do %>
                 <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
                 <div class="border-2 border-b-blue-900 mx-2"></div>
-                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.instructor_user_settings_path(@conn, :edit) %>
+                <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@conn, :edit) %>
                 <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@conn, :delete), method: :delete %>
               <% else %>
                 <%= link "Login", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_session_path(@conn, :new) %>

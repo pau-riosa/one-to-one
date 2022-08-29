@@ -1,11 +1,11 @@
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl mx-auto py-5 ">
         <div class="flex flex-row items-center">
-        <%= live_patch to: Routes.instructor_event_path(@socket, :new), class: "flex align-baseline mb-8"  do %>
+        <%= live_patch to: Routes.event_path(@socket, :new), class: "flex align-baseline mb-8"  do %>
             <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-5 w-5 fill-gray-400") %></i>
             <h3 class="text-sm font-semibold text-gray-400">Dashboard</h3>
         <% end %>
-        <%= live_patch to: Routes.instructor_event_path(@socket, :new), class: "flex align-baseline mb-8"  do %>
+        <%= live_patch to: Routes.event_path(@socket, :new), class: "flex align-baseline mb-8"  do %>
             <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-5 w-5 fill-gray-400") %></i>
             <h3 class="text-sm font-semibold text-gray-400">Create Event</h3>
         <% end %>
@@ -46,7 +46,7 @@
                 <CalendarWeeks.calendar_weeks
                     id="weeks"
                     socket={@socket}
-                    current_path={Routes.instructor_event_path(@socket, :create_schedule, @event_id)}
+                    current_path={Routes.event_path(@socket, :create_schedule, @event_id)}
                     current_week={@current_week}
                     beginning_of_week={@beginning_of_week}
                     end_of_week={@end_of_week}

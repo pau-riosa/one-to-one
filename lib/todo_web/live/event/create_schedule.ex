@@ -1,4 +1,4 @@
-defmodule TodoWeb.Instructor.Event.CreateSchedule do
+defmodule TodoWeb.Event.CreateSchedule do
   use TodoWeb, :live_component
 
   alias Todo.Schedules.{Schedule, Operation}
@@ -26,7 +26,7 @@ defmodule TodoWeb.Instructor.Event.CreateSchedule do
         {:noreply,
          socket
          |> put_flash(:info, "Schedule created.")
-         |> push_redirect(to: Routes.instructor_dashboard_path(socket, :index))}
+         |> push_redirect(to: Routes.dashboard_path(socket, :index))}
 
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}

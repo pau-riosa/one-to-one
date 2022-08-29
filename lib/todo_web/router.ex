@@ -66,32 +66,20 @@ defmodule TodoWeb.Router do
     put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
-  live_session :instructor, on_mount: {TodoWeb.Live.InitAssigns, :instructor} do
-    scope "/instructor", TodoWeb, as: :instructor do
+  live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+    scope "/", TodoWeb do
       pipe_through [:browser, :require_authenticated_user]
 
-      live "/dashboard", Instructor.DashboardLive, :index
-      live "/event/new", Instructor.EventLive, :new
-      live "/event/:event_id", Instructor.EventLive, :edit
-      live "/event/:event_id/create_schedule", Instructor.EventLive, :create_schedule
+      live "/dashboard", DashboardLive, :index
+      live "/event/new", EventLive, :new
+      live "/event/:event_id", EventLive, :edit
+      live "/event/:event_id/create_schedule", EventLive, :create_schedule
 
       # will be shared by student and instructor
       get "/room/:event_id", RoomController, :index
       get "/users/settings", UserSettingsController, :edit
       put "/users/settings", UserSettingsController, :update
       get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-    end
-  end
-
-  live_session :student, on_mount: {TodoWeb.Live.InitAssigns, :student} do
-    scope "/student", TodoWeb, as: :student do
-      pipe_through [:browser, :require_authenticated_user]
-
-      live "/dashboard", Student.DashboardLive
-      live "/schedule", Student.ScheduleLive
-
-      # will be shared by student and instructor
-      get "/room/:event_id", RoomController, :index
     end
   end
 

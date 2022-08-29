@@ -1,4 +1,4 @@
-defmodule TodoWeb.Instructor.EventLive do
+defmodule TodoWeb.EventLive do
   use TodoWeb, :live_view
 
   alias Todo.Events.Event
