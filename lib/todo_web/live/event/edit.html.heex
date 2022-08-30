@@ -14,17 +14,17 @@
                     <div class="flex flex-row space-x-3 align-baseline">
                         <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         <div class="flex flex-col justify-center">
-                            <h1 class="text-md text-blue-900 font-semibold"><%= @current_user.first_name <> " " <> @current_user.last_name %></h1>
+                            <h1 class="text-md text-blue-900 font-semibold"><%= "#{@current_user.first_name} #{@current_user.last_name}" %></h1>
                             <%= hidden_input f, :created_by_id, value: @current_user.id %>
                         </div>
                     </div>
                     <%= text_input f, :name, placeholder: "Topic", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
                     <%= error_tag f, :name %>
                     <%= email_input f, :invitee, placeholder: "Invite through email", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_window_keyup: "enter", phx_target: @myself %>
-                    <div class="grid grid-cols-6 gap-1"> 
+                    <div class="grid grid-cols-6 gap-1">
                         <%= for invitee <- @invitees do %>
                             <div class="flex flex-row">
-                                <span class="rounded rounded-md bg-gray-300 text-blue-900 p-3 m-3"><%= invitee %></span> 
+                                <span class="rounded rounded-md bg-gray-300 text-blue-900 p-3 m-3"><%= invitee %></span>
                             </div>
                         <% end %>
                     </div>
