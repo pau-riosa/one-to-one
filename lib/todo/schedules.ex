@@ -16,6 +16,7 @@ defmodule Todo.Schedules do
     |> where([s], s.scheduled_for < ^Timex.now())
     |> select([s, event: e], %{
       event: e,
+      id: s.id,
       scheduled_for: s.scheduled_for
     })
     |> Repo.all()
@@ -56,6 +57,7 @@ defmodule Todo.Schedules do
     |> where([s], fragment("? BETWEEN ? AND ?", s.scheduled_for, ^beginning_of_day, ^end_of_day))
     |> select([s, event: e], %{
       event: e,
+      id: s.id,
       scheduled_for: s.scheduled_for
     })
     |> order_by([s], desc: s.scheduled_for)

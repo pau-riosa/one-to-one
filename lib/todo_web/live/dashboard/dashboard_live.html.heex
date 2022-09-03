@@ -14,7 +14,7 @@
                                 <img class="h-5 w-5 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                             </div>
                             <i @click="open = !open"><%= Heroicons.icon("dots-vertical", type: "outline", class: "h-5 w-5 cursor-pointer") %></i>
-                            <ul x-show="open" 
+                            <ul x-show="open"
                                 x-transition:enter="transition ease-out duration-200"
                                 x-transition:enter-start="opacity-0"
                                 x-transition:enter-end="opacity-100"
@@ -24,7 +24,7 @@
                                 class="absolute top-3 right-3 bg-white rounded rounded-md text-blue-900 border border-blue p-3 space-y-2">
                               <li><%= live_patch "Edit", to: Routes.event_path(@socket, :edit, schedule.event.id) %></li>
                               <li><a href="#">Cancel</a></li>
-                              <li><a href="#">Delete</a></li>        
+                              <li><a href="#">Delete</a></li>
                             </ul>
                         </div>
                         <h2 class="text-2xl text-blue-900 font-bold uppercase"><%= schedule.event.name %></h2>
@@ -34,7 +34,7 @@
                             <p class="text-sm mx-2"><%= Timex.format!(schedule.scheduled_for, "%A %B %e, %Y %l:%M %p", :strftime) %></p>
                         </div>
                         <div class="flex justify-end space-x-3">
-                            <%= Phoenix.HTML.Link.link "Start", to: Routes.room_path(@socket, :index, schedule.event.id),  class: "py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
+                            <%= Phoenix.HTML.Link.link "Start", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
                         </div>
                     </div>
                 </div>
