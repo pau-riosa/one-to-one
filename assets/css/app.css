@@ -19,6 +19,43 @@
   }
 }
 
+#spin:after {
+  content: "";
+  animation: spin 5s linear infinite;
+}
+@keyframes spin {
+  0% {
+    content: "web development";
+  }
+  10% {
+    content: "programming";
+  }
+  20% {
+    content: "english";
+  }
+  30% {
+    content: "trading";
+  }
+  40% {
+    content: "data analysis";
+  }
+  50% {
+    content: "e-sports";
+  }
+  60% {
+    content: "management";
+  }
+  70% {
+    content: "tagalog";
+  }
+  80% {
+    content: "french";
+  }
+  90% {
+    content: "coding";
+  }
+}
+
 /* for multiselectinput */
 .wrap-items {
   display: flex;
