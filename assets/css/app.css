@@ -19,6 +19,12 @@
   }
 }
 
+/* for multiselectinput */
+.wrap-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .flip-horizontally {
   transform: scaleX(-1);
 }

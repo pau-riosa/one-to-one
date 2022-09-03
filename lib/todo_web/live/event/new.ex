@@ -9,8 +9,7 @@ defmodule TodoWeb.Event.New do
      socket
      |> assign(:uploaded_files, [])
      |> allow_upload(:file, accept: :any, max_entries: 3)
-     |> assign(:page_title, "Create New Event")
-     |> assign(:invitees, [])}
+     |> assign(:page_title, "Create New Event")}
   end
 
   @impl true
@@ -49,28 +48,32 @@ defmodule TodoWeb.Event.New do
   end
 
   @impl true
-  def handle_event("space", %{"key" => " ", "value" => value} = _params, socket) do
-    case validate_email(value) do
-      {:ok, value} ->
-        {:noreply, assign(socket, :invitees, [value | socket.assigns.invitees])}
+  def handle_event(
+        "comma",
+        %{"key" => ",", "value" => value} = _params,
+        socket
+      ) do
+    [value, _] = String.split(value, ",")
 
-      _ ->
-        {:noreply, socket}
-    end
-  end
+    socket =
+      socket
+      |> assign(:invitees, [value | socket.assigns.invitees])
 
-  @impl true
-  def handle_event("space", _params, socket) do
     {:noreply, socket}
   end
 
-  def validate_email(value) do
-    case Regex.run(~r/^[^\s]+@[^\s]+$/, value) do
-      nil ->
-        {:error, nil}
-
-      [email] ->
-        {:ok, email}
-    end
+  @impl true
+  def handle_event("comma", _params, socket) do
+    {:noreply, socket}
   end
+
+  # def validate_email(value) do
+  #   case Regex.run(~r/^[^\s]+@[^\s]+$/, value) do
+  #     nil ->
+  #       {:error, nil}
+
+  #     [email] ->
+  #       {:ok, email}
+  #   end
+  # end
 end
