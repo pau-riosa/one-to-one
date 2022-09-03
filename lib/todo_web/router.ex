@@ -66,7 +66,7 @@ defmodule TodoWeb.Router do
     put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
-  live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+  live_session :private, on_mount: {TodoWeb.Live.InitAssigns, :private} do
     scope "/", TodoWeb do
       pipe_through [:browser, :require_authenticated_user]
 

@@ -6,7 +6,7 @@ defmodule TodoWeb.Live.InitAssigns do
 
   alias Todo.Accounts
 
-  def on_mount(:default, _params, %{"user_token" => user_token} = _session, socket) do
+  def on_mount(:private, _params, %{"user_token" => user_token} = _session, socket) do
     timezone = get_connect_params(socket)["timezone"] || "Asia/Manila"
     current_user = Accounts.get_user_by_session_token(user_token)
 
