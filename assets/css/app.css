@@ -20,39 +20,39 @@
 }
 
 #spin:after {
-  content: "";
-  animation: spin 5s linear infinite;
+  content: "Latest Tech";
+  animation: spin 7s linear infinite;
 }
 @keyframes spin {
   0% {
-    content: "web development";
+    content: "Web development";
   }
   10% {
-    content: "programming";
+    content: "Programming";
   }
   20% {
-    content: "english";
+    content: "English";
   }
   30% {
-    content: "trading";
+    content: "Trading";
   }
   40% {
-    content: "data analysis";
+    content: "Data analysis";
   }
   50% {
-    content: "e-sports";
+    content: "E-sports";
   }
   60% {
-    content: "management";
+    content: "Management";
   }
   70% {
-    content: "tagalog";
+    content: "Tagalog";
   }
   80% {
-    content: "french";
+    content: "French";
   }
   90% {
-    content: "coding";
+    content: "Coding";
   }
 }
 
