@@ -34,7 +34,7 @@ defmodule TodoWeb.Components.MultiSelectInput do
         <%= Heroicons.icon("x", phx_click: "remove-item", phx_target: @myself, phx_value_item: item, type: "solid", class: "rounded rounded-full border border-red-600 fill-red-700 self-center h-4 w-4 ml-3 cursor-pointer") %>
         </div> 
         <% end %>
-    <%= text_input @form, @field, placeholder: @placeholder, class: "flex-1 appearance-none px-3 py-3 border border-0 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm ", phx_target: @myself, phx_hook: "CreateItem" %>
+    <%= text_input @form, @field, placeholder: @placeholder, class: "flex-1 appearance-none p-1 border border-0 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm ", phx_target: @myself, phx_hook: "CreateItem" %>
       </div> 
     </div> 
     """
