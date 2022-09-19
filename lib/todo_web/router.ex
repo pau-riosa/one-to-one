@@ -86,6 +86,10 @@ defmodule TodoWeb.Router do
   scope "/", TodoWeb do
     pipe_through [:browser]
 
+    live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+      live "/book-a-tutor", BookLive
+    end
+
     get "/", PageController, :index
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new

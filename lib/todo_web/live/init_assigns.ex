@@ -19,6 +19,13 @@ defmodule TodoWeb.Live.InitAssigns do
   end
 
   def on_mount(:default, _params, _session, socket) do
+    timezone = get_connect_params(socket)["timezone"] || "Asia/Manila"
+
+    socket =
+      socket
+      |> assign(timezone: timezone)
+      |> assign(current_user: nil)
+
     {:cont, socket}
   end
 end
