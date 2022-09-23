@@ -1,5 +1,6 @@
+
 <%= render_shared "_user_menu.html", assigns %>
-<div id="room" class="flex flex-col relative bg-gray-100" data-room-id={@schedule_id} data-display-name={@current_user.email}>
+<div id="room" class="flex flex-col bg-gray-100" data-room-id={@schedule_id} data-display-name={@email}>
     <!-- mb-14 to keep disconnect with absolute value above the videos-->
     <section class="flex flex-col h-screen mb-14">
         <header class="p-4">
@@ -50,10 +51,12 @@
                 </div>
             </button>
         <% end %>
-        <%= link to: Routes.dashboard_path(@conn, :index) do %>
+        <%= link to: "/" do %>
             <button id="leave-control" class="mr-2 p-3 rounded-full transition duration-300 ease-in-out border-2 border-white bg-blue-900 hover:bg-white/50">
                 <img class="black-to-red transform rotate-135" height="26" width="26" src={Routes.static_path(@conn, "/svg/phone-fill.svg")} />
             </button>
         <% end %>
     </div>
 </div>
+    
+

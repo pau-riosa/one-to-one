@@ -4,6 +4,11 @@ defmodule Todo.Schedules.Schedule do
   schema "schedules" do
     field :scheduled_for, :utc_datetime_usec
     field :duration, :integer
+    field :name, :string
+    field :email, :string
+    field :comment, :string
+    field :start_at, :utc_datetime_usec
+    field :end_at, :utc_datetime_usec
     belongs_to(:event, Todo.Events.Event)
     belongs_to(:created_by, Todo.Accounts.User)
 
@@ -16,7 +21,7 @@ defmodule Todo.Schedules.Schedule do
     :created_by_id
   ]
 
-  @optional_attrs [:duration]
+  @optional_attrs [:duration, :name, :email, :comment, :start_at, :end_at]
 
   def changeset(event, attrs \\ %{}) do
     event

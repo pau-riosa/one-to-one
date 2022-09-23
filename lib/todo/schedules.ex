@@ -31,6 +31,7 @@ defmodule Todo.Schedules do
       [s, event: e],
       fragment("?::date = ?::date", s.scheduled_for, ^date)
     )
+    |> where([s], is_nil(s.email))
     |> select([s], s.scheduled_for)
     |> Repo.all()
   end

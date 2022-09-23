@@ -32,4 +32,9 @@ defmodule Todo.Schedules.Operation do
         {:error, changeset}
     end
   end
+
+  def update(changeset, attrs) do
+    Schedule.changeset(changeset, attrs)
+    |> Repo.update()
+  end
 end

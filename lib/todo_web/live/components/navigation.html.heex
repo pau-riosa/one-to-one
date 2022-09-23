@@ -24,7 +24,7 @@
         </div>
       <% end %>
       </div>
-      <% if @current_user do %>
+      <%= if @current_user do %>
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <button type="button" class="bg-yellow-900 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
           <!-- Heroicon name: outline/bell -->
@@ -45,7 +45,7 @@
             <div
               id="menu" 
               x-transition.origin.top.left
-              class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+              class="hidden  origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
               <!-- Active: "bg-gray-100", Not Active: "" -->
               <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
               <div class="border-2  border-b-blue-900 mx-2"></div>
@@ -55,6 +55,7 @@
           </div>
         </div>
       </div>
+
     <% end %>
     </div>
   </div>

@@ -8,13 +8,33 @@ defmodule Todo.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Todo", "contact@example.com"})
+      |> from({"Todo", "hello@thriveschool.com"})
       |> subject(subject)
       |> text_body(body)
 
     with {:ok, _metadata} <- Mailer.deliver(email) do
       {:ok, email}
     end
+  end
+
+  @doc """
+  Deliver instructions to start schedule.
+  """
+  def deliver_schedule_instructions(schedule, url) do
+    deliver(schedule.email, "Scheduled Book: #{schedule.event.name}", """
+
+    ==============================
+
+    Hi #{schedule.email},
+
+    To enter the room kindly visit this url:
+
+    #{url}
+
+    And enter the email you use to book.
+
+    ==============================
+    """)
   end
 
   @doc """

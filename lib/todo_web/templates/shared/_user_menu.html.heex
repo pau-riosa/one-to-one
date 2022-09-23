@@ -72,7 +72,7 @@
               <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </button>
             <% else %>
-              <%= link "Sign up", class: "bg-yellow-900 text-blue-900  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-sm text-sm font-medium", to: Routes.user_registration_path(@conn, :new) %>
+              <%= link "Sign up and be a Tutor", class: "bg-yellow-900 text-blue-900  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-sm text-sm font-medium", to: Routes.user_registration_path(@conn, :new) %>
               <%= link "Log in", class: "bg-yellow-900 text-blue-900  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-sm text-sm font-medium", to: Routes.user_session_path(@conn, :new) %>
             <% end %>
             <div
@@ -91,7 +91,7 @@
                 <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@conn, :delete), method: :delete %>
               <% else %>
                 <%= link "Login", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_session_path(@conn, :new) %>
-                <%= link "Sign up", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_registration_path(@conn, :new) %>
+                <%= link "Sign up and be a Tutor", class: "block px-4 py-2 text-sm text-gray-700", to: Routes.user_registration_path(@conn, :new) %>
               <% end %>
             </div>
           </div>
@@ -115,13 +115,3 @@
   </div>
 </nav>
 
-<%# <ul> %>
-<%# <%= if @current_user do %1> %>
-<%#   <li><%= @current_user.email %1></li> %>
-<%#   <li><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %1></li> %>
-<%#   <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %1></li> %>
-<%# <% else %1> %>
-<%#   <li><%= link "Register", to: Routes.user_registration_path(@conn, :new) %1></li> %>
-<%#   <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %1></li> %>
-<%# <% end %1> %>
-<%# </ul> %>
