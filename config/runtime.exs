@@ -178,6 +178,9 @@ if config_env() == :prod do
     api_key: System.get_env("MAILJET_API_KEY"),
     secret: System.get_env("MAILJET_SECRET")
 
+  # Swoosh API client is needed for adapters other than SMTP.
+  config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+
   #
   # For this example you need include a HTTP client required by Swoosh API client.
   # Swoosh supports Hackney and Finch out of the box:
