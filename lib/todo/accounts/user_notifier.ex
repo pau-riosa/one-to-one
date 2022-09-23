@@ -8,7 +8,9 @@ defmodule Todo.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Todo", "hello@thriveschool.com"})
+      # TODO: changed into this when launching 
+      # |> from({"Todo", "hello@thriveschool.com"})
+      |> from({"Todo", "jethro.riosa@gmail.com"})
       |> subject(subject)
       |> text_body(body)
 
