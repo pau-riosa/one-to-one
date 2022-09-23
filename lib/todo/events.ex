@@ -6,6 +6,10 @@ defmodule Todo.Events do
   alias Todo.Events.Event
   alias Todo.Repo
 
+  def get_by_slug(slug) do
+    Repo.get_by(Event, slug: slug)
+  end
+
   def get(id) do
     Repo.get(Event, id)
   end

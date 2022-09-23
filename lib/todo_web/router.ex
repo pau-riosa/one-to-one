@@ -88,7 +88,9 @@ defmodule TodoWeb.Router do
     pipe_through [:browser]
 
     live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
-      live "/book-a-tutor", BookLive
+      live "/book-a-class", BookLive
+      live "/book-a-class/:class", BookLive, :book_class
+      live "/book-a-class/:class/:schedule", BookLive, :set_schedule
     end
 
     get "/", PageController, :index

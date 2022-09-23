@@ -9,9 +9,35 @@ defmodule Todo.Schedules do
   alias Todo.Schedules.Schedule
   alias Todo.Repo
 
+  def get_by_slug_and_datetime(slug, datetime) do
+    {:ok, datetime, _} = datetime |> DateTime.from_iso8601()
+
+    Schedule
+    |> join(:inner, [s], e in assoc(s, :event), as: :event)
+    |> where([s, event: e], e.slug == ^slug and s.scheduled_for == ^datetime)
+    |> preload(event: :created_by)
+    |> select([s], s)
+    |> Repo.one()
+  end
+
+  def get_by_slug_and_date(slug, date) do
+    date =
+      Timex.parse!(date, "%Y-%m-%d", :strftime)
+      |> Timex.to_date()
+
+    Schedule
+    |> join(:inner, [s], e in assoc(s, :event), as: :event)
+    |> where(
+      [s, event: e],
+      fragment("?::date = ?::date", s.scheduled_for, ^date)
+    )
+    |> select([s], s.scheduled_for)
+    |> Repo.all()
+  end
+
   def get_all_past_schedules(created_by_id) do
     Schedule
-    |> join(:left, [s], e in assoc(s, :event), as: :event)
+    |> join(:inner, [s], e in assoc(s, :event), as: :event)
     |> where([event: e], e.created_by_id == ^created_by_id)
     |> where([s], s.scheduled_for < ^Timex.now())
     |> select([s, event: e], %{
@@ -24,7 +50,7 @@ defmodule Todo.Schedules do
 
   def get_all_schedules(created_by_id) do
     Schedule
-    |> join(:left, [s], e in assoc(s, :event), as: :event)
+    |> join(:inner, [s], e in assoc(s, :event), as: :event)
     |> where([event: e], e.created_by_id == ^created_by_id)
     |> select([s], s.scheduled_for)
     |> Repo.all()

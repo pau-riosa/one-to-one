@@ -3,6 +3,9 @@ defmodule TodoWeb.BookLive do
 
   alias Todo.Events
   alias Todo.Events.Event
+  alias Todo.Schedules
+  alias Todo.Schedules.Schedule
+  alias TodoWeb.Components.CalendarMonths
 
   def mount(_params, _session, socket) do
     events = Events.all()
@@ -10,6 +13,47 @@ defmodule TodoWeb.BookLive do
     {:ok,
      socket
      |> assign(:events, events)}
+  end
+
+  def handle_params(%{"class" => class_slug, "schedule" => datetime} = params, _session, socket) do
+    schedule = Schedules.get_by_slug_and_datetime(class_slug, datetime)
+    changeset = Schedule.changeset(schedule)
+
+    {:noreply,
+     socket
+     |> Schedules.assign_dates(params)
+     |> assign(:schedule, schedule)
+     |> assign(:changeset, changeset)
+     |> assign(:page_title, "Book Schedule")}
+  end
+
+  def handle_params(%{"class" => class_slug, "date" => date} = params, _session, socket) do
+    event = Events.get_by_slug(class_slug)
+
+    schedules = Schedules.get_by_slug_and_date(class_slug, date)
+
+    {:noreply,
+     socket
+     |> Schedules.assign_dates(params)
+     |> assign(:schedules, schedules)
+     |> assign(:event, event)
+     |> assign(:page_title, "Select Date")}
+  end
+
+  def handle_params(%{"class" => class_slug} = params, _session, socket) do
+    event = Events.get_by_slug(class_slug)
+
+    socket =
+      socket
+      |> Schedules.assign_dates(params)
+      |> assign(:schedules, [])
+      |> assign(:page_title, "Select Class")
+
+    {:noreply, socket |> assign(:event, event)}
+  end
+
+  def handle_params(_params, _session, socket) do
+    {:noreply, socket}
   end
 
   def handle_event(
