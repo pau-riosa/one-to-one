@@ -20,7 +20,6 @@
                     </div>
                     <%= text_input f, :name, placeholder: "Topic", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
                     <%= error_tag f, :name %>
-                    <.live_component id="multi" module={TodoWeb.Components.MultiSelectInput} form={f} field={:invitee} items={@invitees} placeholder="Press comma after each Email" />
                     <%= textarea f, :description, placeholder: "Description", class: "resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", rows: "10" %>
                     <%= error_tag f, :description %>
                         <%= for {_ref, msg} <- @uploads.file.errors do %>

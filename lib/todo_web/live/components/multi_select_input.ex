@@ -20,6 +20,22 @@ defmodule TodoWeb.Components.MultiSelectInput do
     ... do your thing 
   end
 
+  add handle_event in your other live_component
+
+
+  def handle_event("comma", _params, socket) do
+
+    [value, _] = String.split(value, ",")
+    socket =
+      socket
+      |> assign(:items, [value, socket.assigns.items])
+
+      {:noreply, socket}
+  end
+
+  def handle_event("comma", _params, socket) do
+  {:noreply, socket} 
+  end
   """
   use TodoWeb, :live_component
 

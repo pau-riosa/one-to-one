@@ -7,7 +7,7 @@ defmodule Todo.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -53,7 +53,7 @@ defmodule Todo.MixProject do
       {:timex, "~> 3.0"},
 
       # heroicons
-      {:ex_heroicons, "~> 0.6.0"},
+      {:ex_heroicons, "~> 2.0.0"},
 
       # tailwindcss
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
@@ -65,7 +65,7 @@ defmodule Todo.MixProject do
       # Otel
       {:opentelemetry, "~> 1.0"},
       {:opentelemetry_api, "~> 1.0"},
-      {:opentelemetry_exporter, "~> 1.0"},
+      # {:opentelemetry_exporter, "~> 1.1"},
       {:opentelemetry_zipkin, "~> 1.0"}
     ]
   end

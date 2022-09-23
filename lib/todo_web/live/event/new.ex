@@ -46,34 +46,4 @@ defmodule TodoWeb.Event.New do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
-
-  @impl true
-  def handle_event(
-        "comma",
-        %{"key" => ",", "value" => value} = _params,
-        socket
-      ) do
-    [value, _] = String.split(value, ",")
-
-    socket =
-      socket
-      |> assign(:invitees, [value | socket.assigns.invitees])
-
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("comma", _params, socket) do
-    {:noreply, socket}
-  end
-
-  # def validate_email(value) do
-  #   case Regex.run(~r/^[^\s]+@[^\s]+$/, value) do
-  #     nil ->
-  #       {:error, nil}
-
-  #     [email] ->
-  #       {:ok, email}
-  #   end
-  # end
 end

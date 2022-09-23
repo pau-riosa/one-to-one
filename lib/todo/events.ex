@@ -21,4 +21,10 @@ defmodule Todo.Events do
     |> where([e], e.created_by_id == ^created_by_id)
     |> Repo.all()
   end
+
+  def delete(id) do
+    Event
+    |> Repo.get(id)
+    |> Repo.delete()
+  end
 end

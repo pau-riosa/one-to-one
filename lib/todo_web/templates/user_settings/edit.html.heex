@@ -3,7 +3,7 @@
 <div class="flex justify-center align-center">
   <div class="w-full max-w-7xl flex flex-row p-5 justify-center align-center gap-x-10">
     <div class="bg-white border rounded-md p-10 shadow-lg space-y-10">
-      <.form let={f} for={@email_changeset} action={Routes.instructor_user_settings_path(@conn, :update)} id="update_email" class="w-full px-12">
+      <.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email" class="w-full px-12">
       <h3 class="font-semibold text-lg text-center text-blue-900">Change email</h3>
       <%= hidden_input f, :action, name: "action", value: "update_email" %>
       <%= if @email_changeset.action do %>
@@ -23,7 +23,7 @@
       </div>
       </.form>
       <div class="border-2 border-b-gray-300 w-full mx-2"></div>
-      <.form let={f} for={@password_changeset} action={Routes.instructor_user_settings_path(@conn, :update)} id="update_password" class="w-full px-12">
+      <.form let={f} for={@password_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_password" class="w-full px-12">
       <h3 class="font-semibold text-lg text-center text-blue-900">Change password</h3>
       <%= hidden_input f, :action, name: "action", value: "update_password" %>
 

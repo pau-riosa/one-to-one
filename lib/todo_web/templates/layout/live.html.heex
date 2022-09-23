@@ -1,5 +1,5 @@
 <%= if @current_user do %>
-   <TodoWeb.Components.Navigation.nav socket={@socket} current_user={@current_user} />
+   <.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
 <% end %>
 <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" class="fixed top-0 right-0 flex items-end my-10 mx-5">
    <p x-show="show"

@@ -9,8 +9,7 @@ defmodule TodoWeb.Event.Edit do
     {:ok,
      socket
      |> assign(:uploaded_files, [])
-     |> allow_upload(:file, accept: :any, max_entries: 3)
-     |> assign(:invitees, [])}
+     |> allow_upload(:file, accept: :any, max_entries: 3)}
   end
 
   @impl true

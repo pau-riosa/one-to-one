@@ -13,7 +13,6 @@ defmodule TodoWeb.EventLive do
       socket
       |> assign(:schedule_changeset, schedule_changeset)
       |> assign(:existing_timeslots, Schedules.get_all_schedules(current_user.id))
-      |> assign(:invitees, [])
       |> handle_page_title()
 
     {:ok, socket}
@@ -38,20 +37,6 @@ defmodule TodoWeb.EventLive do
       |> assign(event_changeset: changeset)
       |> assign(event_id: params["event_id"])
 
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("add-item", item, socket) do
-    invitees = [item | socket.assigns.invitees]
-    socket = assign(socket, :invitees, invitees)
-    {:noreply, socket}
-  end
-
-  @impl true
-  def handle_info({:remove_item, item}, socket) do
-    items = Enum.filter(socket.assigns.invitees, &(&1 != item))
-    socket = assign(socket, :invitees, items)
     {:noreply, socket}
   end
 

@@ -21,7 +21,6 @@
             id="event-new"
             changeset={@event_changeset}
             current_user={@current_user}
-            invitees={@invitees}
             />
     <% @live_action == :edit -> %>
         <.live_component module={TodoWeb.Event.Edit}
@@ -29,6 +28,5 @@
             event_id={@event_id}
             changeset={@event_changeset}
             current_user={@current_user}
-            invitees={@invitees}
             />
 <% end %>

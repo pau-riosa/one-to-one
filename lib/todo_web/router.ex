@@ -71,6 +71,7 @@ defmodule TodoWeb.Router do
       pipe_through [:browser, :require_authenticated_user]
 
       live "/dashboard", DashboardLive, :index
+      live "/class", ClassLive, :index
       live "/event/new", EventLive, :new
       live "/event/:event_id", EventLive, :edit
       live "/event/:event_id/create_schedule", EventLive, :create_schedule

@@ -53,7 +53,7 @@ defmodule TodoWeb.Components.CalendarMonths do
             <% end %>
         </div>
         <div class="flex items-center gap-x-1 text-blue">
-            <i><%= Heroicons.icon("globe", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
+            <i><%= Heroicons.icon("globe-asia-australia", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
             <%= @timezone %> 
         </div>
     </div>
