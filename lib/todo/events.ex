@@ -10,6 +10,11 @@ defmodule Todo.Events do
     Repo.get(Event, id)
   end
 
+  def all do
+    Event
+    |> Repo.all()
+  end
+
   def get_events_id(event_id) when is_binary(event_id) do
     Event
     |> where([e], e.id == ^event_id)
