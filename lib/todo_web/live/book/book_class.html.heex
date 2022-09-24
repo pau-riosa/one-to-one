@@ -33,10 +33,10 @@
                         <%= if @schedules == [] do %>
                             <h1 class="text-xl text-blue-900 text-center capitalize font-bold">No schedule available</h1> 
                         <% else %>
-                            <div class="flex flex-col items-center">
+                            <div class="flex flex-col items-center gap-4">
                                 <%= for schedule <- @schedules do %>
                                     <% path = Routes.book_path(@socket, :set_schedule, @event.slug, DateTime.to_iso8601(schedule)) |> URI.decode() %>
-                                    <%= live_patch Timex.format!(schedule, "%k:%M", :strftime), to: path, class: "border border-blue-900 p-2 rounded rounded-lg bg-blue-900 text-white w-3/5 text-center" %>
+                                    <%= live_patch Timex.format!(schedule, "%l:%M", :strftime), to: path, class: "border border-blue-900 p-2 rounded rounded-lg bg-blue-900 text-white w-3/5 text-center" %>
                                 <% end %>
                             </div>
                         <% end %>

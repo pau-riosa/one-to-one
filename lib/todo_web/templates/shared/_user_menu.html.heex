@@ -20,6 +20,7 @@
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <%= link "Dashboard", to: Routes.dashboard_path(@conn, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+              <%= link "Classes", to: Routes.class_path(@conn, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
             </div>
           </div>
         <% end %>

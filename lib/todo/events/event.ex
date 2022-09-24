@@ -7,6 +7,7 @@ defmodule Todo.Events.Event do
     field :files, {:array, :string}, default: []
     field :slug, :string
     belongs_to(:created_by, Todo.Accounts.User)
+    has_many(:schedules, Todo.Schedules.Schedule)
     timestamps()
   end
 
