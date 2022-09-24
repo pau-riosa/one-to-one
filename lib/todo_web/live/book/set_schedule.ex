@@ -11,7 +11,7 @@ defmodule TodoWeb.Book.SetSchedule do
   def handle_event("validate", %{"schedule" => schedule_params} = _params, socket) do
     changeset =
       socket.assigns.changeset
-      |> Schedule.changeset(schedule_params)
+      |> Schedule.set_schedule_changeset(schedule_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
@@ -25,7 +25,7 @@ defmodule TodoWeb.Book.SetSchedule do
       |> Todo.Repo.preload(:event)
 
     schedule
-    |> Operation.update(schedule_params)
+    |> Operation.set_schedule(schedule_params)
     |> case do
       {:ok, schedule} ->
         UserNotifier.deliver_schedule_instructions(

@@ -7,7 +7,9 @@ defmodule Todo.Events do
   alias Todo.Repo
 
   def get_by_slug(slug) do
-    Repo.get_by(Event, slug: slug)
+    Event
+    |> Repo.get_by(slug: slug)
+    |> Repo.preload(:created_by)
   end
 
   def get(id) do
@@ -17,6 +19,7 @@ defmodule Todo.Events do
   def all do
     Event
     |> Repo.all()
+    |> Repo.preload(:created_by)
   end
 
   def get_events_id(event_id) when is_binary(event_id) do

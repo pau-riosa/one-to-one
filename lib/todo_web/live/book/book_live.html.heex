@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="flex flex-col ml-2">
                                             <h2 class="text-2xl text-blue-900 font-bold uppercase"><%= event.name %></h2>
-                                            <p class="text-sm text-blue-900 font-normal capitalize">instructor's name</p>
+                                            <p class="text-sm text-blue-900 font-normal capitalize"><%= event.created_by.first_name%> <%= event.created_by.last_name %></p>
                                         </div>
                                     </div> 
                                     <p class="text-sm truncate"><%= event.description %></p>

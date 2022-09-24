@@ -10,7 +10,7 @@
                             </div>
                             <div class="flex flex-col ml-2">
                                 <h2 class="text-2xl text-blue-900 font-bold uppercase"><%= @event.name %></h2>
-                                <p class="text-sm text-blue-900 font-normal capitalize">instructor's name</p>
+                                <p class="text-sm text-blue-900 font-normal capitalize"><%= @event.created_by.first_name %> <%= @event.created_by.last_name %></p>
                             </div>
                         </div> 
                         <p class="text-sm truncate"><%= @event.description %></p>
@@ -28,11 +28,19 @@
                             socket={@socket}
                             />
                     </div>
-                    <div class="flex flex-col p-5 space-y-5 gap-2 items-center">
-                        <%= for schedule <- @schedules do %>
-                            <% path = Routes.book_path(@socket, :set_schedule, @event.slug, DateTime.to_iso8601(schedule)) |> URI.decode() %>
-                            <%= live_patch Timex.format!(schedule, "%k:%M", :strftime), to: path, class: "border border-blue-900 p-2 rounded rounded-lg bg-blue-900 text-white w-3/5 text-center" %>
+                    <div class="flex flex-col p-5 space-y-5 gap-2 justify-start align-start h-full">
+                        <h1 class="text-xl text-blue-900 font-bold"><%= Timex.format!(@current, "%B %Y", :strftime) %></h1>
+                        <%= if @schedules == [] do %>
+                            <h1 class="text-xl text-blue-900 text-center capitalize font-bold">No schedule available</h1> 
+                        <% else %>
+                            <div class="flex flex-col items-center">
+                                <%= for schedule <- @schedules do %>
+                                    <% path = Routes.book_path(@socket, :set_schedule, @event.slug, DateTime.to_iso8601(schedule)) |> URI.decode() %>
+                                    <%= live_patch Timex.format!(schedule, "%k:%M", :strftime), to: path, class: "border border-blue-900 p-2 rounded rounded-lg bg-blue-900 text-white w-3/5 text-center" %>
+                                <% end %>
+                            </div>
                         <% end %>
+
                     </div>
                 </div>
             </div>

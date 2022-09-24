@@ -29,4 +29,19 @@ defmodule Todo.Schedules.Schedule do
     |> validate_required(@required_attrs)
     |> unique_constraint([:created_by_id, :scheduled_for], message: "schedule already exist.")
   end
+
+  @set_schedule_attrs [
+    :name,
+    :email
+  ]
+
+  @set_schedule_optional_attrs [
+    :comment
+  ]
+  def set_schedule_changeset(event, attrs \\ %{}) do
+    event
+    |> cast(attrs, @set_schedule_attrs ++ @set_schedule_optional_attrs)
+    |> validate_required(@set_schedule_attrs)
+    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
+  end
 end
