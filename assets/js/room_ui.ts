@@ -330,9 +330,9 @@ function setupVideoFeed(peerId: string, label: string, isLocalVideo: boolean) {
 }
 
 function setupLocalVideoFeed(peerId: string, label: string) {
-  const copy = (
-    document.querySelector("#local-video-feed-template") as HTMLTemplateElement
-  ).content.cloneNode(true) as Element;
+  const copy = (document.querySelector(
+    "#local-video-feed-template"
+  ) as HTMLTemplateElement).content.cloneNode(true) as Element;
   const feed = copy.querySelector("div[name='video-feed']") as HTMLDivElement;
   const audio = feed.querySelector("audio") as HTMLAudioElement;
   const video = feed.querySelector("video") as HTMLVideoElement;
@@ -352,9 +352,9 @@ function setupLocalVideoFeed(peerId: string, label: string) {
 }
 
 function setupRemoteVideoFeed(peerId: string, label: string) {
-  const copy = (
-    document.querySelector("#remote-video-feed-template") as HTMLTemplateElement
-  ).content.cloneNode(true) as Element;
+  const copy = (document.querySelector(
+    "#remote-video-feed-template"
+  ) as HTMLTemplateElement).content.cloneNode(true) as Element;
   const feed = copy.querySelector("div[name='video-feed']") as HTMLDivElement;
   const audio = feed.querySelector("audio") as HTMLAudioElement;
   const video = feed.querySelector("video") as HTMLVideoElement;
@@ -371,22 +371,24 @@ function setupRemoteVideoFeed(peerId: string, label: string) {
 }
 
 function setupScreensharing(peerId: string, label: string) {
-  const copy = (
-    document.querySelector("#screensharing-template") as HTMLTemplateElement
-  ).content.cloneNode(true) as Element;
+  const copy = (document.querySelector(
+    "#screensharing-template"
+  ) as HTMLTemplateElement).content.cloneNode(true) as Element;
   const feed = copy.querySelector("div[name='video-feed']") as HTMLDivElement;
   const video = feed.querySelector("video") as HTMLVideoElement;
   const videoLabel = feed.querySelector(
     "div[name='video-label']"
   ) as HTMLDivElement;
+  const canvas = feed.querySelector("canvas") as HTMLCanvasElement;
 
+  feed.appendChild(canvas);
   feed.id = elementId(peerId, "screensharing");
   videoLabel.innerText = label;
 
   const grid = document.getElementById("screensharings-grid")!;
   grid.appendChild(feed);
   resizeVideosGrid("screensharings-grid");
-
+  loadCanvas();
   return video;
 }
 
@@ -404,4 +406,70 @@ export function setErrorMessage(
     errorContainer.style.display = "flex";
   }
   document.getElementById("videochat")?.remove();
+}
+
+export function loadCanvas() {
+  var canvas = document.querySelector("#paint");
+  var ctx = canvas.getContext("2d");
+  var tooltype = "draw";
+  var sketch = document.querySelector("#sketch");
+  var sketch_style = getComputedStyle(sketch);
+  canvas.width = parseInt(sketch_style.getPropertyValue("width"));
+  canvas.height = parseInt(sketch_style.getPropertyValue("height"));
+
+  var mouse = { x: 0, y: 0 };
+  var last_mouse = { x: 0, y: 0 };
+
+  /* Mouse Capturing Work */
+  canvas.addEventListener(
+    "mousemove",
+    function (e) {
+      last_mouse.x = mouse.x;
+      last_mouse.y = mouse.y;
+      mouse.x = e.pageX - this.offsetLeft;
+      mouse.y = e.pageY - this.offsetTop;
+    },
+    false
+  );
+
+  /* Drawing on Paint App */
+
+  canvas.addEventListener(
+    "mousedown",
+    function (e) {
+      canvas.addEventListener("mousemove", onPaint, false);
+    },
+    false
+  );
+
+  canvas.addEventListener(
+    "mouseup",
+    function () {
+      canvas.removeEventListener("mousemove", onPaint, false);
+    },
+    false
+  );
+
+  var onPaint = function (e) {
+    ctx.beginPath();
+
+    if (tooltype != "draw") {
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.lineWidth = 100;
+    } else {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 5;
+    }
+    ctx.moveTo(last_mouse.x, last_mouse.y);
+    ctx.lineTo(mouse.x, mouse.y);
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.stroke();
+    ctx.closePath();
+  };
+
+  var use_tool = function (tool) {
+    tooltype = tool;
+  };
 }

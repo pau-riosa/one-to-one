@@ -13,7 +13,8 @@
         <div id="videochat" class="px-2 md:px-20 overflow-y-auto">
             <template id="screensharing-template">
                 <div name="video-feed" class="relative bg-gray-900 shadow rounded-md overflow-hidden h-full w-full ratio-video">
-                    <video class="w-full h-full"></video>
+                    <video class="w-full h-full" ></video>
+                    <canvas id="paint" class="absolute top-0 ratio-video z-10"></canvas>
                     <div name="video-label" class="absolute text-white text-shadow-lg bottom-0 left-0 p-2">Placeholder</div>
                 </div>
             </template>
@@ -35,9 +36,9 @@
                     <div name="no-video-msg" class="absolute text-white w-full h-full top-0 left-0" style="text-align: center">Camera turned off</div>
                 </div>
             </template>
-            <div class="flex flex-col items-center md:flex-row md:items-start justify-center h-full">
-                <div id="screensharings-grid" class="h-full mb-3 md:mr-3 md:mb-none inactive-screensharing-grid"> </div>
-                <div id="videos-grid" class="grid flex-1 grid-cols-2 grid-flow-row gap-4 justify-items-center h-full"></div>
+            <div id="sketch" class="flex flex-col items-center md:flex-row md:items-start justify-center h-full">
+                <div id="screensharings-grid" class="h-full mb-3 md:mr-3 md:mb-none inactive-screensharing-grid"></div>
+                <div id="videos-grid" class="grid flex-1 grid-cols-3 grid-flow-row gap-4 justify-items-center h-full"></div>
             </div>
         </div>
         <div class="video-divider"></div>
