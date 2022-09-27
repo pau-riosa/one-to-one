@@ -421,7 +421,7 @@ export function loadCanvas() {
   var last_mouse = { x: 0, y: 0 };
 
   /* Mouse Capturing Work */
-  canvas.addEventListener(
+  document.addEventListener(
     "mousemove",
     function (e) {
       last_mouse.x = mouse.x;
@@ -461,6 +461,8 @@ export function loadCanvas() {
       ctx.strokeStyle = "red";
       ctx.lineWidth = 5;
     }
+    mouse.x = e.offsetX;
+    mouse.y = e.offsetY;
     ctx.moveTo(last_mouse.x, last_mouse.y);
     ctx.lineTo(mouse.x, mouse.y);
     ctx.lineJoin = "round";
