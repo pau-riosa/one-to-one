@@ -13,8 +13,9 @@
         <div id="videochat" class="px-2 md:px-20 overflow-y-auto">
             <template id="screensharing-template">
                 <div name="video-feed" class="relative bg-gray-900 shadow rounded-md overflow-hidden h-full w-full ratio-video">
-                    <video class="w-full h-full" ></video>
+                    <video name="screenshare" class="w-full h-full" ></video>
                     <canvas id="paint" class="absolute top-0 left-0 z-2"></canvas>
+                    <canvas id="output" class="absolute top-0 left-0 z-2"></canvas>
                     <div name="video-label" class="absolute text-white text-shadow-lg bottom-0 left-0 p-2">Placeholder</div>
                 </div>
             </template>

@@ -1,3 +1,5 @@
+import { viewerAnnotate, sharerAnnotate } from "./canvas";
+
 import {
   AUDIO_TRACK_CONSTRAINTS,
   LOCAL_PEER_ID,
@@ -120,6 +122,8 @@ export class Room {
               `(${ctx.peer.metadata.displayName}) Screen`,
               ctx.stream!
             );
+            // viewer of the screen
+            viewerAnnotate(this.webrtcChannel);
           } else {
             attachStream(ctx.peer.id, {
               audioStream: ctx.stream,
@@ -176,6 +180,26 @@ export class Room {
     this.webrtcChannel.on("mediaEvent", (event: any) =>
       this.webrtc.receiveMediaEvent(event.data)
     );
+
+    // this.webrtcChannel.on("draw", (event: any) => {
+    //   console.log("draw data", event);
+    //   var canvas = document.querySelector("#paint");
+    //   var ctx = canvas.getContext("2d");
+    //   // canvas.width = 1000;
+    //   // canvas.height = 1000;
+    //   // draw(ctx, event);
+    // });
+    // var draw = (ctx, data) => {
+    //   ctx.beginPath();
+    //   // ctx.moveTo(data.last_mouse.x, data.last_mouse.y);
+    //   ctx.lineTo(data.x, data.y);
+    //   ctx.strokeStyle = data.color;
+    //   ctx.lineWidth = 5;
+    //   ctx.lineJoin = "round";
+    //   ctx.lineCap = "round";
+    //   ctx.stroke();
+    //   // ctx.closePath();
+    // };
 
     addAudioStatusChangedCallback(this.onAudioStatusChange.bind(this));
     addVideoStatusChangedCallback(this.onVideoStatusChange.bind(this));
@@ -241,7 +265,6 @@ export class Room {
 
     const onScreensharingStart = async () => {
       if (this.localScreensharing) return;
-
       this.localScreensharing = await navigator.mediaDevices.getDisplayMedia(
         SCREENSHARING_MEDIA_CONSTRAINTS
       );
@@ -264,6 +287,9 @@ export class Room {
         "(Me) Screen",
         this.localScreensharing
       );
+
+      // sharer of the screen
+      sharerAnnotate(this.webrtcChannel);
     };
 
     const callbacks = {
