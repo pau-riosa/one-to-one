@@ -27,10 +27,8 @@ defmodule Todo.Schedules do
 
     Schedule
     |> join(:inner, [s], e in assoc(s, :event), as: :event)
-    |> where(
-      [s, event: e],
-      fragment("?::date = ?::date", s.scheduled_for, ^date)
-    )
+    |> where([event: e], e.slug == ^slug)
+    |> where([s], fragment("?::date = ?::date", s.scheduled_for, ^date))
     |> where([s], is_nil(s.email))
     |> select([s], s.scheduled_for)
     |> Repo.all()

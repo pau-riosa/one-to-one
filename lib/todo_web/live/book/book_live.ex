@@ -29,7 +29,6 @@ defmodule TodoWeb.BookLive do
 
   def handle_params(%{"class" => class_slug, "date" => date} = params, _session, socket) do
     event = Events.get_by_slug(class_slug)
-
     schedules = Schedules.get_by_slug_and_date(class_slug, date)
 
     {:noreply,
