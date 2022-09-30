@@ -58,11 +58,9 @@ export class Room {
     this.webrtcChannel = this.socket.channel(`room:${getRoomId()}`);
     this.webrtcChannel.onError(() => {
       this.socketOff();
-      window.location.reload();
     });
     this.webrtcChannel.onClose(() => {
       this.socketOff();
-      window.location.reload();
     });
 
     this.webrtcSocketRefs.push(this.socket.onError(this.leave));

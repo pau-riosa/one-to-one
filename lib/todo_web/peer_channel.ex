@@ -44,11 +44,21 @@ defmodule TodoWeb.PeerChannel do
     {:noreply, socket}
   end
 
-  # TODO
   @impl true
   def handle_in("draw", %{"data" => event}, socket) do
-    IO.inspect(event)
     broadcast!(socket, "draw", event)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_in("erase", %{"data" => event}, socket) do
+    broadcast!(socket, "erase", event)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_in("clear_all", %{"data" => event}, socket) do
+    broadcast!(socket, "clear_all", event)
     {:noreply, socket}
   end
 
@@ -66,11 +76,4 @@ defmodule TodoWeb.PeerChannel do
 
     {:noreply, socket}
   end
-
-  #   @impl true
-  #   def handle_info({:draw, event}, socket) do
-  #     push(socket, "draw", %{data: event})
-
-  #     {:noreply, socket}
-  #   end
 end

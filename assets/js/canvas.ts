@@ -10,6 +10,9 @@ export function sharerAnnotate(webrtcChannel) {
   var canvas = document.querySelector("#paint") as HTMLCanvasElement;
   var ctx = canvas.getContext("2d");
   loadCanvas(ctx, canvas, randomColor(), webrtcChannel);
+  pen();
+  eraser();
+  clearAll(webrtcChannel);
 }
 
 export function viewerAnnotate(webrtcChannel) {
@@ -22,9 +25,43 @@ export function viewerAnnotate(webrtcChannel) {
   var canvas = document.querySelector("#output") as HTMLCanvasElement;
   var ctx = canvas.getContext("2d");
   loadCanvas(ctx, canvas, randomColor(), webrtcChannel);
+  pen();
+  eraser();
+  clearAll(webrtcChannel);
 }
 
-export function loadCanvas(ctx, canvas, color, webrtcChannel) {
+function pen() {
+  let pen = document.querySelector("#pen");
+  pen.addEventListener("click", () => {
+    tool = "draw";
+  });
+}
+
+function eraser() {
+  let eraser = document.querySelector("#eraser");
+  eraser.addEventListener("click", () => {
+    tool = "erase";
+  });
+}
+
+function clearAll(webrtcChannel) {
+  let clearAll = document.querySelector("#clear-all");
+  clearAll.addEventListener("click", () => {
+    var canvas1 = document.querySelector("#paint") as HTMLCanvasElement;
+    var ctx1 = canvas1.getContext("2d");
+
+    var canvas2 = document.querySelector("#output") as HTMLCanvasElement;
+    var ctx2 = canvas2.getContext("2d");
+    webrtcChannel.push("clear_all", { data: { clear: true } });
+
+    webrtcChannel.on("clear_all", (event: any) => {
+      ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+      ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+    });
+  });
+}
+
+function loadCanvas(ctx, canvas, color, webrtcChannel) {
   var mouse = { x: 0, y: 0 };
   var last_mouse = { x: 0, y: 0 };
 
@@ -49,23 +86,11 @@ export function loadCanvas(ctx, canvas, color, webrtcChannel) {
     mouse = { x: e.offsetX, y: e.offsetY };
 
     if (tool === "draw") {
-      draw(ctx, {
-        last_mouse,
-        x: mouse.x,
-        y: mouse.y,
-        color: color,
-      });
+      startDraw(ctx, last_mouse, mouse, color, webrtcChannel);
+    }
 
-      webrtcChannel.push("draw", {
-        data: {
-          x: mouse.x,
-          y: mouse.y,
-          last_mouse: last_mouse,
-          color: color,
-        },
-      });
-
-      webrtcChannel.on("draw", (event: any) => draw(ctx, event));
+    if (tool === "erase") {
+      startErase(ctx, last_mouse, mouse, color, webrtcChannel);
     }
 
     last_mouse = { x: mouse.x, y: mouse.y };
@@ -79,6 +104,60 @@ export function loadCanvas(ctx, canvas, color, webrtcChannel) {
 
   window.onresize = resize;
   resize();
+}
+
+function startErase(ctx, last_mouse, mouse, color, webrtcChannel) {
+  var canvas = document.querySelector("#paint") as HTMLCanvasElement;
+  var ctx1 = canvas.getContext("2d");
+
+  var canvas = document.querySelector("#output") as HTMLCanvasElement;
+  var ctx2 = canvas.getContext("2d");
+
+  erase(ctx1, {
+    last_mouse,
+    x: mouse.x,
+    y: mouse.y,
+  });
+
+  erase(ctx2, {
+    last_mouse,
+    x: mouse.x,
+    y: mouse.y,
+  });
+
+  webrtcChannel.push("erase", {
+    data: {
+      x: mouse.x,
+      y: mouse.y,
+      last_mouse: last_mouse,
+      color: color,
+    },
+  });
+
+  webrtcChannel.on("erase", (event: any) => {
+    erase(ctx1, event);
+    erase(ctx2, event);
+  });
+}
+
+function startDraw(ctx, last_mouse, mouse, color, webrtcChannel) {
+  draw(ctx, {
+    last_mouse,
+    x: mouse.x,
+    y: mouse.y,
+    color: color,
+  });
+
+  webrtcChannel.push("draw", {
+    data: {
+      x: mouse.x,
+      y: mouse.y,
+      last_mouse: last_mouse,
+      color: color,
+    },
+  });
+
+  webrtcChannel.on("draw", (event: any) => draw(ctx, event));
 }
 
 function erase(ctx, data) {
@@ -96,6 +175,7 @@ function erase(ctx, data) {
 
 function draw(ctx, data) {
   ctx.beginPath();
+  ctx.globalCompositeOperation = "source-over";
   ctx.moveTo(data.last_mouse.x, data.last_mouse.y);
   ctx.lineTo(data.x, data.y);
   ctx.strokeStyle = data.color;
