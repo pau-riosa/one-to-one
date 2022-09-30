@@ -1,3 +1,5 @@
+let tool = "draw";
+
 export function sharerAnnotate(webrtcChannel) {
   const copy = (document.querySelector(
     "#screensharing-template"
@@ -46,26 +48,25 @@ export function loadCanvas(ctx, canvas, color, webrtcChannel) {
   var move = (e) => {
     mouse = { x: e.offsetX, y: e.offsetY };
 
-    draw(ctx, {
-      last_mouse,
-      x: mouse.x,
-      y: mouse.y,
-      color: color,
-    });
-
-    webrtcChannel.push("draw", {
-      data: {
+    if (tool === "draw") {
+      draw(ctx, {
+        last_mouse,
         x: mouse.x,
         y: mouse.y,
-        last_mouse: last_mouse,
         color: color,
-      },
-    });
+      });
 
-    webrtcChannel.on("draw", (event: any) => {
-      console.log("draw data", event);
-      draw(ctx, event);
-    });
+      webrtcChannel.push("draw", {
+        data: {
+          x: mouse.x,
+          y: mouse.y,
+          last_mouse: last_mouse,
+          color: color,
+        },
+      });
+
+      webrtcChannel.on("draw", (event: any) => draw(ctx, event));
+    }
 
     last_mouse = { x: mouse.x, y: mouse.y };
   };

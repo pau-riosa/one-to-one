@@ -29,12 +29,12 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-import { Room } from "./room";
+// import { Room } from "./room";
 
-if (window.location.pathname.split("/").includes("room")) {
-  let room = new Room();
-  room.init().then(() => room.join());
-}
+// if (window.location.pathname.split("/").includes("room")) {
+//   let room = new Room();
+//   room.init().then(() => room.join());
+// }
 
 let Hooks = {};
 

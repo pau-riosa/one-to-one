@@ -376,6 +376,7 @@ function setupScreensharing(peerId: string, label: string) {
   ) as HTMLTemplateElement).content.cloneNode(true) as Element;
   const feed = copy.querySelector("div[name='video-feed']") as HTMLDivElement;
   const video = feed.querySelector("video") as HTMLVideoElement;
+  const button = feed.querySelector("#annotate");
   const videoLabel = feed.querySelector(
     "div[name='video-label']"
   ) as HTMLDivElement;
