@@ -53,180 +53,180 @@ processes = []
     restart_limit = 0
     timeout = "2s"
 
-# [[services]]
-#   http_checks = []
-#   internal_port = 8000
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
+[[services]]
+  http_checks = []
+  internal_port = 8000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
-#   [[services.ports]]
-#     port = 8000
-
-
-# [[services]]
-#   http_checks = []
-#   internal_port = 8001
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
-
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
-
-#   [[services.ports]]
-#     port = 8001
+  [[services.ports]]
+    port = 8000
 
 
-# [[services]]
-#   http_checks = []
-#   internal_port = 8002
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
+[[services]]
+  http_checks = []
+  internal_port = 8001
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
-#   [[services.ports]]
-#     port = 8002
-
-
-# [[services]]
-#   http_checks = []
-#   internal_port = 8003
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
-
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
-
-#   [[services.ports]]
-#     port = 8003
+  [[services.ports]]
+    port = 8001
 
 
-# [[services]]
-#   http_checks = []
-#   internal_port = 8004
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
+[[services]]
+  http_checks = []
+  internal_port = 8002
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
-#   [[services.ports]]
-#     port = 8004
-
-
-# [[services]]
-#   http_checks = []
-#   internal_port = 8005
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
-
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
-
-#   [[services.ports]]
-#     port = 8005
+  [[services.ports]]
+    port = 8002
 
 
-# [[services]]
-#   http_checks = []
-#   internal_port = 8006
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
+[[services]]
+  http_checks = []
+  internal_port = 8003
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
-#   [[services.ports]]
-#     port = 8006
-
-
-# [[services]]
-#   http_checks = []
-#   internal_port = 8007
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
-
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
-
-#   [[services.ports]]
-#     port = 8007
+  [[services.ports]]
+    port = 8003
 
 
-# [[services]]
-#   http_checks = []
-#   internal_port = 8008
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
+[[services]]
+  http_checks = []
+  internal_port = 8004
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
-#   [[services.ports]]
-#     port = 8008
-
-
-# [[services]]
-#   http_checks = []
-#   internal_port = 8009
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
-
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
-
-#   [[services.ports]]
-#     port = 8009
+  [[services.ports]]
+    port = 8004
 
 
-# [[services]]
-#   http_checks = []
-#   internal_port = 8010
-#   processes = ["app"]
-#   protocol = "tcp"
-#   script_checks = []
+[[services]]
+  http_checks = []
+  internal_port = 8005
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
 
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
-#   [[services.ports]]
-#     port = 8010
+  [[services.ports]]
+    port = 8005
+
+
+[[services]]
+  http_checks = []
+  internal_port = 8006
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 8006
+
+
+[[services]]
+  http_checks = []
+  internal_port = 8007
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 8007
+
+
+[[services]]
+  http_checks = []
+  internal_port = 8008
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 8008
+
+
+[[services]]
+  http_checks = []
+  internal_port = 8009
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 8009
+
+
+[[services]]
+  http_checks = []
+  internal_port = 8010
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    port = 8010
 
 
 # [[services]]
