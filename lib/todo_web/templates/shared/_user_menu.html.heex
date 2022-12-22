@@ -1,5 +1,5 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav x-data="{ isOpen: false }" class="w-full bg-blue-900">
+<nav x-data="{ isOpen: false }" class="w-full bg-white-900 border-b-2">
     <div class="relative flex p-10 items-center justify-between h-16">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
@@ -11,8 +11,7 @@
       </div>
       <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
         <div class="flex-shrink-0 flex items-center">
-          <i><%= Heroicons.icon("check-circle", type: "outline", class: "h-7 w-7 mr-1 stroke-white") %></i>
-          <a href="/" class="text-2xl font-bold text-white">thriveschool</a>
+          <img class="" src={Routes.static_path(@conn, "/svg/Logo-one-to-one.svg")} style="">
         </div>
         <%= if @current_user do %>
           <div class="hidden sm:block sm:ml-6">
@@ -72,8 +71,8 @@
               <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
             </button>
             <% else %>
-              <%= link "Sign up and be a Tutor", class: "bg-yellow-900 text-blue-900  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-sm text-sm font-medium", to: Routes.user_registration_path(@conn, :new) %>
-              <%= link "Log in", class: "bg-yellow-900 text-blue-900  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-sm text-sm font-medium", to: Routes.user_session_path(@conn, :new) %>
+              <%= link "Log in", class: "invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium", to: Routes.user_session_path(@conn, :new) %>
+              <%= link "Get Started", class: "invisible lg:visible  bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium  ", to: Routes.user_registration_path(@conn, :new) %>
             <% end %>
             <div
               x-ref="panel"
@@ -103,14 +102,8 @@
   <div x-show="isOpen" @click.away="isOpen = false" class="sm:hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
-
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
-
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+      <a href="#" class="bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Login</a>
+      <a href="#" class="bg-[#E8EBF0] text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Get Started</a>
     </div>
   </div>
 </nav>
-

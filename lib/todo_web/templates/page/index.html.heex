@@ -1,15 +1,19 @@
 <%= render_shared "_user_menu.html", assigns %>
-<div class="flex justify-center align-center px-2">
-  <div class="hero h-screen max-w-7xl flex flex-row justify-center align-center">
-    <div class="w-5/6 flex flex-col justify-center align-center space-y-3">
-      <h1 class="text-6xl lg:text-7xl text-blue-900 font-bold ">Let your child be the best they can be</h1>
-      <h3 class="text-3xl lg:text-3xl text-yellow-900 font-medium my-5">Learn from the industries top tutors and teachers all around the world. Book a 1:1 session and let your child thrive in their journey today.</h3>
-      <div class="flex flex-row justify-start align-center">
-        <%= link "Book Now", class: "bg-yellow-900 text-blue-900 px-5 py-3 mt-5 rounded-md text-lg font-bold", to: Routes.live_path(@conn, TodoWeb.BookLive) %>
+<div class="flex h-full flex-col">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
+      <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-blue-900 sm:text-7xl">Scheduling an appointment has never been so easy</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900">if you are looking for a companion for your business meetings, one-to-one is a free online appointment scheduling platform that you can use to achieve your goals.</p>
+      <div class="mt-10 flex justify-center">
+        <div class="flex flex-col">
+          <input type="text" class="appearance-none rounded w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" placeholder="Enter your email" />
+          <p class="max-w-2xl text-sm tracking-tight text-gray-300 text-left mt-2">create your free account. no credit card required</p>
+        </div>
+        <div class="flex flex-col">
+        <%= link "Sign up", class: "bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-normal font-semibold", to: "/" %>
+        </div>
       </div>
-    </div>
-    <div class="hidden lg:block w-1/2 p-5 m-5">
-      <img class="h-full w-full" src={Routes.static_path(@conn, "/images/todo-1.svg")} alt="">
-    </div>
+  </div>
+  <div class="mt-36 lg:mt-60 bg-[#E8EBF0]">
+    <h1 class="text-center text-4xl font-bold tracking-tight text-blue-900 sm:text-4xl p-20">How it Works?</h1>
   </div>
 </div>
