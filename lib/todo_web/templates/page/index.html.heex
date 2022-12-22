@@ -1,5 +1,5 @@
 <%= render_shared "_user_menu.html", assigns %>
-<div class="flex h-full flex-col">
+<div class="flex h-full flex-col bg-white">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
       <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-blue-900 sm:text-7xl">Scheduling an appointment has never been so easy</h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900">if you are looking for a companion for your business meetings, one-to-one is a free online appointment scheduling platform that you can use to achieve your goals.</p>
@@ -15,5 +15,44 @@
   </div>
   <div class="mt-36 lg:mt-60 bg-[#E8EBF0]">
     <h1 class="text-center text-4xl font-bold tracking-tight text-blue-900 sm:text-4xl p-20">How it Works?</h1>
+  </div>
+  <div class="mx-auto flex justify-center items-center px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-32">
+    <div class="w-full lg:w-3/5">
+      <h1 class="mx-auto max-w-7xl text-xl font-bold tracking-tight text-blue-900 text-center lg:text-left sm:text-5xl">Show your availability</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900 text-center lg:text-left">Using one-to-one you can create your schedule  and open your availability for your invitees.</p>
+    </div>
+    <div class="hidden lg:block lg:w-2/5">
+      <img class="invisible lg:visible" src={Routes.static_path(@conn, "/svg/availability.svg")} />
+    </div>
+  </div>
+  <div class="mx-auto flex justify-center items-center px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-32">
+    <div class="hidden lg:block lg:w-2/5">
+      <img class="invisible lg:visible" src={Routes.static_path(@conn, "/svg/be-in-demand.svg")} />
+    </div>
+    <div class="w-full lg:w-3/5">
+      <h1 class="mx-auto max-w-7xl text-xl font-bold tracking-tight text-blue-900  text-center lg:text-right sm:text-5xl">Be in demand</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900 text-center lg:text-right">Once your schedule is created and open, your invitees can only see your available slots and the length and time you have.</p>
+    </div>
+  </div>
+  <div class="mx-auto flex justify-center items-center px-4 sm:px-6 lg:px-8 pt-20 pb-16 lg:pt-32">
+    <div class="w-full lg:w-3/5">
+      <h1 class="mx-auto max-w-7xl text-xl font-bold tracking-tight text-blue-900 text-center lg:text-left sm:text-5xl">Booking Links</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900 text-center lg:text-left">As a business person with a lot happening to you, you can simply send your own personalized booking links to your invitees or even share it with different social media platform for them to know when is the time to have a talk with you!</p>
+    </div>
+    <div class="hidden lg:block lg:w-2/5">
+      <img class="invisible lg:visible" src={Routes.static_path(@conn, "/svg/booking-links.svg")} />
+    </div>
+  </div>
+  <div class="flex justify-center items-center bg-[#E8EBF0]">
+    <div class="mx-auto text-center items-center space-y-10 p-20">
+      <h1 class="text-center text-4xl font-bold tracking-tight text-blue-900 sm:text-4xl">Try one-to-one free</h1>
+      <p class="max-w-2xl text-lg tracking-tight text-blue-900">And Be closely connected to your success</p>
+      <button class="bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-2xl font-semibold">Start Free</button>
+    </div>
+  </div>
+  <div class="flex justify-center items-center bg-[#E8EBF0]">
+    <div class="mx-auto text-center items-center space-y-10 p-5">
+      <p class="max-w-2xl text-lg tracking-tight text-gray-400">All Right Reserved ❤️  Pau Riosa 2022</p>
+    </div>
   </div>
 </div>
