@@ -24,7 +24,6 @@ defmodule TodoWeb.DashboardLive do
       socket
       |> Schedules.assign_dates(params)
       |> Schedules.get_current_schedules(params)
-      |> handle_tab(params)
       |> assign(:page_title, "Dashboard")
 
     {:noreply, socket}

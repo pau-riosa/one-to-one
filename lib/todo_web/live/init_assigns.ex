@@ -10,10 +10,17 @@ defmodule TodoWeb.Live.InitAssigns do
     timezone = get_connect_params(socket)["timezone"] || "Asia/Manila"
     current_user = Accounts.get_user_by_session_token(user_token)
 
+    active_tab =
+      case socket.view do
+        TodoWeb.DashboardLive -> :dashboard
+        _ -> nil
+      end
+
     socket =
       socket
       |> assign(timezone: timezone)
       |> assign(current_user: current_user)
+      |> assign(active_tab: active_tab)
 
     {:cont, socket}
   end

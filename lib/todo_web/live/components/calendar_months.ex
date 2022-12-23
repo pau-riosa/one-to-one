@@ -1,6 +1,20 @@
 defmodule TodoWeb.Components.CalendarMonths do
   use TodoWeb, :component
 
+  @doc """
+
+    <CalendarMonths.calendar_months
+        id="calendar"
+        current_path={Routes.dashboard_path(@socket, :index)}
+        previous_month={@previous_month}
+        next_month={@next_month}
+        end_of_month={@end_of_month}
+        beginning_of_month={@beginning_of_month}
+        timezone={@timezone}
+        current={@current}
+        socket={@socket}
+        />
+  """
   def calendar_months(
         %{
           current_path: current_path,

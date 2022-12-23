@@ -1,5 +1,4 @@
 
-<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
 <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" class="fixed top-0 right-0 flex items-end my-10 mx-5">
    <p x-show="show"
       x-transition:enter="transition ease-out duration-300"
@@ -23,6 +22,7 @@
       phx-value-key="error"
       class="alert bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert"><%=  live_flash(@flash, :error) %></p>
 </div>
+<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
 <main class="">
    <%= @inner_content %>
 </main>
