@@ -54,6 +54,25 @@ defmodule TodoWeb.Router do
   ## Authentication routes
 
   scope "/", TodoWeb do
+    pipe_through [:browser]
+
+    get "/", PageController, :index
+    delete "/users/log_out", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :edit
+    post "/users/confirm/:token", UserConfirmationController, :update
+
+    live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+      get "/room/:schedule_id", RoomController, :index
+      post "/room/:schedule_id", RoomController, :enter
+      live "/book-a-class", BookLive
+      live "/book-a-class/:class", BookLive, :book_class
+      live "/book-a-class/:class/:schedule", BookLive, :set_schedule
+    end
+  end
+
+  scope "/", TodoWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/users/register", UserRegistrationController, :new
@@ -84,22 +103,9 @@ defmodule TodoWeb.Router do
     end
   end
 
-  scope "/", TodoWeb do
-    pipe_through [:browser]
+  # scope "/", TodoWeb do
+  #   pipe_through [:browser]
 
-    live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
-      get "/room/:schedule_id", RoomController, :index
-      post "/room/:schedule_id", RoomController, :enter
-      live "/book-a-class", BookLive
-      live "/book-a-class/:class", BookLive, :book_class
-      live "/book-a-class/:class/:schedule", BookLive, :set_schedule
-    end
-
-    get "/", PageController, :index
-    delete "/users/log_out", UserSessionController, :delete
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :edit
-    post "/users/confirm/:token", UserConfirmationController, :update
-  end
+  #   # get "/", PageController, :index
+  # end
 end

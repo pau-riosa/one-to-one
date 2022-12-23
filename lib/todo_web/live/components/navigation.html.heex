@@ -1,74 +1,62 @@
-<nav x-data="{ isOpen: false }" class="h-auto w-full bg-blue-900">
-    <div class="relative flex p-10 items-center justify-between h-16">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Mobile menu button-->
-        <button @click="isOpen = !isOpen "type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <i><%= Heroicons.icon("bars-4", type: "outline", class: "block h-6 w-6 mr-1 fill-indigo-500") %></i>
-          <i ><%= Heroicons.icon("x-mark", type: "outline", class: "hidden h-7 w-7 mr-1 fill-indigo-500") %></i>
-        </button>
-      </div>
-      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="flex-shrink-0 flex items-center">
-          <i><%= Heroicons.icon("check-circle", type: "outline", class: "h-7 w-7 mr-1 stroke-white") %></i>
-          <a href="/" class="text-2xl font-bold text-white">thriveschool</a>
-        </div>
-        <%= if @current_user do %>
-        <div class="hidden sm:block sm:ml-6">
-          <div class="flex space-x-4">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <%= live_patch "Dashboard",  to: Routes.dashboard_path(@socket, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
-            <%= live_patch "Classes",  to: Routes.class_path(@socket, :index), class: "bg-yellow-900 text-blue-900 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"  %>
-          </div>
-        </div>
-      <% end %>
-      </div>
+<nav x-data="{ isOpen: false, isDropdown: false }" class="w-full bg-white border-b-2">
+  <div class="relative flex items-center justify-between h-16 p-10">
+    <button @click="isOpen = !isOpen" type="button" class="inline-flex lg:hidden items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <i><%= Heroicons.icon("bars-4", type: "outline", class: "block h-7 w-7 mr-1 fill-indigo-500") %></i>
+    </button>
+    <div class="flex-1 flex justify-center items-center lg:justify-start">
+      <img class="flex-shrink-0" src={Routes.static_path(@socket, "/svg/Logo-one-to-one.svg")} style="">
+    </div>
+    <div class="hidden lg:flex space-x-5 items-center">
       <%= if @current_user do %>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button" class="bg-yellow-900 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+        <button type="button" class="bg-blue-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+          <span class="sr-only">View notifications</span>
           <!-- Heroicon name: outline/bell -->
           <i><%= Heroicons.icon("bell", type: "outline", class: "block h-6 w-6 stroke-blue-900") %></i>
         </button>
 
-        <!-- Profile dropdown -->
-        <div class="ml-3 relative flex justify-end">
-          <div class="relative">
-            <button
-              phx-click={Phoenix.LiveView.JS.toggle(to: "#menu")}
-              phx-click-away={Phoenix.LiveView.JS.hide(to: "#menu")}
-              type="button"
-              class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-              <span class="sr-only">Open user menu</span>
-              <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-            </button>
-            <div
-              id="menu"
-              x-transition.origin.top.left
-              class="hidden  origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-              <!-- Active: "bg-gray-100", Not Active: "" -->
-              <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
-              <div class="border-2  border-b-blue-900 mx-2"></div>
-              <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@socket, :edit) %>
-              <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@socket, :delete), method: :delete %>
-            </div>
-          </div>
-        </div>
-      </div>
+        <button
+          @click="isDropdown = !isDropdown"
+          type="button"
+          class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+          <span class="sr-only">Open user menu</span>
+          <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+        </button>
 
-    <% end %>
+        <%= live_patch "Create Session", to: Routes.event_path(@socket, :new), class: "invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium" %>
+      <% else %>
+        <%= link "Log in", class: "invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium", to: Routes.user_session_path(@socket, :new) %>
+        <%= link "Get Started", class: "invisible lg:visible  bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium ", to: Routes.user_registration_path(@socket, :new) %>
+      <% end %>
     </div>
+  </div>
+
+  <div
+    x-show="isDropdown"
+    @click.away="isDropdown = false"
+    class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+    <!-- Active: "bg-gray-100", Not Active: "" -->
+    <%= if @current_user do %>
+      <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
+      <div class="border-2 border-b-blue-900 mx-2"></div>
+      <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@socket, :edit) %>
+      <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@socket, :delete), method: :delete %>
+    <% else %>
+        <%= link "Log in", class: "invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium", to: Routes.user_session_path(@socket, :new) %>
+        <%= link "Get Started", class: "invisible lg:visible  bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium ", to: Routes.user_registration_path(@socket, :new) %>
+    <% end %>
+  </div>
+
 
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div x-show="isOpen" @click.away="isOpen = false" class="sm:hidden" id="mobile-menu">
+  <div x-show="isOpen" @click.away="isOpen = false" class="lg:hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
       <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
-
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
-
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+      <%= link "Log in", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :new) %>
+      <%= link "Get Started", class: "bg-[#E8EBF0] text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@socket, :new) %>
     </div>
   </div>
 </nav>
+
+
+

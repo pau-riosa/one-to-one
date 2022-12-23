@@ -17,7 +17,7 @@
 //
 //     import "some-package"
 //
-// import Alpine
+// import Alpine @ version 2
 import Alpine from "alpinejs";
 // Add this before your liveSocket call.
 window.Alpine = Alpine;

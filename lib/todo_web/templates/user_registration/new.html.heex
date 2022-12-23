@@ -1,7 +1,7 @@
 <div class="flex justify-center align-center">
   <div class="w-full min-h-screen max-w-2xl flex flex-col justify-center align-center items-center py-12 sm:px-6 lg:px-8">
     <div class="bg-white border rounded-md p-10 shadow-lg w-full">
-      <.form let={f} class="w-full px-12" for={@changeset} action={Routes.user_registration_path(@conn, :create)} as={:user}>
+      <.form let={f} class="w-full px-12" for={@conn} action={Routes.user_registration_path(@conn, :create)} as={:user}>
       <input type="hidden" name="remember" value="true">
       <%= if @changeset.action do %>
         <div class="alert alert-danger">
@@ -9,9 +9,10 @@
         </div>
       <% end %>
       <div class="mb-10 w-full">
-        <div class="flex-shrink-0 flex items-center">
-          <i><%= Heroicons.icon("check-circle", type: "outline", class: "h-7 w-7 mr-1 stroke-blue-900") %></i>
-          <a href="/" class="text-2xl font-bold text-blue-900 mb-1">thriveschool</a>
+        <div class="flex-shrink-0 flex justify-center items-center">
+          <a href="/"> 
+            <img class="flex-shrink-0" src={Routes.static_path(@conn, "/svg/Logo-one-to-one.svg")} style="">
+          </a> 
         </div>
       </div>
       <div class="my-10 w-full">
@@ -33,7 +34,7 @@
         </div>
       </div>
       <div class="flex flex-col items-center">
-        <%= submit "Sign up", class: "w-2/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-yellow-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
+        <%= submit "Sign up", class: "w-2/5 flex align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-white hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue" %>
       </div>
       </.form>
     </div>

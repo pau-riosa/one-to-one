@@ -13,6 +13,12 @@ defmodule Todo.Accounts.User do
     timestamps()
   end
 
+  def changeset(user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
+  end
+
   @doc """
   A user changeset for registration.
 
