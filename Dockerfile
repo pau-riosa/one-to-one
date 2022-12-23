@@ -74,7 +74,7 @@ RUN npm install \
   autoprefixer \
   postcss-import \
   postcss-nested \
-  alpinejs \
+  alpinejs@2 \
   @membraneframework/membrane-webrtc-js \
   query-string \
   webrtc-adapter
