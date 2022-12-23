@@ -3,7 +3,7 @@
         <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} /> 
         <div class="w-full flex flex-col rounded-md space-y-3 px-10 overflow-y-auto overflow-hidden">
             <div class="flex flex-col w-full space-y-2 pb-7 border-b-2">
-                <h1 class="text-xl text-blue-900 font-bold">Welcome</h1>
+                <h1 class="text-2xl text-blue-900 font-bold">Welcome</h1>
                 <p class="text-md text-blue-800 font-normal">You have <span class="text-yellow-900 text-md font-bold">1 upcoming session</span></p>
             </div>
             <div class="flex flex-row justify-center align-center items-center pt-10 space-x-5">
@@ -16,46 +16,6 @@
                     <p class="text-lg font-bold text-blue-900">30</p>
                 </div>
             </div>
-
-
-            <%# <div class="flex flex-row space-x-10"> %>
-            <%#     <%= live_patch "Upcoming Sessions", to: Routes.dashboard_path(@socket, :index, %{"class" => "upcoming"}), class: "#{if @active_tab == "upcoming", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %1> %>
-            <%#     <%= live_patch "Past Sessions", to: Routes.dashboard_path(@socket, :index, %{"class" => "past"}), class: "#{if @active_tab == "past", do: "text-xl font-bold text-blue-900 mb-4", else: "text-xl font-bold text-gray-400 mb-4 hover:text-blue-900"}" %1> %>
-            <%# </div> %>
-            <%# <%= for schedule <- @schedules do %1> %>
-            <%#     <div class="w-full rounded-lg bg-white shadow-xl flex flex-col"> %>
-            <%#         <div class="p-10 space-y-5"> %>
-            <%#             <div x-data="{ open: false }" x-on:click.outside="open = false" class="flex flex-row mb-5 justify-between relative"> %>
-            <%#                 <div class="flex"> %>
-            <%#                     <p class="text-sm mr-2">Instructor</p> %>
-            <%#                     <img class="h-5 w-5 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""> %>
-            <%#                 </div> %>
-            <%#                 <i @click="open = !open"><%= Heroicons.icon("ellipsis-vertical", type: "outline", class: "h-5 w-5 cursor-pointer") %1></i> %>
-            <%#                 <ul x-show="open" %>
-            <%#                     x-transition:enter="transition ease-out duration-200" %>
-            <%#                     x-transition:enter-start="opacity-0" %>
-            <%#                     x-transition:enter-end="opacity-100" %>
-            <%#                     x-transition:leave="transition ease-in duration-200" %>
-            <%#                     x-transition:leave-start="opacity-100" %>
-            <%#                     x-transition:leave-end="opacity-0" %>
-            <%#                     class="absolute top-3 right-3 bg-white rounded rounded-md text-blue-900 border border-blue p-3 space-y-2"> %>
-            <%#                   <li><%= live_patch "Edit", to: Routes.event_path(@socket, :edit, schedule.event.id) %1></li> %>
-            <%#                   <li><a href="#">Cancel</a></li> %>
-            <%#                   <li><a href="#">Delete</a></li> %>
-            <%#                 </ul> %>
-            <%#             </div> %>
-            <%#             <h2 class="text-2xl text-blue-900 font-bold uppercase"><%= schedule.event.name %1></h2> %>
-            <%#             <p class="text-sm truncate"><%= schedule.event.description %1></p> %>
-            <%#             <div class="flex flex-row my-5 align-center text-blue-900"> %>
-            <%#                 <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5") %1></i> %>
-            <%#                 <p class="text-sm mx-2"><%= Timex.format!(schedule.scheduled_for, "%A %B %e, %Y %l:%M %p", :strftime) %1></p> %>
-            <%#             </div> %>
-            <%#             <div class="flex justify-end space-x-3"> %>
-            <%#                 <%= Phoenix.HTML.Link.link "Start", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-4 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %1> %>
-            <%#             </div> %>
-            <%#         </div> %>
-            <%#     </div> %>
-            <%# <% end %1> %>
         </div> 
     </div>
 </div>

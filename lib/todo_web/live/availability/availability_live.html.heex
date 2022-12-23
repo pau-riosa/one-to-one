@@ -1,0 +1,15 @@
+<div class="flex justify-center align-center">
+    <div class="w-full max-w-7xl min-h-screen flex flex-row py-5">
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} /> 
+        <div class="w-full flex flex-col rounded-md space-y-8 px-10 overflow-y-auto overflow-hidden">
+            <div class="flex flex-col w-full space-y-2 pb-7">
+                <h1 class="text-2xl text-blue-900 font-bold">Availability</h1>
+                <p class="text-blue-800">Each slot defaults to only 15mins, you can change this under booking duration. </p>
+                <p class="text-blue-900">In your local timezone <span class="text-md text-blue-900 font-bold"><%= @timezone %></span></p>
+            </div>
+            <div class="flex flex-row space-x-10">
+                <h1 class="text-2xl text-blue-900 font-bold">Work in progress</h1>
+            </div>
+        </div> 
+    </div>
+</div>

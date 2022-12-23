@@ -93,7 +93,7 @@ defmodule Todo.Schedules do
     current = current_from_params(socket, params)
 
     schedules =
-      case params["class"] do
+      case params["session"] do
         "upcoming" ->
           get_schedules_by_created_by_id(
             socket.assigns.current_user.id,

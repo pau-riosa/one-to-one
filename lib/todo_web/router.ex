@@ -90,6 +90,8 @@ defmodule TodoWeb.Router do
       pipe_through [:browser, :require_authenticated_user]
 
       live "/dashboard", DashboardLive, :index
+      live "/bookings", BookingLive, :index
+      live "/availability", AvailabilityLive, :index
       live "/class", ClassLive, :index
       live "/event/new", EventLive, :new
       live "/event/:event_id", EventLive, :edit
@@ -97,15 +99,10 @@ defmodule TodoWeb.Router do
 
       # # will be shared by student and instructor
       # get "/room/:schedule_id", RoomController, :index
+      live "/settings", SettingsLive, :index
       get "/users/settings", UserSettingsController, :edit
       put "/users/settings", UserSettingsController, :update
       get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     end
   end
-
-  # scope "/", TodoWeb do
-  #   pipe_through [:browser]
-
-  #   # get "/", PageController, :index
-  # end
 end

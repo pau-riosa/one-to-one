@@ -13,6 +13,9 @@ defmodule TodoWeb.Live.InitAssigns do
     active_tab =
       case socket.view do
         TodoWeb.DashboardLive -> :dashboard
+        TodoWeb.BookingLive -> :bookings
+        TodoWeb.AvailabilityLive -> :availability
+        TodoWeb.SettingsLive -> :settings
         _ -> nil
       end
 
