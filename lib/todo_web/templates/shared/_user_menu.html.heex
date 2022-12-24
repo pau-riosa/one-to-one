@@ -5,12 +5,12 @@
       <span class="sr-only">Open main menu</span>
       <i><%= Heroicons.icon("bars-4", type: "outline", class: "block h-7 w-7 mr-1 fill-indigo-500") %></i>
     </button>
-    <div class="flex-1 flex justify-center items-center lg:justify-start">
+    <a href="/" class="flex-1 flex justify-center items-center lg:justify-start">
       <img class="flex-shrink-0" src={Routes.static_path(@conn, "/svg/Logo-one-to-one.svg")} style="">
-    </div>
+    </a>
     <div class="hidden lg:flex space-x-5 items-center">
       <%= if @current_user do %>
-        <button type="button" class="bg-blue-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+        <button type="button" class="bg-blue-700 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
           <span class="sr-only">View notifications</span>
           <!-- Heroicon name: outline/bell -->
           <i><%= Heroicons.icon("bell", type: "outline", class: "block h-6 w-6 stroke-blue-900") %></i>
@@ -40,6 +40,7 @@
     <%= if @current_user do %>
       <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
       <div class="border-2 border-b-blue-900 mx-2"></div>
+      <%= link "Home", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.dashboard_path(@conn, :index) %>
       <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@conn, :edit) %>
       <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@conn, :delete), method: :delete %>
     <% else %>
