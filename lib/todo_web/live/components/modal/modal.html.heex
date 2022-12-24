@@ -1,0 +1,22 @@
+<div id={@id}>
+  <%= if @show_modal == true do %>
+    <div id={"modal-#{@id}"} class="phx-modal" phx-remove={hide_modal(%JS{}, @id)}>
+      <div
+        id={"modal-content-#{@id}"}
+        class="phx-modal-content"
+        phx-click-away={hide_modal(%JS{}, @id)}
+        phx-window-keydown={hide_modal(%JS{}, @id)}
+        phx-key="escape"
+        phx-target={@myself}
+        >
+        <div class="flex justify-between items-center border-b-2">
+          <h1 class="text-2xl text-blue-900 font-bold"><%= @title %></h1>
+          <button class="phx-modal-close" phx-click={hide_modal(%JS{}, @id)} phx-target={@myself}>x</button>
+        </div>
+        <div class="py-10 px-2">
+          <%= render_slot(@inner_block) %> 
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

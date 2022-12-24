@@ -55,6 +55,7 @@ defmodule TodoWeb do
     quote do
       use Phoenix.LiveComponent
       import TodoWeb.Components.Helpers
+      alias Phoenix.LiveView.JS
 
       unquote(view_helpers())
     end
