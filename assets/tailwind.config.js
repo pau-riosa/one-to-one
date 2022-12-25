@@ -1,9 +1,11 @@
 module.exports = {
+  important: true,
   mode: "jit",
   content: ["./js/**/*.js", "../lib/*_web/**/*.*ex"],
   theme: {
     extend: {
       colors: {
+        "black-rgba": "rgba(0, 0, 0, 0.4)",
         blue: {
           900: "#1D3557",
           800: "#A8AFB9",
