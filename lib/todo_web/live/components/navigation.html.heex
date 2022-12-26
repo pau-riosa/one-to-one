@@ -50,13 +50,13 @@
   <div x-show="isOpen" @click.away="isOpen = false" class="lg:hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
       <%= if @current_user do %>
-        <a phx-click="open" phx-target="#create-session" class="bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium">Create Session</a>
-        <%= link "Home", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.dashboard_path(@socket, :index) %>
-        <%= link "Settings", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_settings_path(@socket, :edit) %>
-        <%= link "Log out", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :delete), method: :delete %>
+        <a phx-click="open" phx-target="#create-session" class="bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Create Session</a>
+        <%= link "Home", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.dashboard_path(@socket, :index) %>
+        <%= link "Settings", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_settings_path(@socket, :edit) %>
+        <%= link "Log out", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :delete), method: :delete %>
       <% else %> 
-        <%= link "Log in", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :new) %>
-        <%= link "Get Started", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@socket, :new) %>
+        <%= link "Log in", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :new) %>
+        <%= link "Get Started", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@socket, :new) %>
       <% end %> 
     </div>
   </div>
