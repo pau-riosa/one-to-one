@@ -31,7 +31,7 @@ defmodule TodoWeb.Components.TimeInput do
     <div class="flex flex-col w-full">
         <label class="text-md text-blue-900 font-normal"><%= Atom.to_string(@field) |> String.capitalize %></label>
         <div class="flex flex-row justify-between border border-gray-300 my-1 items-center rounded-md bg-white px-3 py-3">
-          <%= text_input @form, @field, value: @selected_time, placeholder: "00:00 AM", class: "appearance-none w-full text-blue-900 font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_click: "show-time", phx_target: @myself %>
+          <%= text_input @form, @field, value: @selected_time, placeholder: "00:00 AM", class: "appearance-none w-full text-blue-900 font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_click: "show-time", phx_click_away: "hide-time", phx_target: @myself %>
           <i><%= Heroicons.icon("clock", type: "solid", class: "h-5 w-5 fill-blue-900") %></i> 
         </div>
       <%= if @show_time do %>
