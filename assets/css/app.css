@@ -216,6 +216,15 @@
   animation: 0.2s ease-out 0s normal forwards 1 fade-out-keys;
 }
 
+/* Toggle B */
+input:checked ~ .dot-bg {
+  background-color: #a8afb9 !important;
+}
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #1d3557 !important;
+}
+
 @keyframes fade-in-scale-keys {
   0% {
     scale: 0.95;
