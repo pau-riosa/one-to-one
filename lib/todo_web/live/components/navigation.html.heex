@@ -1,8 +1,7 @@
 <nav x-data="{ isOpen: false, isDropdown: false }" class="w-full bg-white border-b-2">
   <div class="relative flex items-center justify-between h-16 p-10">
-    <button @click="isOpen = !isOpen" type="button" class="inline-flex lg:hidden items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-      <span class="sr-only">Open main menu</span>
-      <i><%= Heroicons.icon("bars-4", type: "outline", class: "block h-7 w-7 mr-1 fill-indigo-500") %></i>
+    <button @click="isOpen = !isOpen" type="button" class="border-2 border-blue-700 inline-flex  items-center justify-center p-2 rounded-md lg:hidden" aria-controls="mobile-menu" aria-expanded="false">
+      <p class="text-lg text-blue-900 font-semibold">Menu</p>
     </button>
     <a href="/" class="flex-1 flex justify-center items-center lg:justify-start">
       <img class="flex-shrink-0" src={Routes.static_path(@socket, "/svg/Logo-one-to-one.svg")} style="">
@@ -11,7 +10,6 @@
       <%= if @current_user do %>
         <button type="button" class="bg-blue-700 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
           <span class="sr-only">View notifications</span>
-          <!-- Heroicon name: outline/bell -->
           <i><%= Heroicons.icon("bell", type: "outline", class: "block h-6 w-6 stroke-blue-900") %></i>
         </button>
 
@@ -23,7 +21,7 @@
           <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
         </button>
 
-        <button phx-click="open" phx-target="#create-session" class="invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium">Create Session</button>
+        <button phx-click="open" phx-target="#create-session" class="bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium">Create Session</button>
       <% else %>
         <%= link "Log in", class: "invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium", to: Routes.user_session_path(@socket, :new) %>
         <%= link "Get Started", class: "invisible lg:visible  bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium ", to: Routes.user_registration_path(@socket, :new) %>
@@ -35,7 +33,6 @@
     x-show="isDropdown"
     @click.away="isDropdown = false"
     class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-    <!-- Active: "bg-gray-100", Not Active: "" -->
     <%= if @current_user do %>
       <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
       <div class="border-2 border-b-blue-900 mx-2"></div>
@@ -52,9 +49,15 @@
   <!-- Mobile menu, show/hide based on menu state. -->
   <div x-show="isOpen" @click.away="isOpen = false" class="lg:hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <%= link "Log in", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :new) %>
-      <%= link "Get Started", class: "bg-[#E8EBF0] text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@socket, :new) %>
+      <%= if @current_user do %>
+        <a phx-click="open" phx-target="#create-session" class="bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium">Create Session</a>
+        <%= link "Home", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.dashboard_path(@socket, :index) %>
+        <%= link "Settings", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_settings_path(@socket, :edit) %>
+        <%= link "Log out", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :delete), method: :delete %>
+      <% else %> 
+        <%= link "Log in", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :new) %>
+        <%= link "Get Started", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@socket, :new) %>
+      <% end %> 
     </div>
   </div>
 </nav>

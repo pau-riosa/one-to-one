@@ -1,9 +1,8 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <nav x-data="{ isOpen: false, isDropdown: false }" class="w-full bg-white border-b-2">
   <div class="relative flex items-center justify-between h-16 p-10">
-    <button @click="isOpen = !isOpen" type="button" class="inline-flex lg:hidden items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-      <span class="sr-only">Open main menu</span>
-      <i><%= Heroicons.icon("bars-4", type: "outline", class: "block h-7 w-7 mr-1 fill-indigo-500") %></i>
+    <button @click="isOpen = !isOpen" type="button" class="border-2 border-blue-700 inline-flex  items-center justify-center p-2 rounded-md lg:hidden" aria-controls="mobile-menu" aria-expanded="false">
+      <p class="text-lg text-blue-900 font-semibold">Menu</p>
     </button>
     <a href="/" class="flex-1 flex justify-center items-center lg:justify-start">
       <img class="flex-shrink-0" src={Routes.static_path(@conn, "/svg/Logo-one-to-one.svg")} style="">
@@ -53,9 +52,14 @@
   <!-- Mobile menu, show/hide based on menu state. -->
   <div x-show="isOpen" @click.away="isOpen = false" class="lg:hidden" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <%= link "Log in", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@conn, :new) %>
-      <%= link "Get Started", class: "bg-[#E8EBF0] text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@conn, :new) %>
+      <%= if @current_user do %>
+        <%= link "Home", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.dashboard_path(@conn, :index) %>
+        <%= link "Settings", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_settings_path(@conn, :edit) %>
+        <%= link "Log out", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+      <% else %>
+        <%= link "Log in", class: "bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@conn, :new) %>
+        <%= link "Get Started", class: "bg-[#E8EBF0] text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_registration_path(@conn, :new) %>
+      <% end %>
     </div>
   </div>
 </nav>
