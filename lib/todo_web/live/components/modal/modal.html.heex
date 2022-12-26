@@ -11,7 +11,7 @@
         >
           <div class="flex flex-row justify-between items-center mb-3">
             <h1 class="text-2xl text-blue-900 font-bold"><%= @title %></h1>
-            <button class="phx-modal-close" phx-click={hide_modal(%JS{}, @id)} phx-target={@myself}>x</button>
+            <%= Heroicons.icon("x-mark", type: "solid", class: "cursor-pointer h-6 w-6 fill-blue-900", phx_click: hide_modal(%JS{}, @id), phx_target: @myself) %>
           </div>
           <div class="flex flex-row justify-between items-center my-5">
             <p class="text-md text-blue-800 font-normal"><%= @subtitle %></p>

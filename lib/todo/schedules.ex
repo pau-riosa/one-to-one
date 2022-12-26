@@ -113,7 +113,7 @@ defmodule Todo.Schedules do
     assign(socket, :schedules, schedules)
   end
 
-  def assign_dates(socket, params) do
+  def assign_dates(socket, params \\ %{}) do
     current = current_from_params(socket, params)
     beginning_of_month = Timex.beginning_of_month(current)
     end_of_month = Timex.end_of_month(current)
@@ -199,17 +199,17 @@ defmodule Todo.Schedules do
     Timex.today(socket.assigns.timezone)
   end
 
-  defp list_of_time(date) do
+  def list_of_time(date) do
     Timex.Interval.new(from: date, until: [days: 1], left_open: false)
     |> Timex.Interval.with_step(minutes: 30)
     |> Enum.map(& &1)
   end
 
-  defp date_to_week(datetime) do
+  def date_to_week(datetime) do
     Timex.format!(datetime, "{YYYY}-{0M}-{D}")
   end
 
-  defp date_to_month(datetime) do
+  def date_to_month(datetime) do
     Timex.format!(datetime, "{YYYY}-{0M}")
   end
 end

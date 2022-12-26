@@ -11,4 +11,8 @@ defmodule TodoWeb.Components.CreateSession do
     changeset = Event.changeset(%Event{}, %{})
     {:ok, assign(socket, changeset: changeset)}
   end
+
+  def handle_event("save", _, socket) do
+    {:noreply, socket}
+  end
 end

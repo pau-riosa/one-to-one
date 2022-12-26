@@ -1,0 +1,47 @@
+<div class="flex flex-col w-full">
+  <label class="text-md text-blue-900 font-normal"><%= Atom.to_string(@field) |> String.capitalize %></label>
+  <%= text_input @form, @field, value: @date,  class: "appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-gray-200 text-blue-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_click: "show-calendar", phx_target: @myself  %>
+
+  <%= if @show_calendar do %>
+    <div class="bg-white rounded-md border-2 border-gray-200 p-3 ">
+      <div class="flex justify-between items-center text-blue-900 border-b-2 border-gray-200 my-3">
+        <%= Timex.format!(@current, "%B %Y", :strftime) %> 
+
+        <div class="flex justify-end flex-1">
+          <button phx-target={@myself} phx-value-previous-month={@previous_month} phx-click="previous-month" class="flex items-center justify-center w-4 h-4 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+            <i><%= Heroicons.icon("chevron-left", type: "solid", class: " w-4 h-4  fill-blue-900") %></i>
+          </button>
+          <button phx-target={@myself} phx-value-next-month={@next_month} phx-click="next-month" class="flex items-center justify-center w-4 h-4 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+            <i><%= Heroicons.icon("chevron-right", type: "solid", class: " w-4 h-4 fill-blue-900") %></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-6 text-center text-blue-900 uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
+        <div class="text-xs">Mon</div>
+        <div class="text-xs">Tue</div>
+        <div class="text-xs">Wed</div>
+        <div class="text-xs">Thu</div>
+        <div class="text-xs">Fri</div>
+        <div class="text-xs">Sat</div>
+        <div class="text-xs">Sun</div>
+        <%= for i <- 0..(@end_of_month.day - 1) do %>
+          <.live_component module={TodoWeb.Components.DayInput}
+             id={"day-input-#{i}"}
+             index={i}
+             current={@current}
+             date={Timex.shift(@beginning_of_month, days: i)}
+             timezone={@timezone}
+             field={@field}
+             form={@form}
+             />
+           <% end %>
+      </div> 
+      <div class="flex items-center gap-x-1 text-blue">
+        <i><%= Heroicons.icon("globe-asia-australia", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
+        <%= @timezone %> 
+      </div>
+    </div>
+  <% end %>
+</div>
+

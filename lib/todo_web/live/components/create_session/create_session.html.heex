@@ -9,23 +9,21 @@
       <.form let={f} for={@changeset} phx-validate="validate" phx-submit="save" phx-target={@myself} class="w-full space-y-10"> 
         <div class="flex flex-col items-center justify-center my-5 space-y-5"> 
           <div class="flex flex-row w-full space-x-1">
-            <div class="flex flex-col w-full">
-              <label class="text-md text-blue-900 font-normal">Date</label>
-              <input type="text" class="appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm">
-            </div>
-            <div class="flex flex-col w-full">
-              <label class="text-md text-blue-900 font-normal">Time</label>
-              <input type="text" class="appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm">
-            </div>
+            <.live_component module={TodoWeb.Components.CalendarMonthInput} id="date-input"
+                                                                            form={f}
+                                                                            field={:date}
+                                                                            timezone={@timezone}
+                                                                            />
+                                                                            
+            <.live_component module={TodoWeb.Components.TimeInput} id="time-input" form={f} field={:time} timezone={@timezone} />
           </div>
           <div class="flex flex-col w-full">
             <label class="text-md text-blue-900 font-normal">Email</label>
-            <input type="text" class="appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm">
+              <%= email_input f, :email,  class: "appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-gray-200 text-blue-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
           </div>
           <div class="flex flex-col w-full">
             <label class="text-md text-blue-900 font-normal">Notes</label>
-            <textarea rows="10" class="appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm">
-            </textarea>
+            <textarea rows="10" placeholder="Let your invitee know what will be this one-to-one about" class="appearance-none rounded-md w-full px-1 py-3 my-1 border border-gray-300 placeholder-blue-800 text-blue-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm"></textarea>
           </div>
           <button type="submit" class="w-1/2 align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-white hover:text-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue">Send Invitation</button>
         </div>
