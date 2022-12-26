@@ -13,8 +13,8 @@ defmodule TodoWeb.Components.Modal do
 
   </.live_component>
   """
-  @modal_class "!opacity-100 fixed z-100 left-0 top-0 w-full h-full overflow-auto bg-black-rgba "
-  @content_class "bg-[#fefefe] mx-auto my-[15vh] p-[20px] border-2 border-blue-700 rounded-md w-5/6"
+  @modal_class "!opacity-100 fixed z-100 left-0 top-0 w-full h-full overflow-auto bg-black-rgba transition fade-in"
+  @content_class "bg-[#fefefe] mx-auto my-[15vh] p-[20px] border-2 border-blue-700 rounded-md w-5/6 transition fade-in-scale"
 
   def mount(socket) do
     {:ok,

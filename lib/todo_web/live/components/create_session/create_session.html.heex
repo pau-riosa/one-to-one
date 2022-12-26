@@ -3,7 +3,7 @@
   id="create-session" 
   title="Set up 1 to 1 session" 
   subtitle="Schedule an instant appointment. Kindly select a date and time together with the email of your invitee." 
-  modal_content_class="bg-white my-[15vh] mx-5 lg:mx-auto w-90 lg:w-3/12 border-2 border-blue-700 rounded-md p-[20px]">
+  modal_content_class="bg-white my-[15vh] mx-5 lg:mx-auto w-90 lg:w-3/12 border-2 border-blue-700 rounded-md p-[20px] transition fade-in-scale">
   <div class="w-full flex lg:flex-row flex-col">
     <div class="w-full bg-gray-100 rounded-md p-5 border-gray-300"> 
       <.form let={f} for={@changeset} phx-validate="validate" phx-submit="save" phx-target={@myself} class="w-full space-y-10"> 
