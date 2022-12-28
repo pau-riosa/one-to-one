@@ -8,30 +8,36 @@
                 <p class="text-blue-800">Each slot defaults to only 15mins, you can change this under booking duration. </p>
                 <p class="text-blue-900">In your local timezone <span class="text-md text-blue-900 font-bold"><%= @timezone %></span></p>
             </div>
-            <div class="flex flex-row space-x-10 border-b-2 border-blue-700">
-                <h1 class="text-lg text-blue-900 font-semibold">Available Hours</h1>
-                <h1 class="text-lg text-blue-900 font-semibold">Session Settings</h1>
+            <div class="flex flex-row space-x-10 border-b-2">
+                <h1 class="text-md text-blue-900 font-semibold mb-3">Available Hours</h1>
+                <h1 class="text-md text-blue-900 font-semibold mb-3">Booking Duration</h1>
             </div>
-            <%= for day <- ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] do %>
-                <div class="w-full flex flex-row justify-start items-center space-x-20"> 
-                    <label for="toggleB" class="flex items-center cursor-pointer">
-                        <div class="relative">
-                            <input type="checkbox" id="toggleB" class="sr-only">
-                            <div class="dot-bg block bg-gray-600 w-14 h-8 rounded-full"></div>
-                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+            <.form let={f} for={@account_changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10" >
+            <%= for g <- (inputs_for f, :session_settings) |> Enum.sort_by(&sorter(&1.data.day), :asc) do %>
+                <%= hidden_inputs_for(g) %>
+                <div class="w-full grid grid-cols-6 gap-4 py-3 items-start border-b-2">
+                    <%= hidden_input g, :day, value: g.data.day, phx_update: "ignore" %>
+                    <p class="text-lg text-blue-900 font-semibold uppercase" phx-update="ignore" id={"session_setting-day-#{g.index}"}><%= g.data.day %></p>
+                    <div class="w-full col-span-3 items-start" >
+                        <div class="w-full col-span-2 grid grid-cols-3 gap-2 items-center content-end">
+                            <%= for h <- (inputs_for g, :times) do %>
+                                <%= hidden_inputs_for(h) %>
+                                <TodoWeb.Components.TimeInput.render form={h} label={false} field={:start_time} timezone={@timezone} />
+                                <TodoWeb.Components.TimeInput.render form={h} label={false} field={:end_time} timezone={@timezone} />
+                                <%= Heroicons.icon("trash", type: "solid", class: "h-6 w-10 fill-red-600  cursor-pointer", phx_click: "delete-time", phx_value_index: h.index, phx_value_schedule_index: g.index) %>
+                            <% end %>
                         </div>
-                    </label>
-                    <div class="w-full"> 
-                        <p class="text-lg text-blue-900 font-semibold uppercase"><%= day %></p>
-                    </div>
-                    <div class="w-full"> 
-                        <p class="text-lg text-blue-900 font-semibold">UNAVAILABLE</p>
                     </div>
                     <div class="w-full text-right"> 
-                        <p class="text-lg text-blue-900 font-semibold">+</p>
+                        <button  type="button" 
+                                 class={"border-2 border-blue-800 bg-blue-900 hover:bg-white text-lg font-normal text-white hover:text-blue-900 px-3 py-2 rounded-md cursor-pointer"}  
+                                 phx-value-index={g.index} 
+                                 phx-click="add-time">add time</button>
                     </div>
                 </div>
             <% end %>
+            <%= submit "Update Settings", class: "border-2 border-blue-800 bg-blue-900 hover:bg-white text-lg font-normal text-white hover:text-blue-900 px-3 py-2 rounded-md cursor-pointer" %>
+            </.form>
         </div> 
     </div>
     <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} />

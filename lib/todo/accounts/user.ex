@@ -10,12 +10,25 @@ defmodule Todo.Accounts.User do
     field :last_name, :string
     field :middle_name, :string
     field :avatar, :string
+    has_many :schedules, Todo.Schedules.Schedule
+
+    has_many :session_settings, Todo.SessionSetting,
+      on_replace: :nilify,
+      preload_order: [asc: :day]
+
     timestamps()
+  end
+
+  def availability_changeset(struct, attrs \\ %{}) do
+    struct
+    |> cast(attrs, [])
+    |> cast_assoc(:session_settings, with: &Todo.SessionSetting.changeset/2)
   end
 
   def changeset(user, attrs \\ %{}) do
     user
     |> cast(attrs, [:email, :password])
+    |> cast_assoc(:session_settings, with: &Todo.SessionSetting.changeset/2)
     |> validate_required([:email, :password])
   end
 

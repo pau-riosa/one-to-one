@@ -8,8 +8,8 @@
                 <p class="text-blue-900">The session timings are following your local timezone <span class="text-md text-blue-900 font-bold"><%= @timezone %></span></p>
             </div>
             <div class="flex flex-row space-x-10  border-b-2">
-                <%= live_patch "Upcoming", to: Routes.booking_path(@socket, :index, %{"session" => "upcoming"}), class: "#{if @active_selection == "upcoming", do: "text-md font-bold text-blue-900 mb-4", else: "text-md font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
-                <%= live_patch "Past", to: Routes.booking_path(@socket, :index, %{"session" => "past"}), class: "#{if @active_selection == "past", do: "text-md font-bold text-blue-900 mb-4", else: "text-md font-bold text-gray-400 mb-4 hover:text-blue-900"}" %>
+                <%= live_patch "Upcoming", to: Routes.booking_path(@socket, :index, %{"session" => "upcoming"}), class: "mb-3 #{if @active_selection == "upcoming", do: "text-md font-semibold text-blue-900", else: "text-md font-semibold text-gray-400 hover:text-blue-900"}" %>
+                <%= live_patch "Past", to: Routes.booking_path(@socket, :index, %{"session" => "past"}), class: "mb-3 #{if @active_selection == "past", do: "text-md font-semibold text-blue-900", else: "text-md font-semibold text-gray-400 hover:text-blue-900"}" %>
             </div>
             <%= cond do %>
                 <% Enum.empty?(@schedules) and @active_selection == "upcoming" -> %>

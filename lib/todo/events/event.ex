@@ -21,6 +21,7 @@ defmodule Todo.Events.Event do
   def changeset(event, attrs \\ %{}) do
     event
     |> cast(attrs, @required_attrs ++ @optional_attrs)
+    |> cast_assoc(:schedules, with: &Todo.Schedules.Schedule.changeset/2)
     |> validate_required(@required_attrs)
     |> add_slug(attrs)
   end

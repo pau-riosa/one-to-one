@@ -44,6 +44,8 @@ defmodule TodoWeb do
 
   def live_view do
     quote do
+      alias Phoenix.LiveView.JS
+
       use Phoenix.LiveView,
         layout: {TodoWeb.LayoutView, "live.html"}
 

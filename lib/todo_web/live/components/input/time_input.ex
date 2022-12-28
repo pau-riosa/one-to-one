@@ -14,7 +14,9 @@ defmodule TodoWeb.Components.TimeInput do
 
   """
   def render(assigns) do
-    times = list_of_time(Timex.today())
+    times =
+      list_of_time(Timex.today())
+      |> Enum.map(&Timex.format!(&1, "%I:%M %p", :strftime))
 
     class =
       class_list([
@@ -26,23 +28,18 @@ defmodule TodoWeb.Components.TimeInput do
       assigns
       |> assign(times: times)
       |> assign(class: class)
+      |> assign(label: Map.get(assigns, :label, true))
 
     ~H"""
     <div class="flex flex-col w-full">
-        <label class="text-md text-blue-900 font-normal"><%= Atom.to_string(@field) |> String.capitalize %></label>
+        <%= if @label do %>
+          <label class="text-md text-blue-900 font-normal"><%= Atom.to_string(@field) |> String.capitalize %></label>
+        <% end %>
         <div class="flex flex-row justify-between border border-gray-300 my-1 items-center rounded-md bg-white px-3 py-3">
-          <%= text_input @form, @field, value: @selected_time, placeholder: "00:00 AM", class: "appearance-none w-full text-blue-900 font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_click: "show-time", phx_click_away: "hide-time", phx_target: @myself %>
+          <%= select @form, @field, @times, class: "appearance-none w-full text-blue-900 font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_update: "ignore" %>
           <i><%= Heroicons.icon("clock", type: "solid", class: "h-5 w-5 fill-blue-900") %></i> 
         </div>
-      <%= if @show_time do %>
-        <div class="flex flex-col h-80 w-1/2 bg-white overflow-auto ">
-          <%= for time <- @times do %>
-            <a class={@class} phx-value-selected-time={Timex.format!(time, "%l:%M %p", :strftime)} phx-click="select-time" phx-target={"##{@form.name}_#{@field}"} >
-              <%= Timex.format!(time, "%l:%M %p", :strftime) %> 
-            </a> 
-        <% end %>
-        </div>
-      <% end %>
+        <%= error_tag @form, @field %>
     </div>
     """
   end
@@ -54,23 +51,6 @@ defmodule TodoWeb.Components.TimeInput do
       |> assign(selected_time: "")
 
     {:ok, socket}
-  end
-
-  def handle_event("show-time", _, socket) do
-    {:noreply, assign(socket, show_time: true)}
-  end
-
-  def handle_event("hide-time", _, socket) do
-    {:noreply, assign(socket, show_time: false)}
-  end
-
-  def handle_event("select-time", %{"selected-time" => time}, socket) do
-    socket =
-      socket
-      |> assign(selected_time: time)
-      |> assign(show_time: false)
-
-    {:noreply, socket}
   end
 
   def list_of_time(date) do
