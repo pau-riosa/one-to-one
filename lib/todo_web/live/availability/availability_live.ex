@@ -5,13 +5,13 @@ defmodule TodoWeb.AvailabilityLive do
   alias Todo.SessionSetting
 
   @session_settings [
-    %SessionSetting{day: "Sunday"},
-    %SessionSetting{day: "Monday"},
-    %SessionSetting{day: "Tuesday"},
-    %SessionSetting{day: "Wednesday"},
-    %SessionSetting{day: "Thursday"},
-    %SessionSetting{day: "Friday"},
-    %SessionSetting{day: "Saturday"}
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Sunday", times: []},
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Monday", times: []},
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Tuesday", times: []},
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Wednesday", times: []},
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Thursday", times: []},
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Friday", times: []},
+    %SessionSetting{id: Ecto.UUID.generate(), day: "Saturday", times: []}
   ]
 
   def mount(_params, _session, socket) do
@@ -19,52 +19,53 @@ defmodule TodoWeb.AvailabilityLive do
       socket.assigns.current_user
       |> Todo.Repo.preload(:session_settings)
 
-    settings =
+    current_user =
       if Enum.empty?(current_user.session_settings) do
-        @session_settings
+        %User{session_settings: @session_settings}
       else
-        current_user.session_settings
+        current_user
       end
 
-    account_changeset =
-      current_user
-      |> User.availability_changeset()
-      |> Ecto.Changeset.put_assoc(
-        :session_settings,
-        settings
-      )
+    changeset = User.availability_changeset(current_user)
 
     socket =
       socket
-      |> assign(account_changeset: account_changeset)
+      |> assign(account_changeset: changeset)
 
     {:ok, socket}
   end
 
   def handle_event("save", %{"user" => user} = _params, socket) do
     changeset =
-      socket.assigns.account_changeset
+      socket.assigns.current_user
+      |> Todo.Repo.preload(:session_settings)
       |> User.availability_changeset(user)
       |> Map.put(:action, :update)
       |> Todo.Repo.update()
 
-    {:noreply, socket}
+    IO.inspect(changeset)
+    {:noreply, push_redirect(socket, to: "/availability")}
   end
 
   def handle_event("validate", %{"user" => user} = _params, socket) do
-    socket =
-      update(socket, :account_changeset, fn changeset ->
-        IO.inspect(user)
+    current_user =
+      socket.assigns.current_user
+      |> Todo.Repo.preload(:session_settings)
 
-        changeset
+    current_user =
+      if Enum.empty?(current_user.session_settings) do
+        %User{session_settings: @session_settings}
+      else
+        current_user
+      end
+
+    socket =
+      update(socket, :account_changeset, fn _changeset ->
+        current_user
         |> User.availability_changeset(user)
         |> Map.put(:action, :validate)
       end)
 
-    {:noreply, push_patch(socket, to: Routes.availability_path(socket, :index))}
-  end
-
-  def handle_params(_, _, socket) do
     {:noreply, socket}
   end
 
@@ -84,15 +85,7 @@ defmodule TodoWeb.AvailabilityLive do
           Ecto.Changeset.get_field(changeset, :times, [])
           |> Enum.map(&Map.put(&1, :id, Ecto.UUID.generate()))
 
-        changeset = Ecto.Changeset.put_embed(changeset, :times, existing ++ [%Todo.Time{}])
-
-        Ecto.Changeset.put_assoc(
-          account_changeset,
-          :session_settings,
-          List.insert_at(existing_settings, index, changeset)
-        )
-        |> Map.put(:action, :update)
-        |> Todo.Repo.update()
+        changeset = Ecto.Changeset.put_change(changeset, :times, existing ++ [%{}])
 
         Ecto.Changeset.put_assoc(
           account_changeset,
@@ -116,8 +109,12 @@ defmodule TodoWeb.AvailabilityLive do
           |> List.pop_at(schedule_index)
 
         changeset = SessionSetting.changeset(selected_setting)
-        existing = Ecto.Changeset.get_field(changeset, :times, [])
-        changeset = Ecto.Changeset.put_embed(changeset, :times, List.delete_at(existing, index))
+
+        {_, existing} =
+          Ecto.Changeset.get_field(changeset, :times, [])
+          |> List.pop_at(index)
+
+        changeset = Ecto.Changeset.put_embed(changeset, :times, existing)
 
         Ecto.Changeset.put_assoc(
           account_changeset,
@@ -134,7 +131,11 @@ defmodule TodoWeb.AvailabilityLive do
         )
       end)
 
-    {:noreply, push_redirect(socket, to: Routes.availability_path(socket, :index))}
+    {:noreply, push_redirect(socket, to: "/availability")}
+  end
+
+  def handle_params(_params, _route, socket) do
+    {:noreply, socket}
   end
 
   def sorter("Sunday"), do: 0
@@ -144,4 +145,5 @@ defmodule TodoWeb.AvailabilityLive do
   def sorter("Thursday"), do: 4
   def sorter("Friday"), do: 5
   def sorter("Saturday"), do: 6
+  def sorter(_), do: 0
 end

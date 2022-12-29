@@ -13,10 +13,12 @@
                 <h1 class="text-md text-blue-900 font-semibold mb-3">Booking Duration</h1>
             </div>
             <.form let={f} for={@account_changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10" >
+
             <%= for g <- (inputs_for f, :session_settings) |> Enum.sort_by(&sorter(&1.data.day), :asc) do %>
                 <%= hidden_inputs_for(g) %>
                 <div class="w-full grid grid-cols-6 gap-4 py-3 items-start border-b-2">
                     <%= hidden_input g, :day, value: g.data.day, phx_update: "ignore" %>
+                    <%= hidden_input g, :user_id, value: @current_user.id, phx_update: "ignore" %>
                     <p class="text-lg text-blue-900 font-semibold uppercase" phx-update="ignore" id={"session_setting-day-#{g.index}"}><%= g.data.day %></p>
                     <div class="w-full col-span-3 items-start" >
                         <div class="w-full col-span-2 grid grid-cols-3 gap-2 items-center content-end">
@@ -29,10 +31,7 @@
                         </div>
                     </div>
                     <div class="w-full text-right"> 
-                        <button  type="button" 
-                                 class={"border-2 border-blue-800 bg-blue-900 hover:bg-white text-lg font-normal text-white hover:text-blue-900 px-3 py-2 rounded-md cursor-pointer"}  
-                                 phx-value-index={g.index} 
-                                 phx-click="add-time">add time</button>
+                        <%= Heroicons.icon("plus", type: "solid", class: "h-7 w-10 fill-blue-900  cursor-pointer", phx_click: "add-time", phx_value_index: g.index ) %>
                     </div>
                 </div>
             <% end %>

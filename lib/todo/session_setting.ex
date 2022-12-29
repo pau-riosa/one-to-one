@@ -13,6 +13,7 @@ defmodule Todo.Time do
 
     struct
     |> cast(attrs, [:time_id, :start_time, :end_time])
+    |> validate_required([:time_id, :start_time, :end_time])
     |> check_time()
   end
 
@@ -44,10 +45,9 @@ defmodule Todo.SessionSetting do
   schema "session_settings" do
     field :day, :string
 
+    embeds_many :times, Todo.Time, on_replace: :delete
     belongs_to(:user, Todo.Accounts.User)
     timestamps()
-
-    embeds_many :times, Todo.Time, on_replace: :delete
   end
 
   def changeset(struct, attrs \\ %{}) do
