@@ -91,7 +91,9 @@ defmodule TodoWeb.Router do
 
       live "/dashboard", DashboardLive, :index
       live "/bookings", BookingLive, :index
-      live "/availability", AvailabilityLive, :index
+      live "/availability", AvailabilityLive.Index, :index
+      # live "/availability/hours", AvailabilityLive.Hours, :availability_hours
+      # live "/availability/session-settings", AvailabilityLive.SessionSettings, :session_settings
       live "/class", ClassLive, :index
       live "/event/new", EventLive, :new
       live "/event/:event_id", EventLive, :edit

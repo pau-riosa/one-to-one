@@ -1,0 +1,24 @@
+<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
+<div class="flex justify-center align-center">
+    <div class="w-full max-w-7xl min-h-screen flex flex-row py-5">
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} /> 
+        <div class="w-full flex flex-col rounded-md space-y-8 px-10">
+            <div class="flex flex-col w-full space-y-2 pb-7">
+                <h1 class="text-2xl text-blue-900 font-bold">Availability</h1>
+                <p class="text-blue-800">Each slot defaults to only 15mins, you can change this under booking duration. </p>
+                <p class="text-blue-900">In your local timezone <span class="text-md text-blue-900 font-bold"><%= @timezone %></span></p>
+            </div>
+            <div class="flex flex-row space-x-10 border-b-2">
+                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :availability_hours, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-available-hours">Available Hours</h1>
+                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :session_settings, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-session-settings">Session Settings</h1>
+            </div>
+            <%= case @view do %>
+                <%= :session_settings -> %> 
+                    <.live_component module={TodoWeb.AvailabilityLive.SessionSettings} id="hours" />
+                <%= _ -> %> 
+                    <.live_component module={TodoWeb.AvailabilityLive.Hours} id="hours" />
+            <% end %>
+        </div> 
+    </div>
+    <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} />
+</div>

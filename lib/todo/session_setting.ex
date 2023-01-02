@@ -3,17 +3,17 @@ defmodule Todo.Time do
 
   @primary_key false
   embedded_schema do
-    field :time_id, :string
+    field :temp_id, :string
     field :start_time, :string
     field :end_time, :string
   end
 
   def time_changeset(struct, attrs \\ %{}) do
-    attrs = Map.put(attrs, "time_id", Ecto.UUID.generate())
+    attrs = Map.put(attrs, "temp_id", Ecto.UUID.generate())
 
     struct
-    |> cast(attrs, [:time_id, :start_time, :end_time])
-    |> validate_required([:time_id, :start_time, :end_time])
+    |> cast(attrs, [:temp_id, :start_time, :end_time])
+    |> validate_required([:temp_id, :start_time, :end_time])
     |> check_time()
   end
 
@@ -30,7 +30,7 @@ defmodule Todo.Time do
       |> Timex.parse!("%I:%M %p", :strftime)
 
     if Timex.after?(start_time, end_time) do
-      add_error(changeset, :start_time, "cannot be before end_time")
+      add_error(changeset, :start_time, "invalid time")
     else
       changeset
     end
@@ -43,8 +43,9 @@ defmodule Todo.SessionSetting do
   use Todo.Schema
 
   schema "session_settings" do
+    # booking_link
+    # booking_duration
     field :day, :string
-
     embeds_many :times, Todo.Time, on_replace: :delete
     belongs_to(:user, Todo.Accounts.User)
     timestamps()

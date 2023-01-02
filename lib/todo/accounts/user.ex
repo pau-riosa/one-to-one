@@ -12,9 +12,7 @@ defmodule Todo.Accounts.User do
     field :avatar, :string
     has_many :schedules, Todo.Schedules.Schedule
 
-    has_many :session_settings, Todo.SessionSetting,
-      on_replace: :nilify,
-      preload_order: [asc: :day]
+    has_many :session_settings, Todo.SessionSetting, on_replace: :delete
 
     timestamps()
   end
