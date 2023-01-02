@@ -15,7 +15,7 @@ defmodule TodoWeb.BookingLive do
       TodoWeb.Endpoint.subscribe("events")
     end
 
-    {:ok, socket}
+    {:ok, assign(socket, page_title: "Bookings")}
   end
 
   @impl true

@@ -15,7 +15,7 @@ defmodule TodoWeb.DashboardLive do
       TodoWeb.Endpoint.subscribe("events")
     end
 
-    {:ok, socket}
+    {:ok, assign(socket, page_title: "Home")}
   end
 
   @impl true
@@ -24,7 +24,7 @@ defmodule TodoWeb.DashboardLive do
       socket
       |> Schedules.assign_dates(params)
       |> Schedules.get_current_schedules(params)
-      |> assign(:page_title, "Dashboard")
+      |> assign(:page_title, "Home")
 
     {:noreply, socket}
   end
