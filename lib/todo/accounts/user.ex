@@ -10,12 +10,28 @@ defmodule Todo.Accounts.User do
     field :last_name, :string
     field :middle_name, :string
     field :avatar, :string
+    field :duration, :integer, default: 15
+    field :booking_link, :string, virtual: true
+    field :slug, :string, default: ""
     has_many :schedules, Todo.Schedules.Schedule
 
     has_many :session_settings, Todo.SessionSetting, on_replace: :delete
 
     timestamps()
   end
+
+  def session_changeset(struct, attrs \\ %{}) do
+    struct
+    |> cast(attrs, [:booking_link, :slug, :duration])
+    |> validate_required([:booking_link, :duration])
+    |> build_slug()
+  end
+
+  def build_slug(%{changes: %{booking_link: booking_link}} = changeset) do
+    put_change(changeset, :slug, Inflex.parameterize(booking_link))
+  end
+
+  def build_slug(changeset), do: changeset
 
   def availability_changeset(struct, attrs \\ %{}) do
     struct

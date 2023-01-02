@@ -66,7 +66,7 @@ defmodule TodoWeb.Router do
     live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
       get "/room/:schedule_id", RoomController, :index
       post "/room/:schedule_id", RoomController, :enter
-      live "/book-a-class", BookLive
+      live "/:booking_link", BookLive
       live "/book-a-class/:class", BookLive, :book_class
       live "/book-a-class/:class/:schedule", BookLive, :set_schedule
     end
@@ -86,14 +86,12 @@ defmodule TodoWeb.Router do
   end
 
   live_session :private, on_mount: {TodoWeb.Live.InitAssigns, :private} do
-    scope "/", TodoWeb do
+    scope "/admin", TodoWeb do
       pipe_through [:browser, :require_authenticated_user]
 
       live "/dashboard", DashboardLive, :index
       live "/bookings", BookingLive, :index
-      live "/availability", AvailabilityLive.Index, :index
-      # live "/availability/hours", AvailabilityLive.Hours, :availability_hours
-      # live "/availability/session-settings", AvailabilityLive.SessionSettings, :session_settings
+      live "/availability", AvailabilityLive, :index
       live "/class", ClassLive, :index
       live "/event/new", EventLive, :new
       live "/event/:event_id", EventLive, :edit

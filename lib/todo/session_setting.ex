@@ -43,9 +43,8 @@ defmodule Todo.SessionSetting do
   use Todo.Schema
 
   schema "session_settings" do
-    # booking_link
-    # booking_duration
     field :day, :string
+
     embeds_many :times, Todo.Time, on_replace: :delete
     belongs_to(:user, Todo.Accounts.User)
     timestamps()

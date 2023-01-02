@@ -14,7 +14,7 @@ defmodule TodoWeb.Live.InitAssigns do
       case socket.view do
         TodoWeb.DashboardLive -> :dashboard
         TodoWeb.BookingLive -> :bookings
-        TodoWeb.AvailabilityLive.Index -> :availability
+        TodoWeb.AvailabilityLive -> :availability
         TodoWeb.SettingsLive -> :settings
         _ -> nil
       end

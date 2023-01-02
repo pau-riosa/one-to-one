@@ -13,9 +13,9 @@
                 <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :session_settings, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-session-settings">Session Settings</h1>
             </div>
             <%= case @view do %>
-                <%= :session_settings -> %> 
-                    <.live_component module={TodoWeb.AvailabilityLive.SessionSettings} id="hours" />
-                <%= _ -> %> 
+                <% :session_settings -> %> 
+                    <.live_component module={TodoWeb.AvailabilityLive.SessionSettings} id="session-settings" changeset={@changeset} current_user={@current_user} />
+                <% _ -> %> 
                     <.live_component module={TodoWeb.AvailabilityLive.Hours} id="hours" />
             <% end %>
         </div> 

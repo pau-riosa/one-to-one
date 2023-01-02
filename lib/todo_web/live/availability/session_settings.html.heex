@@ -1,1 +1,21 @@
-<p class="text-lg text-blue-800 font-normal">Work in Progress</p>
+<div class="w-full flex flex-col">
+    <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" phx-target={@myself} class="space-y-10">
+    <div class="my-2 space-y-5 w-1/2"> 
+        <label class="text-lg text-blue-900 font-semibold">Set Booking Link</label> 
+        <%= text_input f, :booking_link, value: @current_user.slug, placeholder: "hello-world!", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
+
+        <div class="mt-2 text-sm text-blue-500">
+            <span class="text-gray-500">Booking Link:</span>
+            <%= @public_url %>
+        </div>
+        <%= error_tag f, :booking_link %> 
+    </div>
+
+    <div class="my-2 space-y-5 w-1/2"> 
+        <label class="text-lg text-blue-900 font-semibold">Set Session Duration</label> 
+        <%= number_input f, :duration, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
+        <%= error_tag f, :duration %> 
+    </div>
+    <%= submit "Update", phx_disable_with: "Updating...", class: "py-2 px-10 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-blue-900" %> 
+    </.form>
+</div>
