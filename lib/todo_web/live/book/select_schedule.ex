@@ -1,4 +1,4 @@
-defmodule TodoWeb.Book.BookClass do
+defmodule TodoWeb.Book.SelectSchedule do
   use TodoWeb, :live_component
 
   alias Todo.Events

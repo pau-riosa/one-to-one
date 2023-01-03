@@ -1,0 +1,38 @@
+<div class="w-full rounded-lg bg-white shadow-xl flex flex-col">
+    <div class="grid sm:grid-cols-1 md:grid-cols-3 items-center justify-center">
+        <div class="p-5 space-y-5">
+            <div class="flex flex-row items-center">
+                <div class="flex flex-col">
+                    <img class="h-12 w-12 mr-2 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                </div>
+                <div class="flex flex-col ml-2">
+                    <p class="text-md text-blue-900 font-semibold capitalize"><%= @book_with.first_name %> <%= @book_with.last_name %></p>
+                </div>
+            </div> 
+        </div>
+        <div class="p-5 space-y-5">
+            <TodoWeb.Components.calendar_months
+                id="calendar-months"
+                current_path={@current_path}
+                previous_month={@previous_month}
+                next_month={@next_month}
+                end_of_month={@end_of_month}
+                beginning_of_month={@beginning_of_month}
+                timezone={@timezone}
+                current={@current}
+                socket={@socket}
+                />
+        </div>
+        <div class="h-[450px] py-10  flex flex-col items-center gap-4 w-full overflow-y-scroll overflow-hidden">
+            <%= for schedule <- @schedules do %> 
+                <TodoWeb.Components.schedule
+                    schedule={schedule}
+                    socket={@socket}
+                    slug={@slug}
+                    timezone={@timezone}
+                />
+            <% end %>
+        </div>
+    </div>
+</div>
+

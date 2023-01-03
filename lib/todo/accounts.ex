@@ -10,6 +10,10 @@ defmodule Todo.Accounts do
 
   ## Database getters
 
+  def get_user_by_slug(slug) do
+    Repo.get_by(User, slug: slug)
+  end
+
   @doc """
   Gets a user by email.
 

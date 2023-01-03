@@ -66,9 +66,8 @@ defmodule TodoWeb.Router do
     live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
       get "/room/:schedule_id", RoomController, :index
       post "/room/:schedule_id", RoomController, :enter
-      live "/:booking_link", BookLive
-      live "/book-a-class/:class", BookLive, :book_class
-      live "/book-a-class/:class/:schedule", BookLive, :set_schedule
+      live "/book/:slug", BookLive, :index
+      live "/book/:slug/:schedule", BookLive, :set_schedule
     end
   end
 

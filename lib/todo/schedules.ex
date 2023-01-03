@@ -118,21 +118,6 @@ defmodule Todo.Schedules do
     beginning_of_month = Timex.beginning_of_month(current)
     end_of_month = Timex.end_of_month(current)
 
-    end_of_week = Timex.end_of_week(current)
-
-    beginning_of_week = Timex.beginning_of_week(current)
-
-    display_list_of_time = {"time", list_of_time(current)}
-
-    current_week =
-      Timex.Interval.new(from: beginning_of_week, until: [days: 6], right_open: false)
-      |> Timex.Interval.with_step(days: 1)
-      |> Enum.map(fn date ->
-        {date, list_of_time(date)}
-      end)
-
-    current_week = [display_list_of_time | current_week]
-
     previous_month =
       beginning_of_month
       |> Timex.add(Duration.from_days(-1))
@@ -143,28 +128,13 @@ defmodule Todo.Schedules do
       |> Timex.add(Duration.from_days(1))
       |> date_to_month
 
-    previous_week =
-      beginning_of_week
-      |> Timex.add(Duration.from_days(-1))
-      |> date_to_week
-
-    next_week =
-      end_of_week
-      |> Timex.add(Duration.from_days(7))
-      |> date_to_week
-
     socket
     |> assign(selected_timeslots: [])
     |> assign(current: current)
     |> assign(beginning_of_month: beginning_of_month)
     |> assign(end_of_month: end_of_month)
-    |> assign(beginning_of_week: beginning_of_week)
-    |> assign(end_of_week: end_of_week)
     |> assign(previous_month: previous_month)
     |> assign(next_month: next_month)
-    |> assign(current_week: current_week)
-    |> assign(previous_week: previous_week)
-    |> assign(next_week: next_week)
   end
 
   def current_from_params(socket, %{"datetime" => datetime}) do

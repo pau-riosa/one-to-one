@@ -48,7 +48,7 @@ defmodule TodoWeb.AvailabilityLive.SessionSettings do
   end
 
   def build_booking_link(socket, slug) do
-    Routes.live_url(socket, TodoWeb.BookLive, slug)
+    Routes.book_url(socket, :index, slug)
   end
 
   defp get_slug(%Changeset{changes: %{booking_link: slug}}), do: Inflex.parameterize(slug)
