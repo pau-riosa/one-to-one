@@ -37,11 +37,12 @@ defmodule TodoWeb.BookLive do
   end
 
   def handle_params(%{"slug" => slug, "date" => date} = params, _session, socket) do
+    duration = 15 || socket.assigns.current_user.duration
     book_with = Todo.Accounts.get_user_by_slug(slug)
     date = to_datetime(socket, date)
 
     schedules =
-      list_of_time(date, 30)
+      list_of_time(date, duration)
       |> Enum.map(fn f ->
         f
         |> NaiveDateTime.to_iso8601()

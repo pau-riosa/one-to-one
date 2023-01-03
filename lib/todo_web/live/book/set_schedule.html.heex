@@ -1,35 +1,48 @@
-<div class="flex justify-center align-center">
-    <div class="w-full max-w-7xl mx-auto py-5 h-screen">
-        <div class="w-full flex flex-row justify-center gap-2">
-            <div class="w-2/5 bg-gray-100 rounded-md py-2 px-3  border-gray-300">
-                <div class="flex flex-row space-x-3 align-center justify-center items-center">
-                    <div class="flex flex-col justify-center p-5 gap-y-4">
-                        <h1 class="text-lg text-blue-900 font-semibold capitalize"><%= @book_with.first_name %> <%= @book_with.last_name%></h1>
-                        <span class="text-normal text-blue-900 font-semibold capitalize flex">
-                            <i><%= Heroicons.icon("calendar-days", type: "solid", class: "h-5 w-5 mr-3")%></i> 
-                            <%= @schedule  %> -
-                            <!-- duration of meeting will be set on events -->
-                            <%= @schedule  %>
-                        </span>
-                    </div>
+<div class="w-full rounded-lg bg-white shadow-xl">
+    <div class="w-[1000px] bg-white flex flex-row justify-center gap-2 p-5 rounded-md">
+        <div class="w-2/5">
+
+            <span class="text-normal text-blue-800 font-normal capitalize flex items-center">
+                <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-5 w-5 mr-1")%></i> 
+                <%= live_patch "back", to: Routes.book_path(@socket, :index, @book_with.slug), class: ""  %>
+            </span>
+            <div class="flex flex-row content-center"> 
+                <div class="flex flex-col justify-center p-5 gap-y-4">
+                    <span class="text-lg text-blue-900 font-semibold capitalize"><%= @book_with.first_name %> <%= @book_with.last_name %></span>
+                    <span class="text-normal text-blue-900 font-normal capitalize flex">
+                        <i><%= Heroicons.icon("calendar-days", type: "solid", class: "h-5 w-5 mr-3")%></i> 
+                        <%= @start_time %>-<%= @end_time  %>
+                    </span>
+                    <span class="text-normal text-blue-900 font-normal capitalize flex">
+                        <i><%= Heroicons.icon("clock", type: "solid", class: "h-5 w-5 mr-3")%></i> 
+                        <%= @timezone %>
+                    </span>
                 </div>
-            </div> 
-            <div class="w-3/5 bg-gray-100 rounded-md p-5 border-r border-gray-300">
-                <header class="text-center mb-8">
-                    <h3 class="text-lg font-semibold text-gray-900">Book Schedule</h3>
-                </header>
-                <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10" phx-target={@myself}>
-                <div class="my-5 space-y-5">
+            </div>
+        </div> 
+        <div class="w-3/5">
+            <header class="text-center mb-8">
+                <h3 class="text-lg font-semibold text-blue-900">Book Schedule</h3>
+            </header>
+            <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" class="w-full space-y-10 flex flex-col" phx-target={@myself}>
+            <%= error_tag f, :created_by_id %>
+            <div class="my-5 space-y-5">
+                <%= hidden_input f, :created_by_id, value: @book_with.id %>
+                <%= hidden_input f, :scheduled_for, value: @scheduled_for %>
+                <%= hidden_input f, :duration, value: @duration %>
+                <div class="flex flex-col">
                     <%= text_input f, :name, placeholder: "Name", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
                     <%= error_tag f, :name %>
+                </div>
+                <div class="flex flex-col">
                     <%= email_input f, :email, placeholder: "Email", class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
                     <%= error_tag f, :email %>
-                    <%= textarea f, :comment, placeholder: "Comment", class: "resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", rows: "10" %>
-                    <%= error_tag f, :comment %>
                 </div>
-                <%= submit "Book", class: "w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"%>
-                </.form>
+                <%= textarea f, :comment, placeholder: "Comment", class: "resize-none appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", rows: "10" %>
+                <%= error_tag f, :comment %>
             </div>
+            <%= submit "Book", phx_disabled_with: "Booking...", class: "w-full align-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-yellow-900 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"%>
+            </.form>
         </div>
     </div>
 </div>

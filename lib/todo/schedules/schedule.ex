@@ -10,7 +10,6 @@ defmodule Todo.Schedules.Schedule do
     field :start_at, :utc_datetime_usec
     field :end_at, :utc_datetime_usec
 
-    belongs_to(:event, Todo.Events.Event)
     belongs_to(:created_by, Todo.Accounts.User)
 
     timestamps()
@@ -18,14 +17,13 @@ defmodule Todo.Schedules.Schedule do
 
   @required_attrs [
     :scheduled_for,
-    :event_id,
     :created_by_id
   ]
 
   @optional_attrs [:duration, :name, :email, :comment, :start_at, :end_at]
 
-  def changeset(event, attrs \\ %{}) do
-    event
+  def changeset(struct, attrs \\ %{}) do
+    struct
     |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
     |> unique_constraint([:created_by_id, :scheduled_for], message: "schedule already exist.")
@@ -33,16 +31,20 @@ defmodule Todo.Schedules.Schedule do
 
   @set_schedule_attrs [
     :name,
-    :email
+    :email,
+    :scheduled_for,
+    :created_by_id,
+    :duration
   ]
 
   @set_schedule_optional_attrs [
     :comment
   ]
-  def set_schedule_changeset(event, attrs \\ %{}) do
-    event
+  def set_schedule_changeset(struct, attrs \\ %{}) do
+    struct
     |> cast(attrs, @set_schedule_attrs ++ @set_schedule_optional_attrs)
     |> validate_required(@set_schedule_attrs)
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
+    |> unique_constraint([:created_by_id, :scheduled_for], message: "schedule already exist.")
   end
 end

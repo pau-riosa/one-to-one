@@ -33,8 +33,8 @@ defmodule Todo.Schedules.Operation do
     end
   end
 
-  def set_schedule(changeset, attrs) do
+  def create_schedule(changeset, attrs) do
     Schedule.set_schedule_changeset(changeset, attrs)
-    |> Repo.update()
+    |> Repo.insert()
   end
 end

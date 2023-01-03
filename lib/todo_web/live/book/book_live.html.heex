@@ -2,30 +2,30 @@
     <div class="max-w-7xl rounded-md space-y-3 bg-gray-100 p-5 overflow-y-auto overflow-hidden">
         <%= case @live_action do %>
             <%  :set_schedule -> %>
-                <.live_component 
-         module={TodoWeb.Book.SetSchedule}
-         id="set-schedule"
-         schedule={@schedule} 
-         changeset={@changeset} 
-         socket={@socket}
-         book_with={@book_with}
-         />
+                    <.live_component 
+             module={TodoWeb.Book.SetSchedule}
+             id="set-schedule"
+             schedule={@schedule} 
+             socket={@socket}
+             book_with={@book_with}
+             timezone={@timezone}
+             />
          <%  _ -> %>
-             <.live_component 
-         module={TodoWeb.Book.SelectSchedule}
-         id="select-schedule"
-         current_path={Routes.book_path(@socket, :index, @slug)}
-         current={@current}
-         schedules={@schedules}
-         slug={@slug}
-         book_with={@book_with}
-         previous_month={@previous_month}
-         next_month={@next_month}
-         end_of_month={@end_of_month}
-         beginning_of_month={@beginning_of_month}
-         timezone={@timezone}
-         socket={@socket}
-         />
+                 <.live_component 
+             module={TodoWeb.Book.SelectSchedule}
+             id="select-schedule"
+             current_path={Routes.book_path(@socket, :index, @slug)}
+             current={@current}
+             schedules={@schedules}
+             slug={@slug}
+             book_with={@book_with}
+             previous_month={@previous_month}
+             next_month={@next_month}
+             end_of_month={@end_of_month}
+             beginning_of_month={@beginning_of_month}
+             timezone={@timezone}
+             socket={@socket}
+             />
      <% end %>
     </div>
 </div>

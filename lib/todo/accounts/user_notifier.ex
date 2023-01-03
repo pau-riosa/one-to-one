@@ -23,20 +23,24 @@ defmodule Todo.Accounts.UserNotifier do
   Deliver instructions to start schedule.
   """
   def deliver_schedule_instructions(schedule, url) do
-    deliver(schedule.email, "Scheduled Book: #{schedule.event.name}", """
+    deliver(
+      schedule.email,
+      "Upcoming Appointment with: #{schedule.created_by.first_name} #{schedule.created_by.last_name}",
+      """
 
-    ==============================
+      ==============================
 
-    Hi #{schedule.email},
+      Hi #{schedule.email},
 
-    To enter the room kindly visit this url:
+      To enter the room kindly visit this url:
 
-    #{url}
+      #{url}
 
-    And enter the email you use to book.
+      And enter the email you use to book.
 
-    ==============================
-    """)
+      ==============================
+      """
+    )
   end
 
   @doc """

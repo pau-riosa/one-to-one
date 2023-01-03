@@ -3,13 +3,13 @@
 <% end %>
 <div id="room" class="flex flex-col bg-gray-100" data-room-id={@schedule_id} data-display-name={@email}>
     <!-- mb-14 to keep disconnect with absolute value above the videos-->
+    <div id="videochat-error" class="flex items-center justify-center h-full px-4 text-blue font-bold text-center text-4xl" style="display: none;"> </div>
     <section class="flex flex-col h-screen mb-14">
         <header class="p-4">
-            <h3 class="text-lg font-semibold text-blue-900 mb-2 uppercase"><%= @schedule.event.name %> </h3>
+            <h3 class="text-lg font-semibold text-blue-900 mb-2 uppercase"><%= @schedule.name %> </h3>
             <h3 class="text-lg font-semibold text-blue-900 mb-2 uppercase"><%= Timex.format!(@schedule.scheduled_for, "%Y-%m-%d %l:%M %p", :strftime) %> </h3>
             <div id="participants-list" class="text-md font-medium text-blue-900"></div>
         </header>
-        <div id="videochat-error" class="flex items-center justify-center h-full px-4 text-blue font-bold text-center text-4xl" style="display: none;"> </div>
         <div id="videochat" class="px-2 md:px-20 overflow-y-auto">
             <template id="screensharing-template">
                 <div name="video-feed" class="relative bg-gray-900 shadow rounded-md overflow-hidden h-full w-full ratio-video">

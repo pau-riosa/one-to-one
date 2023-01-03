@@ -13,8 +13,8 @@ defmodule Todo.Schedules do
     {:ok, datetime, _} = datetime |> DateTime.from_iso8601()
 
     Schedule
-    |> join(:inner, [s], e in assoc(s, :event), as: :event)
-    |> where([s, event: e], e.slug == ^slug and s.scheduled_for == ^datetime)
+    |> join(:inner, [s], e in assoc(s, :created_by), as: :created_by)
+    |> where([s, created_by: e], e.slug == ^slug and s.scheduled_for == ^datetime)
     |> preload(event: :created_by)
     |> select([s], s)
     |> Repo.one()
@@ -26,8 +26,8 @@ defmodule Todo.Schedules do
       |> Timex.to_date()
 
     Schedule
-    |> join(:inner, [s], e in assoc(s, :event), as: :event)
-    |> where([event: e], e.slug == ^slug)
+    |> join(:inner, [s], e in assoc(s, :created_by), as: :created_by)
+    |> where([created_by: e], e.slug == ^slug)
     |> where([s], fragment("?::date = ?::date", s.scheduled_for, ^date))
     |> where([s], is_nil(s.email))
     |> select([s], s.scheduled_for)
@@ -36,21 +36,14 @@ defmodule Todo.Schedules do
 
   def get_all_past_schedules(created_by_id) do
     Schedule
-    |> join(:inner, [s], e in assoc(s, :event), as: :event)
-    |> where([event: e], e.created_by_id == ^created_by_id)
+    |> where([s], s.created_by_id == ^created_by_id)
     |> where([s], s.scheduled_for < ^Timex.now())
-    |> select([s, event: e], %{
-      event: e,
-      id: s.id,
-      scheduled_for: s.scheduled_for
-    })
     |> Repo.all()
   end
 
   def get_all_schedules(created_by_id) do
     Schedule
-    |> join(:inner, [s], e in assoc(s, :event), as: :event)
-    |> where([event: e], e.created_by_id == ^created_by_id)
+    |> where([s], s.created_by_id == ^created_by_id)
     |> select([s], s.scheduled_for)
     |> Repo.all()
   end
@@ -77,14 +70,8 @@ defmodule Todo.Schedules do
     end_of_day = Timex.end_of_day(current_date)
 
     Schedule
-    |> join(:inner, [s], e in assoc(s, :event), as: :event)
-    |> where([event: e], e.created_by_id == ^created_by_id)
+    |> where([s], s.created_by_id == ^created_by_id)
     |> where([s], fragment("? BETWEEN ? AND ?", s.scheduled_for, ^beginning_of_day, ^end_of_day))
-    |> select([s, event: e], %{
-      event: e,
-      id: s.id,
-      scheduled_for: s.scheduled_for
-    })
     |> order_by([s], desc: s.scheduled_for)
     |> Repo.all()
   end
