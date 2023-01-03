@@ -6,9 +6,6 @@ defmodule Todo.Repo.Migrations.RemoveEventId do
   alias Todo.Repo
 
   def change do
-    from(s in Schedule)
-    |> Repo.update_all(set: [event_id: nil])
-
     alter table(:schedules) do
       remove :event_id
     end
