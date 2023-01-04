@@ -66,7 +66,7 @@ defmodule Todo.Schedules do
 
   def get_schedules_by_created_by_id(created_by_id, current_date \\ Timex.now())
       when is_binary(created_by_id) do
-    beginning_of_day = Timex.beginning_of_day(current_date)
+    beginning_of_day = Timex.now()
     end_of_day = Timex.end_of_day(current_date)
 
     Schedule

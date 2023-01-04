@@ -2,17 +2,42 @@ defmodule TodoWeb.Components.CreateSession do
   use TodoWeb, :live_component
 
   @moduledoc """
-  <.live_component module={TodoWeb.Components.CreateSession} id="create-session">
+  <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} />
   """
 
-  alias Todo.Events.{Event, Operation}
+  alias Todo.Schedules.Schedule
 
-  def mount(socket) do
-    changeset = Event.changeset(%Event{}, %{})
-    {:ok, assign(socket, changeset: changeset)}
+  def update(assigns, socket) do
+    changeset = Schedule.changeset(%Schedule{})
+
+    {:ok,
+     socket
+     |> assign(:current_user, assigns.current_user)
+     |> assign(:timezone, assigns.timezone)
+     |> assign(:changeset, changeset)}
   end
 
-  def handle_event("save", _, socket) do
-    {:noreply, socket}
+  def handle_event("validate", %{"schedule" => schedule} = params, socket) do
+    changeset =
+      Schedule.changeset(%Schedule{}, schedule)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("save", %{"schedule" => schedule} = params, socket) do
+    Schedule.changeset(%Schedule{}, schedule)
+    |> Map.put(:action, :insert)
+    |> Todo.Repo.insert()
+    |> case do
+      {:ok, schedule} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Schedule created.")
+         |> push_redirect(to: Routes.booking_path(socket, :index))}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 end

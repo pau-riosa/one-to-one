@@ -36,7 +36,7 @@
                                 <p class="text-sm text-blue-800 truncate"><%= schedule.comment %></p>
                                 <div class="flex justify-end space-x-3">
                                     <%= link "Cancel", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-10 rounded rounded-md text-blue-900 hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
-                                    <%= link "Start meeting", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-10 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
+                                    <%= link "Start meeting", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-10 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-yellow", replace: true %>
                                 </div>
                             </div>
                         </div>
@@ -44,5 +44,5 @@
             <% end %>
         </div> 
     </div>
-    <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} />
+    <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} />
 </div>

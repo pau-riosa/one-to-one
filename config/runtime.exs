@@ -161,6 +161,7 @@ if config_env() == :prod do
       transport_options: [socket_opts: [:inet6]]
     ],
     secret_key_base: secret_key_base,
+    check_origin: ["https://gawain.fly.dev", "https://one-to-one.app"],
     server: true
 
   config :todo, :files,
