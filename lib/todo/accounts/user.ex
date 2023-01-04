@@ -10,14 +10,21 @@ defmodule Todo.Accounts.User do
     field :last_name, :string
     field :middle_name, :string
     field :avatar, :string
+
+    # session settings
     field :duration, :integer, default: 15
     field :booking_link, :string, virtual: true
     field :slug, :string, default: ""
     has_many :schedules, Todo.Schedules.Schedule
-
     has_many :session_settings, Todo.SessionSetting, on_replace: :delete
 
     timestamps()
+  end
+
+  def profile_changeset(struct, attrs \\ %{}) do
+    struct
+    |> cast(attrs, [:first_name, :last_name, :middle_name])
+    |> validate_required([:first_name, :last_name])
   end
 
   def session_changeset(struct, attrs \\ %{}) do
@@ -27,11 +34,11 @@ defmodule Todo.Accounts.User do
     |> build_slug()
   end
 
-  def build_slug(%{changes: %{booking_link: booking_link}} = changeset) do
+  defp build_slug(%{changes: %{booking_link: booking_link}} = changeset) do
     put_change(changeset, :slug, Inflex.parameterize(booking_link))
   end
 
-  def build_slug(changeset), do: changeset
+  defp build_slug(changeset), do: changeset
 
   def availability_changeset(struct, attrs \\ %{}) do
     struct
@@ -79,13 +86,17 @@ defmodule Todo.Accounts.User do
     |> unique_constraint(:email)
   end
 
-  defp validate_password(changeset, opts) do
+  defp validate_password(changeset, opts \\ [required: [:password]]) do
+    required = Keyword.get(opts, :required, [:password])
+
     changeset
-    |> validate_required([:password])
+    |> validate_required(required)
     |> validate_length(:password, min: 12, max: 72)
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
-    # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
+    # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/,
+    #   message: "at least one digit or punctuation character"
+    # )
     |> maybe_hash_password(opts)
   end
 
@@ -131,7 +142,7 @@ defmodule Todo.Accounts.User do
       validations on a LiveView form), this option can be set to `false`.
       Defaults to `true`.
   """
-  def password_changeset(user, attrs, opts \\ []) do
+  def password_changeset(user, attrs \\ %{}, opts \\ []) do
     user
     |> cast(attrs, [:password])
     |> validate_confirmation(:password, message: "does not match password")

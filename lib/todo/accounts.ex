@@ -89,6 +89,19 @@ defmodule Todo.Accounts do
 
   ## Examples
 
+      iex> change_user_profile(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_profile(%User{} = user, attrs \\ %{}) do
+    User.profile_changeset(user, attrs)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user changes.
+
+  ## Examples
+
       iex> change_user_registration(user)
       %Ecto.Changeset{data: %User{}}
 

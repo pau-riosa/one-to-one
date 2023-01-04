@@ -1,7 +1,7 @@
 <.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl min-h-screen flex  py-5">
-        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} /> 
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} /> 
         <div class="w-full flex flex-col rounded-md space-y-3 px-10 overflow-y-auto overflow-hidden">
             <div class="flex flex-col w-full space-y-2 pb-7 border-b-2">
                 <h1 class="text-2xl text-blue-900 font-bold">Welcome</h1>

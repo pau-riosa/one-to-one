@@ -1,14 +1,23 @@
 <.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl min-h-screen flex flex-row py-5">
-        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} /> 
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} /> 
         <div class="w-full flex flex-col rounded-md space-y-8 px-10 overflow-y-auto overflow-hidden">
             <div class="flex flex-col w-full space-y-2 pb-7">
                 <h1 class="text-2xl text-blue-900 font-bold">Settings</h1>
+                <p class="text-blue-800">This is where you can set up your profile, change password and more.</p>
             </div>
-            <div class="flex flex-row space-x-10">
-                <h1 class="text-2xl text-blue-900 font-bold">Work in progress</h1>
+            <div class="flex flex-row space-x-10 border-b-2">
+                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :profile, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-profile">Profile</h1>
+                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :change_password, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-change-password">Change Password</h1>
             </div>
+
+            <%= case @view do %>
+                <% :change_password -> %> 
+                    <.live_component module={TodoWeb.Settings.ChangePassword} id="change-password"  current_user={@current_user} />
+                <% _ -> %> 
+                    <.live_component module={TodoWeb.Settings.Profile} id="profile"  current_user={@current_user} />
+            <% end %>
         </div> 
     </div>
     <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} />

@@ -2,8 +2,9 @@
     <div class="flex flex-row space-x-3 align-baseline">
         <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
         <div class="flex flex-col justify-center px-2">
-            <h1 class="text-md text-blue-900 font-bold">Juan Dela Cruz</h1>
-            <p class="text-sm text-blue-900 font-normal">View Profile</p>
+            <h1 class="text-md text-blue-900 font-bold capitalize"><%= @current_user.first_name%> <%= @current_user.last_name %></h1>
+            <a href={@public_url} target="_blank" class="text-sm text-blue-900 font-normal">View Booking Link</a>
+
         </div>
     </div>
     <div class="flex flex-col pt-10 space-y-8 px-3">
