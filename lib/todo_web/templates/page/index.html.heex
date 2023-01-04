@@ -5,11 +5,8 @@
       <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900">if you are looking for a companion for your business meetings, one-to-one is a free online appointment scheduling platform that you can use to achieve your goals.</p>
       <div class="mt-10 flex justify-center">
         <div class="flex flex-col">
-          <input type="text" class="appearance-none rounded w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" placeholder="Enter your email" />
+          <%= link "Sign up", class: "bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-normal font-semibold", to: Routes.user_registration_path(@conn, :new) %>
           <p class="max-w-2xl text-sm tracking-tight text-gray-300 text-left mt-2">create your free account. no credit card required</p>
-        </div>
-        <div class="flex flex-col">
-        <%= link "Sign up", class: "bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-normal font-semibold", to: "/" %>
         </div>
       </div>
   </div>
