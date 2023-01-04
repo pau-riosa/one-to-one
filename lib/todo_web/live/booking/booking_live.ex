@@ -15,7 +15,7 @@ defmodule TodoWeb.BookingLive do
       TodoWeb.Endpoint.subscribe("events")
     end
 
-    {:ok, assign(socket, page_title: "Bookings", schedules: [])}
+    {:ok, assign(socket, page_title: "Bookings")}
   end
 
   @impl true
@@ -31,7 +31,7 @@ defmodule TodoWeb.BookingLive do
   end
 
   @impl true
-  def handle_info(%{event: "new_event", payload: %{event_id: _event_id}}, socket) do
+  def handle_info(%{event: "new_schedule", payload: %{event_id: _event_id}}, socket) do
     {:noreply, Schedules.get_current_schedules(socket, %{})}
   end
 

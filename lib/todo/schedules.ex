@@ -64,10 +64,10 @@ defmodule Todo.Schedules do
     |> Repo.all()
   end
 
-  def get_schedules_by_created_by_id(created_by_id, current_date \\ Timex.now())
+  def get_schedules_by_created_by_id(created_by_id, current_date \\ Timex.now(), timezone)
       when is_binary(created_by_id) do
-    beginning_of_day = Timex.now()
-    end_of_day = Timex.end_of_day(current_date)
+    beginning_of_day = Timex.now(timezone)
+    end_of_day = Timex.end_of_day(Timex.now())
 
     Schedule
     |> where([s], s.created_by_id == ^created_by_id)
@@ -84,7 +84,8 @@ defmodule Todo.Schedules do
         "upcoming" ->
           get_schedules_by_created_by_id(
             socket.assigns.current_user.id,
-            Timex.to_naive_datetime(current)
+            Timex.to_naive_datetime(current),
+            socket.assigns.timezone
           )
 
         "past" ->
@@ -93,7 +94,8 @@ defmodule Todo.Schedules do
         _ ->
           get_schedules_by_created_by_id(
             socket.assigns.current_user.id,
-            Timex.to_naive_datetime(current)
+            Timex.to_naive_datetime(current),
+            socket.assigns.timezone
           )
       end
 

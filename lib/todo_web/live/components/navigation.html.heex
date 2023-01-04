@@ -37,7 +37,7 @@
       <p class="text-right block px-4 py-2 text-sm text-blue-900"><%= @current_user.email %></p>
       <div class="border-2 border-b-blue-900 mx-2"></div>
       <%= link "Home", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.dashboard_path(@socket, :index) %>
-      <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_settings_path(@socket, :edit) %>
+      <%= link "Settings", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.settings_path(@socket, :index) %>
       <%= link "Log out", class: "text-right block px-4 py-2 text-sm text-blue-900", to: Routes.user_session_path(@socket, :delete), method: :delete %>
     <% else %>
         <%= link "Log in", class: "invisible lg:visible bg-blue-900 text-white  hover:bg-white hover:text-blue-900 px-4 py-2 m-1 rounded-md text-sm font-medium", to: Routes.user_session_path(@socket, :new) %>
@@ -52,7 +52,7 @@
       <%= if @current_user do %>
         <a phx-click="open" phx-target="#create-session" class="bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Create Session</a>
         <%= link "Home", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.dashboard_path(@socket, :index) %>
-        <%= link "Settings", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_settings_path(@socket, :edit) %>
+        <%= link "Settings", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.settings_path(@socket, :index) %>
         <%= link "Log out", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :delete), method: :delete %>
       <% else %> 
         <%= link "Log in", class: "bg-blue-700 hover:bg-blue-900 text-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium", to: Routes.user_session_path(@socket, :new) %>
