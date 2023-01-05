@@ -15,7 +15,7 @@ defmodule TodoWeb.Components.TimeInput do
   """
   def render(assigns) do
     times =
-      list_of_time(Timex.today())
+      list_of_time(Timex.today(), assigns.duration)
       |> Enum.map(&Timex.format!(&1, "%I:%M %p", :strftime))
 
     class =
@@ -53,9 +53,9 @@ defmodule TodoWeb.Components.TimeInput do
     {:ok, socket}
   end
 
-  def list_of_time(date) do
+  def list_of_time(date, duration \\ 15) do
     Timex.Interval.new(from: date, until: [days: 1], left_open: false)
-    |> Timex.Interval.with_step(minutes: 30)
+    |> Timex.Interval.with_step(minutes: duration)
     |> Enum.map(& &1)
   end
 end

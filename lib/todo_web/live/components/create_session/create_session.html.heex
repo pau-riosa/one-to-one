@@ -19,7 +19,7 @@
                                                                           timezone={@timezone}
                                                                           />
 
-          <.live_component module={TodoWeb.Components.TimeInput} id="time-input" form={f} field={:time} timezone={@timezone} />
+                                                                          <.live_component module={TodoWeb.Components.TimeInput} id="time-input" form={f} field={:time} timezone={@timezone} duration={@current_user.duration} />
         </div>
         <div class="flex flex-col w-full">
           <label class="text-sm text-blue-900 font-normal">Email</label>

@@ -4,7 +4,7 @@ defmodule TodoWeb.Components.CreateSession do
   @moduledoc """
   <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} />
   """
-
+  alias Todo.Accounts.UserNotifier
   alias Todo.Schedules.Schedule
 
   def update(assigns, socket) do
@@ -31,6 +31,8 @@ defmodule TodoWeb.Components.CreateSession do
     |> Todo.Repo.insert()
     |> case do
       {:ok, schedule} ->
+        schedule = schedule |> Todo.Repo.preload(:created_by)
+
         UserNotifier.deliver_schedule_instructions(
           schedule,
           TodoWeb.Router.Helpers.url(socket) <>
