@@ -34,10 +34,10 @@ defmodule Todo.Schedules do
     |> Repo.all()
   end
 
-  def get_all_past_schedules(created_by_id) do
+  def get_all_past_schedules(created_by_id, timezone \\ "Etc/UTC") do
     Schedule
     |> where([s], s.created_by_id == ^created_by_id)
-    |> where([s], s.scheduled_for < ^Timex.now())
+    |> where([s], s.scheduled_for < ^Timex.now(timezone))
     |> Repo.all()
   end
 
@@ -64,14 +64,22 @@ defmodule Todo.Schedules do
     |> Repo.all()
   end
 
-  def get_schedules_by_created_by_id(created_by_id, current_date \\ Timex.now(), timezone)
+  def get_schedules_by_created_by_id(
+        created_by_id,
+        current_date \\ Timex.now(),
+        timezone \\ "Etc/UTC"
+      )
       when is_binary(created_by_id) do
     beginning_of_day = Timex.now(timezone)
-    end_of_day = Timex.end_of_day(Timex.now())
+
+    end_of_day =
+      timezone
+      |> Timex.now()
+      |> Timex.end_of_day()
 
     Schedule
     |> where([s], s.created_by_id == ^created_by_id)
-    # |> where([s], fragment("? BETWEEN ? AND ?", s.scheduled_for, ^beginning_of_day, ^end_of_day))
+    |> where([s], fragment("? BETWEEN ? AND ?", s.scheduled_for, ^beginning_of_day, ^end_of_day))
     |> order_by([s], desc: s.scheduled_for)
     |> Repo.all()
   end
@@ -89,7 +97,7 @@ defmodule Todo.Schedules do
           )
 
         "past" ->
-          get_all_past_schedules(socket.assigns.current_user.id)
+          get_all_past_schedules(socket.assigns.current_user.id, socket.assigns.timezone)
 
         _ ->
           get_schedules_by_created_by_id(

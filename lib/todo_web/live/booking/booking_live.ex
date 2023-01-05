@@ -44,4 +44,10 @@ defmodule TodoWeb.BookingLive do
 
     assign(socket, :active_selection, active_tab)
   end
+
+  def handle_scheduled_for(scheduled_for, timezone \\ "Etc/UTC") do
+    scheduled_for
+    |> Timex.to_datetime(timezone)
+    |> Timex.format!("%A %B %e, %Y %l:%M %p", :strftime)
+  end
 end

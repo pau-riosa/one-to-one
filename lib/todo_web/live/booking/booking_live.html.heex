@@ -21,11 +21,11 @@
                                 <%= for schedule <- @schedules do %>
                                     <div class="w-full rounded-lg bg-white shadow-md flex flex-col">
                                         <div class="px-10 py-5 space-y-5">
-                                            <p class="text-md text-blue-900">upcoming session with <span class="text-lg text-yellow-900 font-bold capitalize"><%= schedule.name %></span></p>
+                                            <p class="text-md text-blue-900"><%= @active_selection %> session with <span class="text-lg text-yellow-900 font-bold capitalize"><%= schedule.name %></span></p>
                                             <div class="flex flex-row justify-between items-center relative">
                                                 <div class="flex flex-row align-center text-blue-900 items-center">
                                                     <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5") %></i>
-                                                    <p class="text-md mx-2"><%= Timex.format!(schedule.scheduled_for, "%A %B %e, %Y %l:%M %p", :strftime) %></p>
+                                                    <p class="text-md mx-2"><%= handle_scheduled_for(schedule.scheduled_for, @timezone) %></p>
                                                 </div> 
                                             </div>
                                             <div class="flex flex-row justify-between items-center relative">
