@@ -72,9 +72,14 @@ defmodule Todo.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :first_name, :last_name])
+    |> cast(attrs, [:email, :password, :first_name, :last_name, :slug])
     |> validate_email()
     |> validate_password(opts)
+    |> generate_booking_link()
+  end
+
+  defp generate_booking_link(changeset) do
+    put_change(changeset, :slug, Ecto.UUID.generate())
   end
 
   defp validate_email(changeset) do

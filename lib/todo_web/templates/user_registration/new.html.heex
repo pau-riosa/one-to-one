@@ -22,9 +22,11 @@
       <div class="my-20">
         <div>
           <%= email_input f, :email, required: true, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", placeholder: "Email" %>
+          <%= error_tag f, :email %>
         </div>
         <div>
           <%= password_input f, :password, required: true, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", placeholder: "Password"%>
+          <%= error_tag f, :password %>
         </div>
         <div class="flex items-center justify-end mt-3">
           <p class="text-sm pr-2 text-gray-700">Already have an account?</p>
