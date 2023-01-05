@@ -38,6 +38,7 @@ defmodule Todo.Schedules do
     Schedule
     |> where([s], s.created_by_id == ^created_by_id)
     |> where([s], s.scheduled_for < ^Timex.now(timezone))
+    |> order_by([s], desc: s.scheduled_for)
     |> Repo.all()
   end
 
