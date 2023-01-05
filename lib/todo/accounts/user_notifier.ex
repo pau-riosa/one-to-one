@@ -2,15 +2,14 @@ defmodule Todo.Accounts.UserNotifier do
   import Swoosh.Email
 
   alias Todo.Mailer
+  @support "support@one-to-one.app"
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
     email =
       new()
       |> to(recipient)
-      # TODO: changed into this when launching 
-      # |> from({"Todo", "hello@thriveschool.com"})
-      |> from({"Todo", "jethro.riosa@gmail.com"})
+      |> from({"One-to-One", @support})
       |> subject(subject)
       |> text_body(body)
 
