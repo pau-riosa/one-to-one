@@ -14,4 +14,8 @@ defmodule TodoWeb.SettingsLive do
   def handle_event("show-change-password", _session, socket) do
     {:noreply, assign(socket, view: :change_password)}
   end
+
+  def handle_event("show-change-email", _session, socket) do
+    {:noreply, assign(socket, view: :change_email)}
+  end
 end

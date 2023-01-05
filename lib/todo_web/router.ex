@@ -92,16 +92,7 @@ defmodule TodoWeb.Router do
       live "/bookings", BookingLive, :index
       live "/availability", AvailabilityLive, :index
       live "/settings", SettingsLive, :index
-      # live "/class", ClassLive, :index
-      # live "/event/new", EventLive, :new
-      # live "/event/:event_id", EventLive, :edit
-      # live "/event/:event_id/create_schedule", EventLive, :create_schedule
-
-      # # will be shared by student and instructor
-      # get "/room/:schedule_id", RoomController, :index
-      # get "/users/settings", UserSettingsController, :edit
-      # put "/users/settings", UserSettingsController, :update
-      # get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+      get "/settings/confirm_email/:token", UserSettingsController, :confirm_email
     end
   end
 end
