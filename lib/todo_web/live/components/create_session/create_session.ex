@@ -31,6 +31,12 @@ defmodule TodoWeb.Components.CreateSession do
     |> Todo.Repo.insert()
     |> case do
       {:ok, schedule} ->
+        UserNotifier.deliver_schedule_instructions(
+          schedule,
+          TodoWeb.Router.Helpers.url(socket) <>
+            Routes.room_path(socket, :index, schedule)
+        )
+
         {:noreply,
          socket
          |> put_flash(:info, "Schedule created.")
