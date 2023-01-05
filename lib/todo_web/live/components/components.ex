@@ -11,8 +11,8 @@ defmodule TodoWeb.Components do
             <div class="flex flex-wrap items-center justify-between">
               <div class="flex w-0 flex-1 items-center"> 
                   <p class="ml-3 truncate font-medium text-white">
-                    <span class="md:hidden">We announced a new product!</span>
-                    <span class="hidden md:inline">Big news! We're excited to announce a brand new product.</span>
+                    <span class="md:hidden">Kindly confirm your account</span>
+                    <span class="hidden md:inline">We just want to make sure your are enjoying this. Kindly confirm you account.</span>
                   </p>
                 </div>
                 <div class="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
