@@ -17,7 +17,7 @@ defmodule TodoWeb.Components.CreateSession do
      |> assign(:changeset, changeset)}
   end
 
-  def handle_event("validate", %{"schedule" => schedule} = params, socket) do
+  def handle_event("validate", %{"schedule" => schedule} = _params, socket) do
     changeset =
       Schedule.changeset(%Schedule{}, schedule)
       |> Map.put(:action, :validate)
@@ -25,7 +25,7 @@ defmodule TodoWeb.Components.CreateSession do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("save", %{"schedule" => schedule} = params, socket) do
+  def handle_event("save", %{"schedule" => schedule} = _params, socket) do
     Schedule.changeset(%Schedule{}, schedule)
     |> Map.put(:action, :insert)
     |> Todo.Repo.insert()
