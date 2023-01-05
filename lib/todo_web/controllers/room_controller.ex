@@ -28,15 +28,31 @@ defmodule TodoWeb.RoomController do
 
   def index(conn, %{"schedule_id" => schedule_id} = _params) do
     changeset = Schedule.changeset(%Schedule{})
-    render(conn, "room_details.html", changeset: changeset, schedule_id: schedule_id)
+
+    schedule =
+      Schedule
+      |> Repo.get(schedule_id)
+      |> Repo.preload(:created_by)
+
+    render(conn, "room_details.html",
+      changeset: changeset,
+      schedule_id: schedule_id,
+      schedule: schedule
+    )
   end
 
-  def enter(conn, %{"schedule" => schedule, "schedule_id" => schedule_id} = params) do
-    Schedule
-    |> Repo.get_by(id: schedule_id, email: schedule["email"])
-    |> Repo.preload(:created_by)
+  def enter(conn, %{"schedule" => schedule_params, "schedule_id" => schedule_id} = params) do
+    schedule =
+      Schedule
+      |> Repo.get_by(id: schedule_id, email: schedule_params["email"])
+
+    schedule
     |> case do
       %Schedule{} = schedule ->
+        schedule =
+          schedule
+          |> Repo.preload(:created_by)
+
         conn
         |> put_flash(:info, "Welcome")
         |> assign(:email, schedule.email)
@@ -51,7 +67,10 @@ defmodule TodoWeb.RoomController do
 
         conn
         |> put_flash(:error, "No participant found.")
-        |> render("room_details.html", changeset: changeset, schedule_id: schedule_id)
+        |> render("room_details.html",
+          changeset: changeset,
+          schedule_id: schedule_id
+        )
     end
   end
 end
