@@ -66,12 +66,12 @@ defmodule Todo.Schedules do
 
   def get_schedules_by_created_by_id(created_by_id, current_date \\ Timex.now(), timezone)
       when is_binary(created_by_id) do
-    beginning_of_day = Timex.now(timezone)
+    beginning_of_day = Timex.beginning_of_day(current_date)
     end_of_day = Timex.end_of_day(Timex.now())
 
     Schedule
     |> where([s], s.created_by_id == ^created_by_id)
-    |> where([s], fragment("? BETWEEN ? AND ?", s.scheduled_for, ^beginning_of_day, ^end_of_day))
+    # |> where([s], fragment("? BETWEEN ? AND ?", s.scheduled_for, ^beginning_of_day, ^end_of_day))
     |> order_by([s], desc: s.scheduled_for)
     |> Repo.all()
   end
