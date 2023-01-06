@@ -61,7 +61,7 @@ defmodule Todo.MixProject do
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
 
       # membrane_rtc_engine
-      {:membrane_rtc_engine, github: "membraneframework/membrane_rtc_engine"},
+      {:membrane_rtc_engine, "~> 0.8.2"},
       {:ex_dtls, "~> 0.11.1"},
 
       # Otel
