@@ -1,6 +1,3 @@
-<%= if @current_user do %>
-    <%= render_shared "_user_menu.html", assigns %>
-<% end %>
 <div id="room" class="flex flex-col bg-gray-100" data-room-id={@schedule_id} data-display-name={@email}>
     <!-- mb-14 to keep disconnect with absolute value above the videos-->
     <div id="videochat-error" class="flex items-center justify-center h-full px-4 text-blue font-bold text-center text-4xl" style="display: none;"> </div>
@@ -43,7 +40,6 @@
                 </div>
             </template>
             <div id="sketch" class="flex flex-col items-center md:flex-row md:items-start justify-center h-full">
-
                 <div id="screensharings-grid" class="h-full mb-3 md:mr-3 md:mb-none inactive-screensharing-grid"></div>
                 <div id="videos-grid" class="grid flex-1 grid-cols-3 grid-flow-row gap-4 justify-items-center h-full"></div>
             </div>

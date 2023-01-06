@@ -62,16 +62,8 @@ defmodule TodoWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
-  end
-
-  live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
-    scope "/", TodoWeb do
-      pipe_through [:browser]
-      get "/room/:schedule_id", RoomController, :index
-      post "/room/:schedule_id", RoomController, :enter
-      live "/book/:slug", BookLive, :index
-      live "/book/:slug/:schedule", BookLive, :set_schedule
-    end
+    get "/room/:schedule_id", RoomController, :index
+    post "/room/:schedule_id", RoomController, :enter
   end
 
   scope "/", TodoWeb do
@@ -85,6 +77,14 @@ defmodule TodoWeb.Router do
     post "/reset_password", UserResetPasswordController, :create
     get "/reset_password/:token", UserResetPasswordController, :edit
     put "/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+    scope "/", TodoWeb do
+      pipe_through [:browser]
+      live "/book/:slug", BookLive, :index
+      live "/book/:slug/:schedule", BookLive, :set_schedule
+    end
   end
 
   live_session :private, on_mount: {TodoWeb.Live.InitAssigns, :private} do
