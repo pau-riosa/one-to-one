@@ -7,6 +7,10 @@ defmodule TodoWeb.SettingsLive do
     {:ok, assign(socket, page_title: "Settings", view: :profile)}
   end
 
+  def handle_event("show-session-setting", _session, socket) do
+    {:noreply, assign(socket, view: :session_setting)}
+  end
+
   def handle_event("show-profile", _session, socket) do
     {:noreply, assign(socket, view: :profile)}
   end

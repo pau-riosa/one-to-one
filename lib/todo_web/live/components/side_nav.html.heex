@@ -7,16 +7,16 @@
         </div>
     </div>
     <div class="flex flex-col pt-10 space-y-8 px-3">
-        <%= link class: "flex items-center text-md font-bold w-full #{if @active_tab == :dashboard, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10 "}", to: Routes.dashboard_path(@socket, :index) do %> 
+        <%= live_redirect class: "flex items-center text-md font-bold w-full #{if @active_tab == :dashboard, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10 "}", to: Routes.dashboard_path(@socket, :index) do %> 
             <i><%= Heroicons.icon("home", type: "outline", class: "h-5 w-5 mr-2") %></i>Home
         <% end %>
-        <%= link class: "flex items-center text-md font-bold w-full #{if @active_tab == :bookings, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10"}", to: Routes.booking_path(@socket, :index) do %>
+        <%= live_redirect class: "flex items-center text-md font-bold w-full #{if @active_tab == :bookings, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10"}", to: Routes.booking_path(@socket, :index) do %>
             <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5 mr-2") %></i>Bookings 
         <% end %>
-        <%= link class: "flex items-center text-md font-bold w-full #{if @active_tab == :availability, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10"}", to: Routes.availability_path(@socket, :index) do %>
+        <%= live_redirect class: "flex items-center text-md font-bold w-full #{if @active_tab == :availability, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10"}", to: Routes.availability_path(@socket, :index) do %>
             <i><%= Heroicons.icon("ticket", type: "outline", class: "h-5 w-5 mr-2") %></i>Availability 
         <% end %>
-        <%= link class: "flex items-center text-md font-bold w-full #{if @active_tab == :settings, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10"}", to: Routes.settings_path(@socket, :index) do %>
+        <%= live_redirect class: "flex items-center text-md font-bold w-full #{if @active_tab == :settings, do: "text-blue-900 bg-gray-200 px-5 py-2 rounded-md", else: "text-blue-800 py-2 rounded-md hover:bg-gray-200 hover:text-blue-900 hover:px-10"}", to: Routes.settings_path(@socket, :index) do %>
             <i><%= Heroicons.icon("cog", type: "outline", class: "h-5 w-5 mr-2") %></i>Settings 
         <% end %>
     </div>

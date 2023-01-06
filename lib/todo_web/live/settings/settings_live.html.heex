@@ -8,6 +8,7 @@
             </div>
             <div class="flex flex-row space-x-10 border-b-2">
                 <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :profile, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-profile">Profile</h1>
+                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :session_setting, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-session-setting">Session Setting</h1>
                 <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :change_password, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-change-password">Change Password</h1>
                 <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :change_email, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-change-email">Change Email</h1>
             </div>
@@ -17,6 +18,8 @@
                     <.live_component module={TodoWeb.Settings.ChangePassword} id="change-password"  current_user={@current_user} />
                 <% :change_email -> %> 
                     <.live_component module={TodoWeb.Settings.ChangeEmail} id="change-email"  current_user={@current_user} />
+                <% :session_setting -> %> 
+                    <.live_component module={TodoWeb.Settings.Session} id="session-setting" current_user={@current_user} />
                 <% _ -> %> 
                     <.live_component module={TodoWeb.Settings.Profile} id="profile"  current_user={@current_user} />
             <% end %>

@@ -1,4 +1,4 @@
-defmodule TodoWeb.AvailabilityLive.SessionSettings do
+defmodule TodoWeb.Settings.Session do
   use TodoWeb, :live_component
   alias Todo.Accounts.User
   alias Ecto.Changeset
@@ -24,7 +24,7 @@ defmodule TodoWeb.AvailabilityLive.SessionSettings do
         {:noreply,
          socket
          |> put_flash(:info, "Session settings updated.")
-         |> push_redirect(to: Routes.availability_path(socket, :index))}
+         |> push_redirect(to: Routes.settings_path(socket, :index))}
 
       {:error, changeset} ->
         public_url = build_booking_link(socket, get_slug(changeset))
@@ -43,13 +43,8 @@ defmodule TodoWeb.AvailabilityLive.SessionSettings do
     {:noreply, assign(socket, public_url: public_url, changeset: changeset)}
   end
 
-  def build_booking_link(socket, nil) do
-    build_booking_link(socket, "")
-  end
-
-  def build_booking_link(socket, slug) do
-    Routes.book_url(socket, :index, slug)
-  end
+  def build_booking_link(socket, nil), do: build_booking_link(socket, "")
+  def build_booking_link(socket, slug), do: Routes.book_url(socket, :index, slug)
 
   defp get_slug(%Changeset{changes: %{booking_link: slug}}), do: Inflex.parameterize(slug)
   defp get_slug(%Changeset{data: %{slug: slug}}), do: Inflex.parameterize(slug)
