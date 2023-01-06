@@ -17,7 +17,7 @@ defmodule Todo.Accounts.User do
     field :slug, :string, default: ""
     has_many :schedules, Todo.Schedules.Schedule
     has_many :session_settings, Todo.SessionSetting, on_replace: :delete
-
+    has_many :user_tokens, Todo.Accounts.UserToken
     timestamps()
   end
 
