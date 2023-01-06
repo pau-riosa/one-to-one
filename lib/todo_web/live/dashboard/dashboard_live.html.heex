@@ -1,24 +1,21 @@
-<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
-<TodoWeb.Components.confirm_banner current_user={@current_user} socket={@socket} />
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl min-h-screen flex  py-5">
         <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} /> 
         <div class="w-full flex flex-col rounded-md space-y-3 px-10 overflow-y-auto overflow-hidden">
             <div class="flex flex-col w-full space-y-2 pb-7 border-b-2">
                 <h1 class="text-2xl text-blue-900 font-bold">Welcome</h1>
-                <p class="text-md text-blue-800 font-normal">You have <span class="text-yellow-900 text-md font-bold">1 upcoming session</span></p>
+                <p class="text-md text-blue-800 font-normal">You have <span class="text-blue-900 text-md font-bold"><%= @upcoming_session_count %> upcoming session</span></p>
             </div>
             <div class="flex flex-col lg:flex-row justify-evenly align-center">
                 <div class="flex flex-row justify-between w-full py-10 px-4 m-2 rounded rounded-md bg-white text-blue-900 font-semibold shadow-md">
                     <p class="text-lg font-bold text-blue-900">Total Session Minutes</p>
-                    <p class="text-lg font-bold text-blue-900">1000</p>
+                    <p class="text-lg font-bold text-blue-900"><%= @total_session_duration %></p>
                 </div>
                 <div class="flex flex-row justify-between w-full py-10 px-4 m-2 rounded rounded-md bg-white text-blue-900 font-semibold shadow-md">
                     <p class="text-lg font-bold text-blue-900">Total # of Bookings</p>
-                    <p class="text-lg font-bold text-blue-900">30</p>
+                    <p class="text-lg font-bold text-blue-900"><%= @total_bookings %></p>
                 </div>
             </div>
         </div> 
     </div>   
-    <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} />
 </div>

@@ -65,6 +65,35 @@ defmodule Todo.Schedules do
     |> Repo.all()
   end
 
+  def get_total_session_duration(created_by_id) do
+    Schedule
+    |> where([s], s.created_by_id == ^created_by_id)
+    |> select([s], sum(s.duration))
+    |> Repo.one()
+  end
+
+  def get_total_bookings(created_by_id) do
+    Schedule
+    |> where([s], s.created_by_id == ^created_by_id)
+    |> select([s], count(s.id))
+    |> Repo.one()
+  end
+
+  def get_upcoming_session_count(created_by_id, timezone \\ "Etc/UTC") do
+    beginning_of_day = Timex.now(timezone)
+
+    end_of_day =
+      timezone
+      |> Timex.now()
+      |> Timex.end_of_day()
+
+    Schedule
+    |> where([s], s.created_by_id == ^created_by_id)
+    |> where([s], s.scheduled_for >= ^beginning_of_day and s.scheduled_for <= ^end_of_day)
+    |> select([s], count(s.id))
+    |> Repo.one()
+  end
+
   def get_schedules_by_created_by_id(
         created_by_id,
         current_date \\ Timex.now(),
