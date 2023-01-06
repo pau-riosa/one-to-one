@@ -58,12 +58,13 @@ defmodule TodoWeb.Router do
 
     get "/", PageController, :index
     delete "/users/log_out", UserSessionController, :delete
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :edit
-    post "/users/confirm/:token", UserConfirmationController, :update
+    resources "/users/confirm", UserConfirmationController, only: [:new, :create]
+    resources "/users/confirm/:token", UserConfirmationController, only: [:edit, :update]
+  end
 
-    live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+  live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
+    scope "/", TodoWeb do
+      pipe_through [:browser]
       get "/room/:schedule_id", RoomController, :index
       post "/room/:schedule_id", RoomController, :enter
       live "/book/:slug", BookLive, :index
@@ -96,6 +97,11 @@ defmodule TodoWeb.Router do
     end
   end
 
-  # for admin use only
-  # /admin
+  # live_session :admin, on_mount: {TodoWeb.Live.InitAssigns, :admin} do
+  #   score "/admin", TodoWeb do
+  #     pipe_through [:browser, :require_authenticated_user]
+
+  #     live "dashboard", DashboardLive, :index
+  #   end
+  # end
 end
