@@ -19,43 +19,6 @@
   }
 }
 
-#spin:after {
-  content: "Latest Tech";
-  animation: spin 7s linear infinite;
-}
-@keyframes spin {
-  0% {
-    content: "Web development";
-  }
-  10% {
-    content: "Programming";
-  }
-  20% {
-    content: "English";
-  }
-  30% {
-    content: "Trading";
-  }
-  40% {
-    content: "Data analysis";
-  }
-  50% {
-    content: "E-sports";
-  }
-  60% {
-    content: "Management";
-  }
-  70% {
-    content: "Tagalog";
-  }
-  80% {
-    content: "French";
-  }
-  90% {
-    content: "Coding";
-  }
-}
-
 /* for multiselectinput */
 .wrap-items {
   display: flex;
@@ -71,7 +34,7 @@
 }
 
 .ratio-video {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 4;
 }
 
 .video-divider {

@@ -109,7 +109,7 @@ defmodule Todo.Schedules do
 
     Schedule
     |> where([s], s.created_by_id == ^created_by_id)
-    |> where([s], s.scheduled_for >= ^beginning_of_day and s.scheduled_for <= ^end_of_day)
+    # |> where([s], s.scheduled_for >= ^beginning_of_day and s.scheduled_for <= ^end_of_day)
     |> order_by([s], asc: s.scheduled_for)
     |> Repo.all()
   end
