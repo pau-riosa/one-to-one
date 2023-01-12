@@ -7,6 +7,7 @@
         <div name="no-video-msg" class="invisible absolute text-white w-full h-full top-0 left-0" style="text-align: center">Camera turned off</div>
     </div>
 </template>
+
 <template id="remote-video-feed-template">
     <div name="video-feed" class="relative h-full w-full rounded-md">
         <audio></audio>
@@ -16,16 +17,17 @@
         <div name="no-video-msg" class="absolute text-white w-full h-full top-0 left-0" style="text-align: center">Camera turned off</div>
     </div>
 </template>
+
 <template id="screensharing-template"> 
     <div name="video-feed" class="relative col-[1/1] row-[1/1]">
         <video name="screenshare" class="w-full h-full" ></video>
-        <%# <canvas id="paint" class="absolute top-0 left-0 z-2"></canvas> %>
-        <%# <canvas id="output" class="absolute top-0 left-0 z-2"></canvas> %>
-        <%# <div id="annotate" class="absolute flex flex-row w-full top-0 left-0"> %>
-        <%#     <%= Heroicons.icon("pencil", type: "solid", class: "h-10 w-10 fill-white top-0 left-0 p-2 cursor-pointer", id: "pen") %1> %> 
-        <%#     <%= Heroicons.icon("x-mark", type: "solid", class: "h-10 w-10 fill-white top-0 left-0 p-2 cursor-pointer", id: "eraser") %1> %> 
-        <%#     <%= Heroicons.icon("x-circle", type: "solid", class: "h-10 w-10 fill-white top-0 left-0 p-2 cursor-pointer", id: "clear-all") %1> %> 
-        <%# </div> %>
+        <canvas id="paint" class="absolute top-0 left-0 z-2"></canvas>
+        <canvas id="output" class="absolute top-0 left-0 z-2"></canvas>
+        <div id="annotate" class="absolute flex flex-row w-full top-0 left-0">
+            <%= Heroicons.icon("pencil", type: "solid", class: "h-10 w-10 fill-white top-0 left-0 p-2 cursor-pointer", id: "pen") %> 
+            <%= Heroicons.icon("x-mark", type: "solid", class: "h-10 w-10 fill-white top-0 left-0 p-2 cursor-pointer", id: "eraser") %> 
+            <%= Heroicons.icon("x-circle", type: "solid", class: "h-10 w-10 fill-white top-0 left-0 p-2 cursor-pointer", id: "clear-all") %> 
+        </div>
         <div name="video-label" class="absolute text-white text-shadow-lg bottom-0 left-0 p-2">Placeholder</div>
     </div>
 </template>
@@ -37,32 +39,17 @@
             <header class="hidden flex-col md:flex-row md:flex items-center gap-6">
                 <div class="grow flex items-center justify-between gap-4 w-full bg-gray-100 p-4 rounded-md dark:bg-dark-eval-1">
                     <div class="space-y-1">
-                        <h2 class="text-2xl font-medium text-blue-900">Conference Meeting</h2>
+                        <h2 class="text-2xl font-medium text-blue-900">One-to-One</h2>
                         <div id="participants-list" class="text-md font-medium text-blue-800"></div>
                     </div>
                 </div>
             </header>
-            <section id="videos-grid" class="grow grid lg:grid-rows-1 gap-4 overflow-hidden rounded-md h-full"></section>
-            <section id="screensharings-grid" class="hidden grow grid grid-cols-1 grid-rows-1 overflow-hidden rounded-md">
-                <h2 class="sr-only">Screen Share Section</h2>
-                <div class="col-[1/1] row-[1/1]">
-                    <div class="w-full h-full bg-red-300"></div>
-                </div>
-                <div class="col-[1/1] row-[1/1] z-1">
-                    <div class="grid grid-cols-3 md:grid-cols-1 gap-2 p-2">
-                        <div class="h-28 md:w-36  rounded-md border-gray-400 border-2 z-3">
-                            <div class="h-full w-full bg-red-500"></div>
-                        </div>
-                        <div class="h-28 md:w-36  rounded-md border-gray-400 border-2 z-3">
-                            <div class="h-full w-full bg-red-500"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+            <section id="videos-grid" class="grow grid grid-cols-2 grid-rows-1 gap-4 overflow-hidden rounded-md h-full"></section>
+            <section id="screensharings-grid" class="hidden grow grid grid-cols-1 grid-rows-1 overflow-hidden rounded-md"></section>
 
             <section id="controls", class="flex-shrink-0 flex items-center gap-4 justify-center p-4 md:gap-8 md:rounded-md">
                 <%= for {id, svg, hover} <- [{"mic-control","mic-line.svg", "Mute or unmute the microphone"}, {"camera-control", "camera-line.svg", "Turn on/off the camera"}, {"screensharing-control", "computer-line.svg", "Start or stop the screensharing"}] do %>
-
                     <button disabled id={id} class="group relative flex justify-center items-center z-10 mr-2 p-3 rounded-full transition duration-300 ease-in-out border-2 border-blue bg-blue-900 hover:bg-blue/40 disabled:bg-blue/50 disabled:pointer-events-none">
                         <img class="invert group-disabled:invert-80" height="26" width="26" src={Routes.static_path(@conn, "/svg/#{svg}")} />
                         <div class="transition-all duration-500 absolute bottom-0 flex flex-col opacity-0 items-center invisible mb-14 group-hover:visible group-hover:opacity-80">
@@ -79,7 +66,7 @@
             </section>
         </div>
 
-        <section class="invisible lg:visible fixed inset-y-0 right-0 max-w-sm w-full max-h-screen flex flex-col gap-4 bg-gray-100 lg:rounded-2xl lg:static p-4 dark:bg-dark-eval-1">
+        <section class="fixed inset-y-0 right-0 max-w-sm w-full max-h-screen flex flex-col gap-4 bg-gray-100 lg:rounded-2xl lg:static p-4 bg-dark-eval-1">
             <h2 class="sr-only">Agenda Panel</h2>
             <div class="flex items-center justify-between">
                 <h2 class="text-xl font-medium">Agenda</h2> 

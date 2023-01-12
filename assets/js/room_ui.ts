@@ -178,7 +178,14 @@ export function getDisplayName(): string {
 
 function elementId(
   peerId: string,
-  type: "video" | "audio" | "feed" | "screensharing"
+  type:
+    | "video"
+    | "audio"
+    | "feed"
+    | "screensharing"
+    | "mini-video"
+    | "mini-audio"
+    | "mini-feed"
 ) {
   return `${type}-${peerId}`;
 }
@@ -217,34 +224,14 @@ export function attachScreensharing(
   video.muted = false;
 
   video.srcObject = stream;
-
-  adjustScreensharingGridStyles();
 }
 
 export function detachScreensharing(peerId: string) {
   document.getElementById(elementId(peerId, "screensharing"))?.remove();
-  adjustScreensharingGridStyles();
-}
-
-function adjustScreensharingGridStyles() {
   const screensharingsGrid = document.getElementById("screensharings-grid")!;
-  // const videosGrid = document.getElementById("videos-grid")!;
-  // // reset styles
-  // screensharingsGrid.classList.remove(
-  //   "active-screensharing-grid",
-  //   "inactive-screensharing-grid"
-  // );
-  // videosGrid?.classList.remove("videos-grid-with-screensharing");
-  // if (screensharingsGrid.children.length > 0) {
-  //   screensharingsGrid.classList.add("active-screensharing-grid");
-  //   videosGrid?.classList.add("videos-grid-with-screensharing");
-  //   resizeVideosGrid("screensharings-grid");
-  //   replaceGridLayoutStyles(videosGrid, videosGrid.children.length > 3 ? 2 : 1);
-  // } else {
-  //   resizeVideosGrid("videos-grid");
-  //   screensharingsGrid.classList.add("inactive-screensharing-grid");
-  //   screensharingsGrid.classList.remove("flex-1");
-  // }
+  screensharingsGrid.classList.add("hidden");
+  const videosGrid = document.getElementById("videos-grid")!;
+  videosGrid.classList.remove("hidden");
 }
 
 export function addVideoElement(
@@ -283,6 +270,7 @@ export function setParticipantsList(participants: Array<string>): void {
   participantsNamesEl.innerHTML =
     "<b>Participants</b>: " + participants.join(", ");
 }
+
 function resizeVideosGrid(id: string) {
   const grid = document.getElementById(id)!;
 
@@ -315,8 +303,7 @@ function replaceGridLayoutStyles(grid: HTMLElement, videosPerRow: number) {
   classesToRemove.forEach((className) => grid.classList.remove(className));
 
   // add the class to be a default for mobiles
-  grid.classList.add(`grid-cols-1`);
-  grid.classList.add(`lg:grid-cols-${videosPerRow}`);
+  grid.classList.add(`grid-cols-${videosPerRow}`);
 }
 
 function setupVideoFeed(peerId: string, label: string, isLocalVideo: boolean) {
@@ -328,9 +315,6 @@ function setupVideoFeed(peerId: string, label: string, isLocalVideo: boolean) {
 }
 
 function setupLocalVideoFeed(peerId: string, label: string) {
-  const videosGrid = document.getElementById("videos-grid");
-  videosGrid.classList.remove("hidden");
-
   const copy = (document.querySelector(
     "#local-video-feed-template"
   ) as HTMLTemplateElement).content.cloneNode(true) as Element;
@@ -372,6 +356,7 @@ function setupRemoteVideoFeed(peerId: string, label: string) {
 }
 
 function setupScreensharing(peerId: string, label: string) {
+  // Screen Share
   const copy = (document.querySelector(
     "#screensharing-template"
   ) as HTMLTemplateElement).content.cloneNode(true) as Element;
@@ -384,12 +369,12 @@ function setupScreensharing(peerId: string, label: string) {
   feed.id = elementId(peerId, "screensharing");
   videoLabel.innerText = label;
   const videoGrid = document.getElementById("videos-grid");
-  videoGrid.remove();
+  videoGrid.classList.add("hidden");
 
   const grid = document.getElementById("screensharings-grid")!;
   grid.classList.remove("hidden");
   grid.appendChild(feed);
-  // resizeVideosGrid("screensharings-grid");
+
   return video;
 }
 

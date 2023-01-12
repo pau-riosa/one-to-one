@@ -15,10 +15,12 @@ import {
 import { Push, Socket } from "phoenix";
 import {
   addAudioStatusChangedCallback,
+  addMiniVideoElement,
   addVideoElement,
   addVideoStatusChangedCallback,
   attachScreensharing,
   attachStream,
+  attachMiniStream,
   detachScreensharing,
   getRoomId,
   removeVideoElement,
@@ -120,6 +122,7 @@ export class Room {
               `(${ctx.peer.metadata.displayName}) Screen`,
               ctx.stream!
             );
+
             // viewer of the screen
             viewerAnnotate(this.webrtcChannel);
           } else {
@@ -265,7 +268,6 @@ export class Room {
         "(Me) Screen",
         this.localScreensharing
       );
-
       // sharer of the screen
       sharerAnnotate(this.webrtcChannel);
     };
