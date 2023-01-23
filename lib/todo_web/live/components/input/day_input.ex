@@ -42,9 +42,12 @@ defmodule TodoWeb.Components.DayInput do
       |> assign(class: class)
 
     ~H"""
-    <a class={@class} disabled={@disabled} phx-value-selected-date={@date} phx-click="select-date" phx-target={"##{@form.name}_#{@field}"} >
-      <%= @text %> 
-    </a> 
+    <a class={@class}
+    disabled={@disabled}
+    {unless @disabled, do: [{:phx, [click: "select-date", value_selected_date: @date, target: "##{@form.name}_#{@field}"]}], else: []}
+    >
+      <%= @text %>
+      </a>
     """
   end
 end
