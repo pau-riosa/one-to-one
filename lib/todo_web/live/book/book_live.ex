@@ -5,18 +5,18 @@ defmodule TodoWeb.BookLive do
   alias Todo.Schedules
   alias Todo.Schedules.Schedule
   alias Todo.Accounts.User
+  alias Todo.Tempo
 
+  @default_duration 20
   def mount(%{"slug" => slug} = params, _session, socket) do
     case Todo.Accounts.get_user_by_slug(slug) do
       %User{} = book_with ->
-        schedules = []
-
         {:ok,
          socket
          |> Schedules.assign_dates(params)
          |> assign(:book_with, book_with)
          |> assign(:slug, slug)
-         |> assign(:schedules, schedules)}
+         |> assign(:schedules, [])}
 
       _ ->
         {:ok, socket, layout: {TodoWeb.LayoutView, "not_found.html"}}
@@ -37,17 +37,10 @@ defmodule TodoWeb.BookLive do
   end
 
   def handle_params(%{"slug" => slug, "date" => date} = params, _session, socket) do
-    duration = 15 || socket.assigns.current_user.duration
+    timezone = Map.get(socket.assigns.book_with, :timezone, "Asia/Manila")
+    duration = Map.get(socket.assigns.book_with, :duration, @default_duration)
     book_with = Todo.Accounts.get_user_by_slug(slug)
-    date = to_datetime(socket, date)
-
-    schedules =
-      list_of_time(date, duration)
-      |> Enum.map(fn f ->
-        f
-        |> NaiveDateTime.to_iso8601()
-        |> Timex.parse!("{ISO:Extended}")
-      end)
+    schedules = Tempo.list_of_times(date, timezone, duration)
 
     {:noreply,
      socket
@@ -77,11 +70,5 @@ defmodule TodoWeb.BookLive do
       {:ok, current} -> NaiveDateTime.to_date(current)
       _ -> Timex.today(socket.assigns.timezone)
     end
-  end
-
-  def list_of_time(date, duration) do
-    Timex.Interval.new(from: date, until: [days: 1], left_open: false)
-    |> Timex.Interval.with_step(minutes: duration)
-    |> Enum.map(& &1)
   end
 end
