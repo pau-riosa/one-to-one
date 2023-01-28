@@ -1,19 +1,17 @@
 defmodule TodoWeb.Components.CalendarMonthInput do
-  use TodoWeb, :live_component
-
-  alias Timex.Duration
-  alias Timex
-  alias Todo.Schedules
-
-  @doc """
-
-    <CalendarMonths.calendar_months
+  @moduledoc """
+    <.live_component module={TodoWeb.Components.CalendarMonths}
         id="datetime-input"
         form={f}
         field={:date}
         timezone={@timezone}
         />
   """
+  use TodoWeb, :live_component
+
+  alias Timex.Duration
+  alias Timex
+  alias Todo.Schedules
 
   def mount(socket) do
     socket =
@@ -35,7 +33,7 @@ defmodule TodoWeb.Components.CalendarMonthInput do
   def handle_event("select-date", %{"selected-date" => selected_date}, socket) do
     send_update(TodoWeb.Components.TimeInput,
       id: "time-input",
-      date: selected_date,
+      selected_date: selected_date,
       timezone: socket.assigns.timezone
     )
 
