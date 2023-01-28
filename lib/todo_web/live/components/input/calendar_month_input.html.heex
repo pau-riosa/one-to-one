@@ -1,36 +1,38 @@
 <div class="flex flex-col w-full">
   <label class="text-sm text-blue-900 font-normal"><%= Atom.to_string(@field) |> String.capitalize %></label>
   <div class="flex flex-col">
-    <div class="flex flex-row justify-between border border-gray-300 my-1 items-center rounded-md bg-white px-3 py-3">
-      <%= text_input @form, @field, value: @date, placeholder: "YYYY-MM-DD", class: "appearance-none w-full text-blue-900 bg-transparent font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm", phx_click: "show-calendar", phx_click_away: "hide-calendar", phx_target: @myself %>
-      <i><%= Heroicons.icon("calendar", type: "solid", class: "h-5 w-5 fill-blue-900") %></i>
+    <div class="flex flex-row justify-between border border-gray-300 my-1 items-center rounded-md bg-white px-3 py-3 relative">
+      <%= text_input @form, @field,
+      value: @date,
+      placeholder: "YYYY-MM-DD",
+      class: "mr-[24px] appearance-none w-full text-blue-900 bg-transparent font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm"
+      %>
+      <i class="inset-y-0 flex items-center px-2 absolute right-0 bg-gray-300 cursor-pointer"
+      phx-click="toggle-show-calendar"
+      phx-target={@myself}
+      >
+        <%= Heroicons.icon("calendar", type: "solid", class: "h-5 w-5 fill-blue-900") %>
+      </i>
     </div>
     <%= error_tag @form, @field %>
   </div>
-
   <%= if @show_calendar do %>
-    <div class="bg-white rounded-md border-2 border-gray-200 p-3 ">
+    <div class="bg-white rounded-md p-3">
       <div class="flex justify-between items-center text-blue-900 border-b-2 border-gray-200 my-3">
-        <%= Timex.format!(@current, "%B %Y", :strftime) %> 
-
+        <%= Timex.format!(@current, "%B %Y", :strftime) %>
         <div class="flex justify-end flex-1">
-          <button phx-target={@myself} phx-value-previous-month={@previous_month} phx-click="previous-month" class="flex items-center justify-center w-4 h-4 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+          <a phx-target={@myself} phx-value-previous-month={@previous_month} phx-click="previous-month" class="flex items-center justify-center w-4 h-4 text-blue-700 align-middle rounded-full hover:bg-blue-200">
             <i><%= Heroicons.icon("chevron-left", type: "solid", class: " w-4 h-4  fill-blue-900") %></i>
-          </button>
-          <button phx-target={@myself} phx-value-next-month={@next_month} phx-click="next-month" class="flex items-center justify-center w-4 h-4 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+          </a>
+          <a phx-target={@myself} phx-value-next-month={@next_month} phx-click="next-month" class="flex items-center justify-center w-4 h-4 text-blue-700 align-middle rounded-full hover:bg-blue-200">
             <i><%= Heroicons.icon("chevron-right", type: "solid", class: " w-4 h-4 fill-blue-900") %></i>
-          </button>
+          </a>
         </div>
       </div>
-
       <div class="mb-6 text-center text-blue-900 uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
-        <div class="text-xs">Mon</div>
-        <div class="text-xs">Tue</div>
-        <div class="text-xs">Wed</div>
-        <div class="text-xs">Thu</div>
-        <div class="text-xs">Fri</div>
-        <div class="text-xs">Sat</div>
-        <div class="text-xs">Sun</div>
+        <%= for day <- ~w(Mon Tue Wed Thu Fri Sat Sun) do %>
+          <div class="text-xs"><%= day %></div>
+        <% end %>
         <%= for i <- 0..(@end_of_month.day - 1) do %>
           <.live_component module={TodoWeb.Components.DayInput}
              id={"day-input-#{i}"}
@@ -41,13 +43,12 @@
              field={@field}
              form={@form}
              />
-           <% end %>
-      </div> 
-      <div class="flex items-center gap-x-1 text-blue">
-        <i><%= Heroicons.icon("globe-asia-australia", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
-        <%= @timezone %> 
+          <% end %>
+        </div>
+        <div class="flex items-center gap-x-1 text-blue">
+          <i><%= Heroicons.icon("globe-asia-australia", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
+          <%= @timezone %>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
-
+    <% end %>
+  </div>

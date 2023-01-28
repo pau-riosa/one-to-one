@@ -12,7 +12,6 @@ defmodule TodoWeb.Components.CalendarMonthInput do
         form={f}
         field={:date}
         timezone={@timezone}
-       
         />
   """
 
@@ -21,38 +20,43 @@ defmodule TodoWeb.Components.CalendarMonthInput do
       socket
       |> assign_dates()
       |> assign(show_calendar: false)
-      |> assign(date: "")
 
     {:ok, socket}
   end
 
-  def preload(list_of_assigns) do
+  def preload([%{timezone: timezone}] = list_of_assigns) do
     Enum.map(list_of_assigns, fn assign ->
-      Map.put(assign, :timezone, assign[:timezone])
+      assign
+      |> Map.put(:timezone, timezone)
+      |> Map.put(:date, Todo.Tempo.today_date(timezone))
     end)
   end
 
-  def handle_event("select-date", %{"selected-date" => date}, socket) do
+  def handle_event("select-date", %{"selected-date" => selected_date}, socket) do
+    send_update(TodoWeb.Components.TimeInput,
+      id: "time-input",
+      date: selected_date,
+      timezone: socket.assigns.timezone
+    )
+
     socket =
       socket
-      |> assign(date: date)
+      |> assign(date: selected_date)
       |> assign(show_calendar: false)
 
     {:noreply, socket}
   end
 
   def handle_event("previous-month", %{"previous-month" => month}, socket) do
-    socket = socket |> assign_dates(month)
-    {:noreply, socket}
+    {:noreply, assign_dates(socket, month)}
   end
 
   def handle_event("next-month", %{"next-month" => month}, socket) do
-    socket = socket |> assign_dates(month)
-    {:noreply, socket}
+    {:noreply, assign_dates(socket, month)}
   end
 
-  def handle_event("show-calendar", _, socket) do
-    {:noreply, assign(socket, show_calendar: true)}
+  def handle_event("toggle-show-calendar", _, socket) do
+    {:noreply, assign(socket, show_calendar: !socket.assigns.show_calendar)}
   end
 
   def handle_event("hide-calendar", _, socket) do
