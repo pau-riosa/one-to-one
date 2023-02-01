@@ -1,18 +1,26 @@
 {
   "scripts": {},
   "dependencies": {
+    "@dytesdk/react-ui-kit": "^1.41.2",
+    "@dytesdk/react-web-core": "^1.18.0",
     "@membraneframework/membrane-webrtc-js": "^0.1.2",
     "alpinejs": "^2.8.2",
     "autoprefixer": "^10.4.8",
     "daisyui": "^2.17.0",
+    "dyte-client": "^0.37.0-staging.2",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "query-string": "^7.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
     "webrtc-adapter": "^8.1.1"
   },
   "devDependencies": {
     "@types/dom-screen-wake-lock": "^1.0.0",
     "@types/phoenix": "^1.5.4",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
   }

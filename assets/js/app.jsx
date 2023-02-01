@@ -31,9 +31,15 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 import { Room } from "./room";
 
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./dyte/App.jsx";
+
+
 if (window.location.pathname.split("/").includes("room")) {
-  let room = new Room();
-  room.init().then(() => room.join());
+  const container = document.getElementById("root");
+  const root = createRoot(container)
+  root.render(<App />);
 }
 
 let Hooks = {};
