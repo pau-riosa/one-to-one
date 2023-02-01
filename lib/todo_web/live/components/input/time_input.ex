@@ -13,6 +13,8 @@ defmodule TodoWeb.Components.TimeInput do
   use TodoWeb, :live_component
   alias Todo.Tempo
 
+  @default_next_day_time "8:00 AM"
+
   def render(assigns) do
     class =
       class_list([
@@ -28,7 +30,7 @@ defmodule TodoWeb.Components.TimeInput do
     assigns =
       assigns
       |> assign(class: class)
-      |> assign(default_next_day_time: "8:00 AM")
+      |> assign(default_next_day_time: @default_next_day_time)
       |> assign(is_label: Map.get(assigns, :label, true))
       |> assign(label: label)
 
