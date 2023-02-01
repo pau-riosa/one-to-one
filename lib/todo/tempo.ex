@@ -18,14 +18,21 @@ defmodule Todo.Tempo do
       ~D[2023-01-27]
 
   """
-  def today_date(timezone) do
-    timezone
-    |> now!()
-    |> DateTime.to_date()
-  end
+  def today_date(timezone), do: DateTime.to_date(now!(timezone))
 
   @doc """
   Compare 2 dates to check if they are the same
+
+  ## Examples
+
+      iex> Todo.Tempo.same_date?(~D[2023-01-27], ~D[2023-01-27])
+      true
+
+  """
+  def same_date?(%Date{} = date_1, %Date{} = date_2), do: equal?(date_1, date_2)
+
+  @doc """
+  Compare 2 datetimes to check if they are the same
 
   ## Examples
 
@@ -33,7 +40,7 @@ defmodule Todo.Tempo do
       true
 
   """
-  def equal?(%Date{} = date_1, %Date{} = date_2), do: Timex.equal?(date_1, date_2)
+  def equal?(date_1, date_2), do: Timex.equal?(date_1, date_2)
 
   @doc """
   Output list of NaiveDateTime via selected date, timezone and duration
@@ -63,7 +70,7 @@ defmodule Todo.Tempo do
     today_date = today_date(timezone)
 
     selected_date
-    |> equal?(today_date)
+    |> same_date?(today_date)
     |> do_list_of_times(timezone, step)
   end
 
