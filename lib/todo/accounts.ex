@@ -10,6 +10,18 @@ defmodule Todo.Accounts do
 
   ## Database getters
 
+  @doc """
+  Gets a user by email.
+
+  ## Examples
+
+      iex> get_user_by_slug("foo-slug")
+      %User{}
+
+      iex> get_user_by_slug("unknown-slug")
+      nil
+
+  """
   def get_user_by_slug(slug) do
     Repo.get_by(User, slug: slug)
   end
