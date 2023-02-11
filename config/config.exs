@@ -17,6 +17,9 @@ config :todo, TodoWeb.Endpoint,
   pubsub_server: Todo.PubSub,
   live_view: [signing_salt: "ugzWT0/I"]
 
+# Configures Dyte
+config :todo, org_id: System.get_env("ORG_ID")
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

@@ -4,6 +4,10 @@ defmodule TodoWeb.RoomController do
   alias Todo.Accounts.User
   alias Todo.Schedules.Schedule
 
+  @room_name ""
+  @auth_token ""
+  @org_id Application.get_env(:todo, :org_id)
+
   def index(
         %{assigns: %{current_user: %User{} = current_user}} = conn,
         %{"schedule_id" => schedule_id} = _params
@@ -14,7 +18,15 @@ defmodule TodoWeb.RoomController do
       |> Repo.preload(:created_by)
 
     email = current_user.email
-    render(conn, "index.html", schedule_id: schedule_id, schedule: schedule, email: email)
+
+    render(conn, "index.html",
+      schedule_id: schedule_id,
+      schedule: schedule,
+      email: email,
+      org_id: @org_id,
+      auth_token: @auth_token,
+      room_name: @room_name
+    )
   end
 
   def index(%{assigns: %{email: email}} = conn, %{"schedule_id" => schedule_id} = _params) do
@@ -23,7 +35,14 @@ defmodule TodoWeb.RoomController do
       |> Repo.get(schedule_id)
       |> Repo.preload(:created_by)
 
-    render(conn, "index.html", schedule_id: schedule_id, schedule: schedule, email: email)
+    render(conn, "index.html",
+      schedule_id: schedule_id,
+      schedule: schedule,
+      email: email,
+      org_id: @org_id,
+      auth_token: @auth_token,
+      room_name: @room_name
+    )
   end
 
   def index(conn, %{"schedule_id" => schedule_id} = _params) do

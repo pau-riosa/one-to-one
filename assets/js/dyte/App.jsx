@@ -9,7 +9,12 @@ function App() {
       textPrimary:     '#FFFFFF',
       videoBackground: '#FFFFFF'
     }}
-  
+
+  const root = document.querySelector("#root")
+  const orgId = root.dataset.orgId 
+  const authToken = root.dataset.authToken 
+  const roomName = root.dataset.roomName 
+
   return (
     <div className="App">
       <DyteMeeting
@@ -20,10 +25,10 @@ function App() {
             window.location = "/"
           })
         }}
-        clientId={`orgId || clientId`}
+        clientId={orgId}
         meetingConfig={{
-          roomName: `roomName`,
-          authToken: `authToken`,
+          roomName: roomName,
+          authToken: authToken,
         }}
         uiConfig={uiConfigOptions}
       />
