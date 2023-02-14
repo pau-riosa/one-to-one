@@ -2,7 +2,7 @@ defmodule TodoWeb.UserRegistrationController do
   use TodoWeb, :controller
 
   alias Todo.Accounts
-  alias Todo.Accounts.User
+  alias Todo.Schemas.User
   alias TodoWeb.UserAuth
 
   def new(conn, _params) do

@@ -10,7 +10,7 @@ defmodule Todo.Schemas.Participant do
     field :email, :string
 
     belongs_to :meeting, Todo.Schemas.Meeting, foreign_key: :meeting_id, type: :string
-    belongs_to :created_by, Todo.Accounts.User
+    belongs_to :created_by, Todo.Schemas.User
     timestamps()
   end
 

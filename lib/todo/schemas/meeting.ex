@@ -14,7 +14,7 @@ defmodule Todo.Schemas.Meeting do
     field :status, :string
     field :title, :string
     belongs_to :schedule, Todo.Schemas.Schedule
-    belongs_to :created_by, Todo.Accounts.User
+    belongs_to :created_by, Todo.Schemas.User
     timestamps()
   end
 

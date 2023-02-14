@@ -1,6 +1,6 @@
-defmodule Todo.Accounts.UserToken do
+defmodule Todo.Schemas.UserToken do
   use Todo.Schema
-  alias Todo.Accounts.UserToken
+  alias Todo.Schemas.UserToken
 
   @hash_algorithm :sha256
   @rand_size 32
@@ -16,7 +16,7 @@ defmodule Todo.Accounts.UserToken do
     field :token, :binary
     field :context, :string
     field :sent_to, :string
-    belongs_to :user, Todo.Accounts.User
+    belongs_to :user, Todo.Schemas.User
 
     timestamps(updated_at: false)
   end

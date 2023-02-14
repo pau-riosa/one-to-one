@@ -1,4 +1,4 @@
-defmodule Todo.Tempo do
+defmodule Todo.Helpers.Tempo do
   @moduledoc """
   This module provides functions to work with dates and times 
   """
@@ -14,7 +14,7 @@ defmodule Todo.Tempo do
 
   ## Examples
 
-      iex> Todo.Tempo.today_date("Etc/UTC")
+      iex> Todo.Helpers.Tempo.today_date("Etc/UTC")
       ~D[2023-01-27]
 
   """
@@ -25,7 +25,7 @@ defmodule Todo.Tempo do
 
   ## Examples
 
-      iex> Todo.Tempo.same_date?(~D[2023-01-27], ~D[2023-01-27])
+      iex> Todo.Helpers.Tempo.same_date?(~D[2023-01-27], ~D[2023-01-27])
       true
 
   """
@@ -36,7 +36,7 @@ defmodule Todo.Tempo do
 
   ## Examples
 
-      iex> Todo.Tempo.equal?(~D[2023-01-27], ~D[2023-01-27])
+      iex> Todo.Helpers.Tempo.equal?(~D[2023-01-27], ~D[2023-01-27])
       true
 
   """

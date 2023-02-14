@@ -1,4 +1,4 @@
-defmodule Todo.Accounts.User do
+defmodule Todo.Schemas.User do
   use Todo.Schema
 
   schema "users" do
@@ -17,7 +17,7 @@ defmodule Todo.Accounts.User do
     field :slug, :string, default: ""
     has_many :schedules, Todo.Schemas.Schedule
     has_many :session_settings, Todo.SessionSetting, on_replace: :delete
-    has_many :user_tokens, Todo.Accounts.UserToken
+    has_many :user_tokens, Todo.Schemas.UserToken
     timestamps()
   end
 
@@ -162,7 +162,7 @@ defmodule Todo.Accounts.User do
   If there is no user or the user doesn't have a password, we call
   `Bcrypt.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%Todo.Accounts.User{hashed_password: hashed_password}, password)
+  def valid_password?(%Todo.Schemas.User{hashed_password: hashed_password}, password)
       when is_binary(hashed_password) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, hashed_password)
   end

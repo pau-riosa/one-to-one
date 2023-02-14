@@ -4,8 +4,8 @@ defmodule TodoWeb.BookLive do
   alias Todo.Events
   alias Todo.Schedules
   alias Todo.Schemas.Schedule
-  alias Todo.Accounts.User
-  alias Todo.Tempo
+  alias Todo.Schemas.User
+  alias Todo.Helpers.Tempo
 
   @default_duration 20
   def mount(%{"slug" => slug} = params, _session, socket) do

@@ -26,7 +26,7 @@ defmodule TodoWeb.Components.CalendarMonthInput do
     Enum.map(list_of_assigns, fn assign ->
       assign
       |> Map.put(:timezone, timezone)
-      |> Map.put(:date, Todo.Tempo.today_date(timezone))
+      |> Map.put(:date, Todo.Helpers.Tempo.today_date(timezone))
     end)
   end
 

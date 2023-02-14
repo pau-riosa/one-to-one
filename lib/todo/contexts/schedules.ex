@@ -6,7 +6,7 @@ defmodule Todo.Schedules do
   import Phoenix.LiveView, only: [assign: 2, assign: 3]
   alias Timex
   alias Timex.Duration
-  alias Todo.Schema.Schedule
+  alias Todo.Schemas.Schedule
   alias Todo.Repo
 
   def get_by_slug_and_datetime(slug, datetime) do

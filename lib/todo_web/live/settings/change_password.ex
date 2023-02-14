@@ -1,7 +1,7 @@
 defmodule TodoWeb.Settings.ChangePassword do
   use TodoWeb, :live_component
 
-  alias Todo.Accounts.User
+  alias Todo.Schemas.User
 
   def update(assigns, socket) do
     changeset = User.password_changeset(assigns.current_user, %{})

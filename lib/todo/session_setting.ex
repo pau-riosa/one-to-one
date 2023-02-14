@@ -46,7 +46,7 @@ defmodule Todo.SessionSetting do
     field :day, :string
 
     embeds_many :times, Todo.Time, on_replace: :delete
-    belongs_to(:user, Todo.Accounts.User)
+    belongs_to(:user, Todo.Schemas.User)
     timestamps()
   end
 

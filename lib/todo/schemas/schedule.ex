@@ -13,7 +13,7 @@ defmodule Todo.Schemas.Schedule do
     field :time, :string, virtual: true
     field :timezone, :string, virtual: true
 
-    belongs_to(:created_by, Todo.Accounts.User)
+    belongs_to(:created_by, Todo.Schemas.User)
 
     timestamps()
   end

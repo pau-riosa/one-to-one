@@ -1,4 +1,4 @@
-defmodule Todo.ChangesetErrorBuilder do
+defmodule Todo.Helpers.ChangesetErrorBuilder do
   def call(%Ecto.Changeset{} = changeset) do
     changeset
     |> Ecto.Changeset.traverse_errors(&full_messages/3)

@@ -1,7 +1,7 @@
 defmodule TodoWeb.RoomController do
   use TodoWeb, :controller
   alias Todo.Repo
-  alias Todo.Accounts.User
+  alias Todo.Schemas.User
   alias Todo.Schemas.Schedule
 
   @room_name "cmhuqc-aedepy"

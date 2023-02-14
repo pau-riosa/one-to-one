@@ -1,6 +1,6 @@
 defmodule TodoWeb.Settings.Session do
   use TodoWeb, :live_component
-  alias Todo.Accounts.User
+  alias Todo.Schemas.User
   alias Ecto.Changeset
 
   def update(assigns, socket) do
