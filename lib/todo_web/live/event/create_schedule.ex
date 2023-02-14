@@ -1,7 +1,8 @@
 defmodule TodoWeb.Event.CreateSchedule do
   use TodoWeb, :live_component
 
-  alias Todo.Schedules.{Schedule, Operation}
+  alias Todo.Schemas.Schedule
+  alias Todo.Schedules.Operation
   alias TodoWeb.Components.{CalendarWeeks, Time}
 
   def mount(_params, _session, socket) do

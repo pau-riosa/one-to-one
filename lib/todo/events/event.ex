@@ -7,7 +7,7 @@ defmodule Todo.Events.Event do
     field :files, {:array, :string}, default: []
     field :slug, :string
     belongs_to(:created_by, Todo.Accounts.User)
-    has_many(:schedules, Todo.Schedules.Schedule)
+    has_many(:schedules, Todo.Schemas.Schedule)
     timestamps()
   end
 
@@ -21,7 +21,7 @@ defmodule Todo.Events.Event do
   def changeset(event, attrs \\ %{}) do
     event
     |> cast(attrs, @required_attrs ++ @optional_attrs)
-    |> cast_assoc(:schedules, with: &Todo.Schedules.Schedule.changeset/2)
+    |> cast_assoc(:schedules, with: &Todo.Schemas.Schedule.changeset/2)
     |> validate_required(@required_attrs)
     |> add_slug(attrs)
   end

@@ -15,7 +15,7 @@ defmodule Todo.Accounts.User do
     field :duration, :integer, default: 15
     field :booking_link, :string, virtual: true
     field :slug, :string, default: ""
-    has_many :schedules, Todo.Schedules.Schedule
+    has_many :schedules, Todo.Schemas.Schedule
     has_many :session_settings, Todo.SessionSetting, on_replace: :delete
     has_many :user_tokens, Todo.Accounts.UserToken
     timestamps()
@@ -33,12 +33,6 @@ defmodule Todo.Accounts.User do
     |> validate_required([:booking_link, :duration])
     |> build_slug()
   end
-
-  defp build_slug(%{changes: %{booking_link: booking_link}} = changeset) do
-    put_change(changeset, :slug, Inflex.parameterize(booking_link))
-  end
-
-  defp build_slug(changeset), do: changeset
 
   def availability_changeset(struct, attrs \\ %{}) do
     struct
@@ -182,10 +176,13 @@ defmodule Todo.Accounts.User do
   Validates the current password otherwise adds an error to the changeset.
   """
   def validate_current_password(changeset, password) do
-    if valid_password?(changeset.data, password) do
-      changeset
-    else
-      add_error(changeset, :current_password, "is not valid")
-    end
+    if valid_password?(changeset.data, password),
+      do: changeset,
+      else: add_error(changeset, :current_password, "is not valid")
   end
+
+  defp build_slug(%{changes: %{booking_link: booking_link}} = changeset),
+    do: put_change(changeset, :slug, Inflex.parameterize(booking_link))
+
+  defp build_slug(changeset), do: changeset
 end

@@ -1,4 +1,4 @@
-defmodule Todo.Schedules.Schedule do
+defmodule Todo.Schemas.Schedule do
   use Todo.Schema
 
   schema "schedules" do
@@ -29,6 +29,17 @@ defmodule Todo.Schedules.Schedule do
 
   @optional_attrs [:scheduled_for, :duration, :name, :comment, :start_at, :end_at]
 
+  @set_schedule_attrs [
+    :name,
+    :email,
+    :scheduled_for,
+    :created_by_id,
+    :duration
+  ]
+
+  @set_schedule_optional_attrs [
+    :comment
+  ]
   def changeset(struct, attrs \\ %{}) do
     struct
     |> cast(attrs, @required_attrs ++ @optional_attrs)
@@ -52,17 +63,6 @@ defmodule Todo.Schedules.Schedule do
 
   defp insert_scheduled_for(changeset), do: changeset
 
-  @set_schedule_attrs [
-    :name,
-    :email,
-    :scheduled_for,
-    :created_by_id,
-    :duration
-  ]
-
-  @set_schedule_optional_attrs [
-    :comment
-  ]
   def set_schedule_changeset(struct, attrs \\ %{}) do
     struct
     |> cast(attrs, @set_schedule_attrs ++ @set_schedule_optional_attrs)

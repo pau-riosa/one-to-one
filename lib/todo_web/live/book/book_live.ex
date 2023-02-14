@@ -3,7 +3,7 @@ defmodule TodoWeb.BookLive do
 
   alias Todo.Events
   alias Todo.Schedules
-  alias Todo.Schedules.Schedule
+  alias Todo.Schemas.Schedule
   alias Todo.Accounts.User
   alias Todo.Tempo
 

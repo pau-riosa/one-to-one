@@ -2,7 +2,7 @@ defmodule TodoWeb.EventLive do
   use TodoWeb, :live_view
 
   alias Todo.Events.Event
-  alias Todo.Schedules.Schedule
+  alias Todo.Schemas.Schedule
   alias Todo.Schedules
 
   @impl true

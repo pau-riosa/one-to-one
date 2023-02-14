@@ -2,10 +2,10 @@ defmodule TodoWeb.RoomController do
   use TodoWeb, :controller
   alias Todo.Repo
   alias Todo.Accounts.User
-  alias Todo.Schedules.Schedule
+  alias Todo.Schemas.Schedule
 
-  @room_name ""
-  @auth_token ""
+  @room_name "cmhuqc-aedepy"
+  @auth_token "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmY2ViNjg5LWU3OGMtNGFkMi1hMTdkLTY4MWNiYzAyM2E0MyIsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE2NzU5MjY2OTEsImV4cCI6MTY4NDU2NjY5MX0.GToJS1ZTO2Fwv1MRuCu7ehfAJr2AF0M9JHBzrkd9W---OyKBWBYeS6himqpZRAiK1ybCN6HeyMeiD4NdrTteX_k5uyFjqQnX935FakbsuwHqCCoPuUxKmv2Vgj8kd0j8mzgRrEhw1tfgfGQKrYxZGYn_LeSf_CT3PmnYR5U9p_P5L-lZBPessY0ebpisLa4OZHkkIPgVHyz0yx1XyY-neVpzwC0zvtCccVxVKJuB14Qz35pGK3GcPbw07gNpkwk5lAKKYdTZiL-Bhx20QmM-qJDJbGoK9mNhotmP-5YT0WCaitKkVEY1JXfZG3lnnu7OAOJGfk75hhao6xkxWMHYPw"
   @org_id Application.get_env(:todo, :org_id)
 
   def index(

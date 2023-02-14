@@ -1,7 +1,8 @@
 defmodule TodoWeb.Book.SetSchedule do
   use TodoWeb, :live_component
 
-  alias Todo.Schedules.{Schedule, Operation}
+  alias Todo.Schemas.Schedule
+  alias Todo.Schedules.Operation
   alias Todo.Accounts.UserNotifier
 
   def mount(socket) do
