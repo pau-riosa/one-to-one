@@ -3,7 +3,7 @@ defmodule TodoWeb.Book.SetSchedule do
 
   alias Todo.Schemas.Schedule
   alias Todo.Schedules.Operation
-  alias Todo.Accounts.UserNotifier
+  alias Todo.Helpers.UserNotifier
 
   def mount(socket) do
     changeset = Schedule.set_schedule_changeset(%Schedule{})

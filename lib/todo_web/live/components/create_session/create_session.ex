@@ -4,7 +4,7 @@ defmodule TodoWeb.Components.CreateSession do
   @moduledoc """
   <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} />
   """
-  alias Todo.Accounts.UserNotifier
+  alias Todo.Helpers.UserNotifier
   alias Todo.Schemas.Schedule
 
   def update(assigns, socket) do

@@ -8,7 +8,7 @@ defmodule Todo.Accounts do
 
   alias Todo.Schemas.UserToken
   alias Todo.Schemas.User
-  alias Todo.Accounts.UserNotifier
+  alias Todo.Helpers.UserNotifier
 
   ## Database getters
 

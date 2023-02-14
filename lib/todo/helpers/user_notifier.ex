@@ -1,4 +1,4 @@
-defmodule Todo.Accounts.UserNotifier do
+defmodule Todo.Helpers.UserNotifier do
   import Swoosh.Email
 
   alias Todo.Mailer
