@@ -39,6 +39,7 @@ defmodule Todo.Schedules do
     |> where([s], s.created_by_id == ^created_by_id)
     |> where([s], s.scheduled_for < ^Timex.now(timezone))
     |> order_by([s], desc: s.scheduled_for)
+    |> preload([:meeting, :created_by])
     |> Repo.all()
   end
 
@@ -106,6 +107,7 @@ defmodule Todo.Schedules do
     |> where([s], s.created_by_id == ^created_by_id)
     |> where([s], s.scheduled_for >= ^beginning_of_day)
     |> order_by([s], asc: s.scheduled_for)
+    |> preload([:meeting, :created_by])
     |> Repo.all()
   end
 

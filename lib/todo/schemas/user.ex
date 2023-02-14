@@ -16,7 +16,6 @@ defmodule Todo.Schemas.User do
     field :booking_link, :string, virtual: true
     field :slug, :string, default: ""
     has_many :schedules, Todo.Schemas.Schedule
-    has_many :session_settings, Todo.SessionSetting, on_replace: :delete
     has_many :user_tokens, Todo.Schemas.UserToken
     timestamps()
   end

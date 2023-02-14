@@ -12,7 +12,7 @@ defmodule Todo.Schemas.Schedule do
     field :date, :string, virtual: true
     field :time, :string, virtual: true
     field :timezone, :string, virtual: true
-
+    has_one :meeting, Todo.Schemas.Meeting
     belongs_to(:created_by, Todo.Schemas.User)
 
     timestamps()

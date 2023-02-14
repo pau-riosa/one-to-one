@@ -33,8 +33,7 @@ defmodule Todo.Repo.Migrations.CreateMeetingAndParticipantSchemas do
       timestamps()
     end
 
-    create unique_index(:participants, [:token])
-    create unique_index(:participants, [:meeting_id])
+    create unique_index(:participants, [:token, :meeting_id])
 
     alter table(:schedules) do
       add :meeting_id,

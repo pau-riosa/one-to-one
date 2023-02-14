@@ -7,9 +7,16 @@ defmodule Todo.Operations.Schedule do
     Schema.changeset(struct, params)
   end
 
-  def create(params) do
+  def create(params, repo \\ Repo) do
     %Schema{}
     |> Schema.set_schedule_changeset(params)
-    |> Repo.insert()
+    |> repo.insert()
+  end
+
+  def create_schedule(params, repo \\ Repo) do
+    %Schema{}
+    |> Schema.changeset(params)
+    |> Map.put(:action, :insert)
+    |> repo.insert()
   end
 end

@@ -26,7 +26,6 @@ defmodule Todo.Schemas.Participant do
     struct
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> unique_constraint([:token], message: "token already exists")
-    |> unique_constraint([:meeting_id], message: "meeting_id already exists")
+    |> unique_constraint([:token, :meeting_id], message: "already exists")
   end
 end

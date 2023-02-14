@@ -18,9 +18,11 @@ config :todo, TodoWeb.Endpoint,
   live_view: [signing_salt: "ugzWT0/I"]
 
 # Configures Dyte
-config :todo,
+config :todo, :dyte,
   org_id: System.get_env("ORG_ID"),
   api_key: System.get_env("API_KEY")
+
+config :todo, :api_modules, dyte: Todo.DyteIntegration
 
 # Configures the mailer
 #

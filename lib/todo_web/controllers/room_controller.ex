@@ -4,44 +4,65 @@ defmodule TodoWeb.RoomController do
   alias Todo.Schemas.User
   alias Todo.Schemas.Schedule
 
-  @room_name "cmhuqc-aedepy"
-  @auth_token "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZmY2ViNjg5LWU3OGMtNGFkMi1hMTdkLTY4MWNiYzAyM2E0MyIsImxvZ2dlZEluIjp0cnVlLCJpYXQiOjE2NzU5MjY2OTEsImV4cCI6MTY4NDU2NjY5MX0.GToJS1ZTO2Fwv1MRuCu7ehfAJr2AF0M9JHBzrkd9W---OyKBWBYeS6himqpZRAiK1ybCN6HeyMeiD4NdrTteX_k5uyFjqQnX935FakbsuwHqCCoPuUxKmv2Vgj8kd0j8mzgRrEhw1tfgfGQKrYxZGYn_LeSf_CT3PmnYR5U9p_P5L-lZBPessY0ebpisLa4OZHkkIPgVHyz0yx1XyY-neVpzwC0zvtCccVxVKJuB14Qz35pGK3GcPbw07gNpkwk5lAKKYdTZiL-Bhx20QmM-qJDJbGoK9mNhotmP-5YT0WCaitKkVEY1JXfZG3lnnu7OAOJGfk75hhao6xkxWMHYPw"
   @org_id Application.get_env(:todo, :org_id)
 
   def index(
         %{assigns: %{current_user: %User{} = current_user}} = conn,
-        %{"schedule_id" => schedule_id} = _params
+        %{
+          "schedule_id" => schedule_id,
+          "participant_id" => participant_id,
+          "meeting_id" => meeting_id
+        } = _params
       ) do
     schedule =
       Schedule
       |> Repo.get(schedule_id)
       |> Repo.preload(:created_by)
 
-    email = current_user.email
+    participant =
+      Todo.Schemas.Participant
+      |> Repo.get_by(participant_id: participant_id)
+
+    meeting =
+      Todo.Schemas.Meeting
+      |> Repo.get(meeting_id)
 
     render(conn, "index.html",
       schedule_id: schedule_id,
       schedule: schedule,
-      email: email,
       org_id: @org_id,
-      auth_token: @auth_token,
-      room_name: @room_name
+      auth_token: participant.token,
+      room_name: meeting.room_name
     )
   end
 
-  def index(%{assigns: %{email: email}} = conn, %{"schedule_id" => schedule_id} = _params) do
+  def index(
+        conn,
+        %{
+          "schedule_id" => schedule_id,
+          "participant_id" => participant_id,
+          "meeting_id" => meeting_id
+        } = _params
+      ) do
     schedule =
       Schedule
       |> Repo.get(schedule_id)
       |> Repo.preload(:created_by)
 
+    participant =
+      Todo.Schemas.Participant
+      |> Repo.get_by(participant_id: participant_id)
+
+    meeting =
+      Todo.Schemas.Meeting
+      |> Repo.get(meeting_id)
+
     render(conn, "index.html",
       schedule_id: schedule_id,
       schedule: schedule,
-      email: email,
       org_id: @org_id,
-      auth_token: @auth_token,
-      room_name: @room_name
+      auth_token: participant.token,
+      room_name: meeting.room_name
     )
   end
 

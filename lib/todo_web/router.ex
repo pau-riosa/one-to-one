@@ -62,8 +62,8 @@ defmodule TodoWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
-    get "/room/:schedule_id", RoomController, :index
-    post "/room/:schedule_id", RoomController, :enter
+    get "/room/:schedule_id/:participant_id/:meeting_id", RoomController, :index
+    # post "/room/:schedule_id", RoomController, :enter
   end
 
   scope "/", TodoWeb do

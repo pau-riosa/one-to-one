@@ -5,23 +5,19 @@ defmodule Todo.DyteIntegration do
   require Logger
 
   @base_url "https://api.cluster.dyte.in/v1"
-  @organization_id Application.get_env(:todo, :org_id)
-  @api_key Application.get_env(:todo, :api_key)
+  @organization_id Application.get_env(:todo, :dyte)[:org_id]
+  @api_key Application.get_env(:todo, :dyte)[:api_key]
+  @presetName "basic-version-1"
 
-  @doc """
-  meeting_title
-  """
   def create_meeting(meeting_title \\ "Meeting") do
-    url =
-      [@base_url, "/organizations/#{@organization_id}", "/meeting"]
-      |> Enum.join("")
+    url = Enum.join([@base_url, "/organizations/#{@organization_id}", "/meeting"], "")
 
     headers = [{"Authorization", @api_key}, {"Content-Type", "application/json"}]
 
     body =
       %{
         "title" => meeting_title,
-        "presetName" => "basic-version-1",
+        "presetName" => @presetName,
         "authorization" => %{
           "waitingRoom" => false,
           "closed" => false
@@ -42,13 +38,9 @@ defmodule Todo.DyteIntegration do
     end
   end
 
-  @doc """
-  meeting_id
-  participant_name
-  preset_name
+  def create_participant(%{meeting_id: nil}), do: :participant_not_created
 
-  """
-  def create_participant(meeting_id, participant_name, preset_name) do
+  def create_participant(meeting_id, participant_name, preset_name \\ "basic-version-1") do
     url =
       [
         @base_url,
