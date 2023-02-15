@@ -77,7 +77,11 @@ RUN npm install \
   alpinejs@2 \
   @membraneframework/membrane-webrtc-js \
   query-string \
-  webrtc-adapter
+  webrtc-adapter \
+  react \
+  react-dom \
+  @dytesdk/react-ui-kit \
+  @dytesdk/react-web-core
 
 RUN npm install -D \
   @types/dom-screen-wake-lock \
