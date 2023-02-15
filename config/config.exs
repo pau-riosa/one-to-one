@@ -19,8 +19,8 @@ config :todo, TodoWeb.Endpoint,
 
 # Configures Dyte
 config :todo, :dyte,
-  org_id: System.get_env("ORG_ID"),
-  api_key: System.get_env("API_KEY")
+  org_id: System.get_env("DYTE_ORG_ID"),
+  api_key: System.get_env("DYTE_API_KEY")
 
 config :todo, :api_modules, dyte: Todo.DyteIntegration
 
