@@ -14,6 +14,7 @@ defmodule TodoWeb.Components.CreateSessionTest do
   alias Todo.Repo
   alias Swoosh.Email
   alias Todo.Fakes.DyteIntegration
+
   setup %{conn: conn}, do: register_and_log_in_user(%{conn: conn})
 
   test "render component", %{user: user} do
@@ -22,6 +23,60 @@ defmodule TodoWeb.Components.CreateSessionTest do
   end
 
   describe "create-session modal" do
+    setup do
+      DyteIntegration.init()
+
+      DyteIntegration.add_response(
+        {:ok,
+         %{
+           "data" => %{
+             "meeting" => %{
+               "createdAt" => "2023-02-14T02:33:13.982Z",
+               "id" => "4cbb10b3-cc1e-4ce8-9f0b-17ea6af63f70",
+               "liveStreamOnStart" => false,
+               "participants" => [],
+               "recordOnStart" => false,
+               "roomName" => "jtdilh-marnpv",
+               "status" => "LIVE",
+               "title" => "Meeting with Juan"
+             }
+           },
+           "message" => "",
+           "success" => true
+         }}
+      )
+
+      DyteIntegration.add_response(
+        {:ok,
+         %{
+           "data" => %{
+             "authResponse" => %{
+               "authToken" => "authToken",
+               "id" => "26329cc3-55d6-4c9f-8c99-feedde77991e",
+               "userAdded" => true
+             }
+           },
+           "message" => "",
+           "success" => true
+         }}
+      )
+
+      DyteIntegration.add_response(
+        {:ok,
+         %{
+           "data" => %{
+             "authResponse" => %{
+               "authToken" => "authToken-participant-2",
+               "id" => Ecto.UUID.generate(),
+               "userAdded" => true
+             }
+           },
+           "message" => "",
+           "success" => true
+         }}
+      )
+    end
+
     test "should create schedule", %{conn: conn, user: user} do
       {:ok, view, _html} = live(conn, "/users/dashboard")
 
@@ -81,49 +136,6 @@ defmodule TodoWeb.Components.CreateSessionTest do
     end
 
     test "should create 1 dyte meeting w/ 2 participants only", %{conn: conn, user: user} do
-      DyteIntegration.init()
-
-      DyteIntegration.add_response(%{
-        "data" => %{
-          "meeting" => %{
-            "createdAt" => "2023-02-14T02:33:13.982Z",
-            "id" => "4cbb10b3-cc1e-4ce8-9f0b-17ea6af63f70",
-            "liveStreamOnStart" => false,
-            "participants" => [],
-            "recordOnStart" => false,
-            "roomName" => "jtdilh-marnpv",
-            "status" => "LIVE",
-            "title" => "Meeting with Juan"
-          }
-        },
-        "message" => "",
-        "success" => true
-      })
-
-      DyteIntegration.add_response(%{
-        "data" => %{
-          "authResponse" => %{
-            "authToken" => "authToken",
-            "id" => "26329cc3-55d6-4c9f-8c99-feedde77991e",
-            "userAdded" => true
-          }
-        },
-        "message" => "",
-        "success" => true
-      })
-
-      DyteIntegration.add_response(%{
-        "data" => %{
-          "authResponse" => %{
-            "authToken" => "authToken-participant-2",
-            "id" => Ecto.UUID.generate(),
-            "userAdded" => true
-          }
-        },
-        "message" => "",
-        "success" => true
-      })
-
       {:ok, view, _html} = live(conn, "/users/dashboard")
 
       assert view

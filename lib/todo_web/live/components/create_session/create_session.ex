@@ -101,6 +101,5 @@ defmodule TodoWeb.Components.CreateSession do
       )
     end)
     |> Todo.Repo.transaction()
-    |> IO.inspect()
   end
 end

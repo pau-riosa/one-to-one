@@ -1,13 +1,12 @@
 {
   "scripts": {},
   "dependencies": {
-    "@dytesdk/react-ui-kit": "^1.41.2",
-    "@dytesdk/react-web-core": "^1.18.0",
+    "@dytesdk/react-ui-kit": "^1.42.0",
+    "@dytesdk/react-web-core": "^1.19.2",
     "@membraneframework/membrane-webrtc-js": "^0.1.2",
     "alpinejs": "^2.8.2",
     "autoprefixer": "^10.4.8",
     "daisyui": "^2.17.0",
-    "dyte-client": "^0.37.0-staging.2",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "query-string": "^7.1.1",

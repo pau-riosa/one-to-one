@@ -23,7 +23,7 @@ defmodule Todo.Operations.Meeting do
     Repo.delete(struct)
   end
 
-  def create_dyte_meeting(schedule, repo \\ Repo, title \\ "Upcoming One to One session!") do
+  def create_dyte_meeting(schedule, repo \\ Repo, title \\ "Welcome to your 1 to 1 session") do
     case dyte_integration_module.create_meeting(title) do
       {:ok, %{"data" => data}} ->
         %{
