@@ -5,8 +5,8 @@ defmodule Todo.DyteIntegration do
   require Logger
 
   @base_url "https://api.cluster.dyte.in/v1"
-  @organization_id Application.get_env(:todo, :dyte)[:org_id]
-  @api_key Application.get_env(:todo, :dyte)[:api_key]
+  @organization_id Application.fetch_env!(:todo, :dyte)[:org_id]
+  @api_key Application.fetch_env!(:todo, :dyte)[:api_key]
   @presetName "basic-version-1"
 
   def create_meeting(meeting_title \\ "Meeting") do
@@ -26,6 +26,8 @@ defmodule Todo.DyteIntegration do
         "liveStreamOnStart" => false
       }
       |> Jason.encode!()
+
+    raise HTTPoison.post(url, body, headers)
 
     case HTTPoison.post(url, body, headers) do
       {:ok, %HTTPoison.Response{body: body, status_code: 200}} ->
