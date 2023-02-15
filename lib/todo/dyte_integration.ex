@@ -9,10 +9,13 @@ defmodule Todo.DyteIntegration do
   @api_key Application.fetch_env!(:todo, :dyte)[:api_key]
   @presetName "basic-version-1"
 
-  def create_meeting(meeting_title \\ "Meeting") do
-    url = Enum.join([@base_url, "/organizations/#{@organization_id}", "/meeting"], "")
+  defp organization_id(), do: Application.fetch_env!(:todo, :dyte)[:org_id]
+  defp api_key(), do: Application.fetch_env!(:todo, :dyte)[:api_key]
 
-    headers = [{"Authorization", @api_key}, {"Content-Type", "application/json"}]
+  def create_meeting(meeting_title \\ "Meeting") do
+    url = Enum.join([@base_url, "/organizations/#{organization_id()}", "/meeting"], "")
+
+    headers = [{"Authorization", api_key()}, {"Content-Type", "application/json"}]
 
     body =
       %{
