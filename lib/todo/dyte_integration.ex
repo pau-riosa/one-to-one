@@ -5,8 +5,6 @@ defmodule Todo.DyteIntegration do
   require Logger
 
   @base_url "https://api.cluster.dyte.in/v1"
-  @organization_id Application.fetch_env!(:todo, :dyte)[:org_id]
-  @api_key Application.fetch_env!(:todo, :dyte)[:api_key]
   @presetName "basic-version-1"
 
   defp organization_id(), do: Application.fetch_env!(:todo, :dyte)[:org_id]
@@ -49,14 +47,14 @@ defmodule Todo.DyteIntegration do
     url =
       [
         @base_url,
-        "/organizations/#{@organization_id}",
+        "/organizations/#{organization_id()}",
         "/meetings",
         "/#{meeting_id}",
         "/participant"
       ]
       |> Enum.join("")
 
-    headers = [{"Authorization", @api_key}, {"Content-Type", "application/json"}]
+    headers = [{"Authorization", api_key()}, {"Content-Type", "application/json"}]
 
     body =
       %{
