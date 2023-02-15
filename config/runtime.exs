@@ -182,6 +182,12 @@ if config_env() == :prod do
   # Swoosh API client is needed for adapters other than SMTP.
   config :swoosh, :api_client, Swoosh.ApiClient.Hackney
 
+  # Configures Dyte
+  config :todo, :dyte,
+    org_id: System.get_env("DYTE_ORG_ID"),
+    api_key: System.get_env("DYTE_API_KEY")
+
+  config :todo, :api_modules, dyte: Todo.DyteIntegration
   #
   # For this example you need include a HTTP client required by Swoosh API client.
   # Swoosh supports Hackney and Finch out of the box:
