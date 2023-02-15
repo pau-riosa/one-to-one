@@ -28,8 +28,6 @@ defmodule Todo.DyteIntegration do
       }
       |> Jason.encode!()
 
-    raise HTTPoison.post(url, body, headers)
-
     case HTTPoison.post(url, body, headers) do
       {:ok, %HTTPoison.Response{body: body, status_code: 200}} ->
         Logger.info("[DyteIntegration] meeting created")
