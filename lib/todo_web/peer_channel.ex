@@ -37,43 +37,43 @@ defmodule TodoWeb.PeerChannel do
      Phoenix.Socket.assign(socket, %{room_id: room_id, room_pid: room_pid, peer_id: peer_id})}
   end
 
-  @impl true
-  def handle_in("mediaEvent", %{"data" => event}, socket) do
-    send(socket.assigns.room_pid, {:media_event, socket.assigns.peer_id, event})
+  # @impl true
+  # def handle_in("mediaEvent", %{"data" => event}, socket) do
+  #   send(socket.assigns.room_pid, {:media_event, socket.assigns.peer_id, event})
 
-    {:noreply, socket}
-  end
+  #   {:noreply, socket}
+  # end
 
-  @impl true
-  def handle_in("draw", %{"data" => event}, socket) do
-    broadcast!(socket, "draw", event)
-    {:noreply, socket}
-  end
+  # @impl true
+  # def handle_in("draw", %{"data" => event}, socket) do
+  #   broadcast!(socket, "draw", event)
+  #   {:noreply, socket}
+  # end
 
-  @impl true
-  def handle_in("erase", %{"data" => event}, socket) do
-    broadcast!(socket, "erase", event)
-    {:noreply, socket}
-  end
+  # @impl true
+  # def handle_in("erase", %{"data" => event}, socket) do
+  #   broadcast!(socket, "erase", event)
+  #   {:noreply, socket}
+  # end
 
-  @impl true
-  def handle_in("clear_all", %{"data" => event}, socket) do
-    broadcast!(socket, "clear_all", event)
-    {:noreply, socket}
-  end
+  # @impl true
+  # def handle_in("clear_all", %{"data" => event}, socket) do
+  #   broadcast!(socket, "clear_all", event)
+  #   {:noreply, socket}
+  # end
 
-  @impl true
-  def handle_info(
-        {:DOWN, _ref, :process, _pid, _reason},
-        socket
-      ) do
-    {:stop, :normal, socket}
-  end
+  # @impl true
+  # def handle_info(
+  #       {:DOWN, _ref, :process, _pid, _reason},
+  #       socket
+  #     ) do
+  #   {:stop, :normal, socket}
+  # end
 
-  @impl true
-  def handle_info({:media_event, event}, socket) do
-    push(socket, "mediaEvent", %{data: event})
+  # @impl true
+  # def handle_info({:media_event, event}, socket) do
+  #   push(socket, "mediaEvent", %{data: event})
 
-    {:noreply, socket}
-  end
+  #   {:noreply, socket}
+  # end
 end

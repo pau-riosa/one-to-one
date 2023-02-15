@@ -17,6 +17,13 @@ config :todo, TodoWeb.Endpoint,
   pubsub_server: Todo.PubSub,
   live_view: [signing_salt: "ugzWT0/I"]
 
+# Configures Dyte
+config :todo, :dyte,
+  org_id: System.get_env("DYTE_ORG_ID"),
+  api_key: System.get_env("DYTE_API_KEY")
+
+config :todo, :api_modules, dyte: Todo.DyteIntegration
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
@@ -45,7 +52,7 @@ config :esbuild,
   version: "0.14.29",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.jsx --bundle --target=es2017  --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]

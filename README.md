@@ -20,11 +20,22 @@ export PKG_CONFIG_PATH=/opt/homebrew/Cellar/openssl@1.1/1.1.1l_1/lib/pkgconfig/
 sudo apt-get install libsrtp2-dev libavcodec-dev libavformat-dev libavutil-dev
 ```
 
+### Compilation Troubleshooting
+
+If you encounter
+```
+** (Mix) Could not compile dependency :fast_tls, "/Users/meline-woolbird/.asdf/installs/elixir/1.13/.mix/rebar3 bare compile --paths /Users/meline-woolbird/projects/todo/_build/test/lib/*/ebin" command failed. Errors may have been logged above. You can recompile this dependency with "mix deps.compile fast_tls", update it with "mix deps.update fast_tls" or clean it with "mix deps.clean fast_tls"
+```
+run the following
+
+1. mix deps.clean fast_tls
+2. mix deps.get fast_tls
+3. env LDFLAGS="-L$(brew --prefix openssl@1.1)/lib" CFLAGS="-I$(brew --prefix openssl@1.1)/include" mix compile
+
 # Launching the Application
 ```
 mix deps.get
 npm i --prefix=assets
 ```
 ### Reference 
-
 [Please see membrane_videoroom](https://github.com/membraneframework/membrane_videoroom)

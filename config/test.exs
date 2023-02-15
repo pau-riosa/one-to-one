@@ -26,6 +26,8 @@ config :todo, TodoWeb.Endpoint,
 # In test we don't send emails.
 config :todo, Todo.Mailer, adapter: Swoosh.Adapters.Test
 
+config :todo, :api_modules, dyte: Todo.Fakes.DyteIntegration
+
 # Print only warnings and errors during test
 config :logger, level: :debug
 

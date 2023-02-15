@@ -9,6 +9,8 @@ defmodule Todo.AccountsFixtures do
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
+      first_name: "hello",
+      last_name: "world",
       email: unique_user_email(),
       password: valid_user_password()
     })

@@ -11,7 +11,7 @@ defmodule TodoWeb.Components.TimeInput do
   />
   """
   use TodoWeb, :live_component
-  alias Todo.Tempo
+  alias Todo.Helpers.Tempo
 
   @default_next_day_time "8:00 AM"
 

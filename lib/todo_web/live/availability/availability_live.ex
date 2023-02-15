@@ -1,7 +1,7 @@
 defmodule TodoWeb.AvailabilityLive do
   use TodoWeb, :live_view
 
-  alias Todo.Accounts.User
+  alias Todo.Schemas.User
 
   def mount(_params, _session, socket) do
     {:ok, assign(socket, view: :availability_hours, page_title: "Availability Hours")}

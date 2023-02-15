@@ -53,6 +53,7 @@ defmodule Todo.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:timex, "~> 3.0"},
       {:inflex, "~> 2.1.0"},
+      {:httpoison, "~> 2.0"},
 
       # heroicons
       {:ex_heroicons, "~> 2.0.0"},

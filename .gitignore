@@ -38,3 +38,4 @@ npm-debug.log
 
 Dockerfile_env
 mix.lock
+.env.*

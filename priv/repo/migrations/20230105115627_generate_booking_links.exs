@@ -1,7 +1,7 @@
 defmodule Todo.Repo.Migrations.GenerateBookingLinks do
   use Ecto.Migration
 
-  alias Todo.Accounts.User
+  alias Todo.Schemas.User
   alias Todo.Repo
 
   import Ecto.Query

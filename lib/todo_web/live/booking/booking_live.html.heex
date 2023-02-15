@@ -19,6 +19,7 @@
                             <p class="text-lg text-blue-800 font-normal">You have no past schedules</p>
                             <% true -> %>
                                 <%= for schedule <- @schedules do %>
+                                    <% participant = Todo.Repo.get_by(Todo.Schemas.Participant, email: schedule.created_by.email, meeting_id: schedule.meeting.meeting_id) %>
                                     <div class="w-full rounded-lg bg-white shadow-md flex flex-col">
                                         <div class="px-10 py-5 space-y-5">
                                             <p class="text-md text-blue-900"><%= @active_selection %> session with <span class="text-lg text-yellow-900 font-bold capitalize"><%= schedule.name %></span></p>
@@ -36,11 +37,11 @@
                                             </div>
                                             <p class="text-sm text-blue-800 truncate"><%= schedule.comment %></p>
                                             <div class="flex justify-end space-x-3">
-                                                <%= link "Cancel", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-10 rounded-md text-blue-900 hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
+                                                <%= link "Cancel", to: Routes.room_path(@socket, :index, schedule.id, participant.participant_id, schedule.meeting.meeting_id),  class: "py-2 px-10 rounded-md text-blue-900 hover:bg-yellow-900 hover:text-blue-900 hover:border-yellow", replace: true %>
                                                 <%= if @active_selection == "past" do %>
                                                     <%= link "Review meeting", to: Routes.dashboard_path(@socket, :index),  class: "py-2 px-10 rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-yellow", replace: true %>
                                                 <% else %>
-                                                    <%= link "Start meeting", to: Routes.room_path(@socket, :index, schedule.id),  class: "py-2 px-10 rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-yellow", replace: true %>
+                                                    <%= link "Start meeting", to: Routes.room_path(@socket, :index, schedule.id, participant.participant_id, schedule.meeting.meeting_id),  class: "py-2 px-10 rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-yellow", replace: true %>
                                                 <% end %>
                                             </div>
                                         </div>
