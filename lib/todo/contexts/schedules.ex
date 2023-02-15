@@ -36,6 +36,8 @@ defmodule Todo.Schedules do
 
   def get_all_past_schedules(created_by_id, timezone \\ "Etc/UTC") do
     Schedule
+    |> join(:left, [s], meeting in assoc(s, :meeting), as: :meeting)
+    |> where([meeting: meeting], not is_nil(meeting.meeting_id))
     |> where([s], s.created_by_id == ^created_by_id)
     |> where([s], s.scheduled_for < ^Timex.now(timezone))
     |> order_by([s], desc: s.scheduled_for)
