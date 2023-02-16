@@ -2,7 +2,6 @@ defmodule TodoWeb.UserSocket do
   use Phoenix.Socket
 
   channel("meeting:*", TodoWeb.MeetingChannel)
-  channel("room:*", TodoWeb.PeerChannel)
 
   @impl true
   def connect(_params, socket, _connect_info) do

@@ -21,7 +21,8 @@ defmodule TodoWeb.DashboardLive do
        page_title: "Home",
        total_session_duration: total_session_duration,
        total_bookings: total_bookings,
-       upcoming_session_count: upcoming_session_count
+       upcoming_session_count: upcoming_session_count,
+       active_url: socket.assigns.active_url
      )}
   end
 end

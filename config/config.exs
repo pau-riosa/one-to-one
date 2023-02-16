@@ -69,25 +69,7 @@ config :todo, TodoWeb.Endpoint, pubsub_server: Todo.PubSub
 
 config :todo, version: System.get_env("VERSION", "unknown")
 
-config :logger,
-  compile_time_purge_matching: [
-    [level_lower_than: :info],
-    # Silence irrelevant warnings caused by resending handshake events
-    [module: Membrane.SRTP.Encryptor, function: "handle_event/4", level_lower_than: :error]
-  ]
-
-telemetry_enabled = true
-
-config :membrane_telemetry_metrics, enabled: telemetry_enabled
-
-config :membrane_opentelemetry, enabled: telemetry_enabled
-
 config :logger, :console, metadata: [:room, :peer]
-
-# ExDTLS can work both as a C node or as a NIF. 
-# By default C node implementation is used however, 
-# user can change it by passing proper option while starting ExDTLS or in config.exs by:
-config :ex_dtls, impl: NIF
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

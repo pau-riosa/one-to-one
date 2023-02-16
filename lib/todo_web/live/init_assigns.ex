@@ -19,11 +19,21 @@ defmodule TodoWeb.Live.InitAssigns do
         _ -> nil
       end
 
+    active_url =
+      case socket.view do
+        TodoWeb.DashboardLive -> Routes.dashboard_path(socket, :index)
+        TodoWeb.BookingLive -> Routes.booking_path(socket, :index)
+        TodoWeb.AvailabilityLive -> Routes.availability_path(socket, :index)
+        TodoWeb.SettingsLive -> Routes.settings_path(socket, :index)
+        _ -> nil
+      end
+
     socket =
       socket
       |> assign(timezone: timezone)
       |> assign(current_user: current_user)
       |> assign(active_tab: active_tab)
+      |> assign(active_url: active_url)
 
     {:cont, socket}
   end

@@ -54,22 +54,8 @@ defmodule Todo.MixProject do
       {:timex, "~> 3.0"},
       {:inflex, "~> 2.1.0"},
       {:httpoison, "~> 2.0"},
-
-      # heroicons
       {:ex_heroicons, "~> 2.0.0"},
-
-      # tailwindcss
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
-
-      # membrane_rtc_engine
-      {:membrane_rtc_engine, "~> 0.8.2"},
-      {:ex_dtls, "~> 0.11.1"},
-
-      # Otel
-      {:opentelemetry, "~> 1.0"},
-      {:opentelemetry_api, "~> 1.0"},
-      # {:opentelemetry_exporter, "~> 1.1"},
-      {:opentelemetry_zipkin, "~> 1.0"}
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 

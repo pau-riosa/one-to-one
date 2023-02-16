@@ -7,6 +7,8 @@ config :todo, :files,
   hostname: "localhost",
   transport_opts: []
 
+config :todo, :api_modules, dyte: Todo.Fakes.DyteIntegration
+
 # Configure your database
 config :todo, Todo.Repo,
   username: "postgres",

@@ -2,6 +2,7 @@ defmodule Todo.Operations.Participant do
   @moduledoc false
   alias Todo.Schemas.Participant, as: Schema
   alias Todo.Repo
+  require Logger
 
   def changeset(struct \\ %Schema{}, params \\ %{}) do
     Schema.changeset(struct, params)
@@ -33,7 +34,7 @@ defmodule Todo.Operations.Participant do
         },
         repo \\ Repo
       ) do
-    case dyte_integration_module.create_participant(meeting_id, participant_name, preset_name) do
+    case dyte_integration_module().create_participant(meeting_id, participant_name, preset_name) do
       {:ok, %{"data" => data}} ->
         %{
           meeting_id: meeting_id,
@@ -44,7 +45,8 @@ defmodule Todo.Operations.Participant do
         }
         |> create(repo)
 
-      _ ->
+      errors ->
+        Logger.warning("[Operations.Participant] #{inspect(errors)}")
         {:error, :cannot_create_participant}
     end
   end

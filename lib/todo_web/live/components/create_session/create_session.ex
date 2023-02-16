@@ -2,7 +2,7 @@ defmodule TodoWeb.Components.CreateSession do
   use TodoWeb, :live_component
 
   @moduledoc """
-  <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} />
+  <.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} active_url={@active_url} />
   """
   alias Todo.Helpers.UserNotifier
   alias Todo.Schemas.Schedule
@@ -15,7 +15,8 @@ defmodule TodoWeb.Components.CreateSession do
      socket
      |> assign(:current_user, assigns.current_user)
      |> assign(:timezone, assigns.timezone)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(:active_url, assigns.active_url)}
   end
 
   def handle_event("validate", %{"schedule" => schedule} = _params, socket) do
@@ -46,10 +47,19 @@ defmodule TodoWeb.Components.CreateSession do
         {:noreply,
          socket
          |> put_flash(:info, "Schedule created.")
-         |> push_redirect(to: Routes.booking_path(socket, :index))}
+         |> push_redirect(to: socket.assigns.active_url)}
 
-      {:error, _, changeset, _} ->
-        {:noreply, assign(socket, changeset: changeset)}
+      {:error, _, :cannot_create_meeting, _} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Cannot create meeting.")
+         |> push_redirect(to: socket.assigns.active_url)}
+
+      {:error, _, :cannot_create_participant, _} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Cannot create participant.")
+         |> push_redirect(to: socket.assigns.active_url)}
 
       _ ->
         {:noreply, socket}

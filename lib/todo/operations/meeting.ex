@@ -2,6 +2,7 @@ defmodule Todo.Operations.Meeting do
   @moduledoc false
   alias Todo.Schemas.Meeting, as: Schema
   alias Todo.Repo
+  require Logger
 
   def changeset(struct \\ %Schema{}, params \\ %{}) do
     Schema.changeset(struct, params)
@@ -24,7 +25,7 @@ defmodule Todo.Operations.Meeting do
   end
 
   def create_dyte_meeting(schedule, repo \\ Repo, title \\ "Welcome to your 1 to 1 session") do
-    case dyte_integration_module.create_meeting(title) do
+    case dyte_integration_module().create_meeting(title) do
       {:ok, %{"data" => data}} ->
         %{
           meeting_id: data["meeting"]["id"],
@@ -36,7 +37,8 @@ defmodule Todo.Operations.Meeting do
         }
         |> create(repo)
 
-      _ ->
+      errors ->
+        Logger.warning("[Operations.Meeting] #{inspect(errors)}")
         {:error, :cannot_create_meeting}
     end
   end
