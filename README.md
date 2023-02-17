@@ -39,3 +39,19 @@ npm i --prefix=assets
 ```
 ### Reference 
 [Please see membrane_videoroom](https://github.com/membraneframework/membrane_videoroom)
+
+
+
+### Fly Commands
+
+> flyctl checks list -a <app-name> 
+
+shows health checks for the given app
+
+> flyctl deploy
+
+deploys an app
+
+> flyctl secrets set SECRET_NAME=SECRET_VALUE
+
+sets secret in your app

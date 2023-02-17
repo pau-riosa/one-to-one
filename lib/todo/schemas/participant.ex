@@ -26,6 +26,11 @@ defmodule Todo.Schemas.Participant do
     struct
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> unique_constraint([:token, :meeting_id], message: "already exists")
+    |> unique_constraint([:token, :meeting_id],
+      message: "token cannot be duplicated or be reused for this meeting"
+    )
+    |> unique_constraint([:email, :meeting_id],
+      message: "participant's email for this meeting already exists"
+    )
   end
 end

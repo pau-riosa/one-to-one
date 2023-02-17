@@ -74,24 +74,8 @@ defmodule TodoWeb.Components.CreateSession do
     |> Multi.run(:create_meeting, fn repo, %{create_schedule: schedule} ->
       Todo.Operations.Meeting.create_dyte_meeting(schedule, repo)
     end)
-    |> Multi.run(:participant, fn repo,
-                                  %{
-                                    create_meeting: meeting,
-                                    create_schedule: schedule
-                                  } ->
-      schedule = schedule |> repo.preload(:created_by)
-
-      Todo.Operations.Participant.create_dyte_participant(
-        %{
-          schedule: schedule,
-          email: schedule_params["email"],
-          meeting_id: meeting.meeting_id,
-          participant_name: schedule_params["name"],
-          preset_name: "basic-version-1"
-        },
-        repo
-      )
-    end)
+    # create meeting owner to assure that unique email_meeting_id will be inserted 
+    # and will not be duplicated upon email invite
     |> Multi.run(:meeting_owner, fn repo,
                                     %{
                                       create_meeting: meeting,
@@ -105,6 +89,24 @@ defmodule TodoWeb.Components.CreateSession do
           email: schedule.created_by.email,
           meeting_id: meeting.meeting_id,
           participant_name: "#{schedule.created_by.first_name} #{schedule.created_by.last_name}",
+          preset_name: "basic-version-1"
+        },
+        repo
+      )
+    end)
+    |> Multi.run(:participant, fn repo,
+                                  %{
+                                    create_meeting: meeting,
+                                    create_schedule: schedule
+                                  } ->
+      schedule = schedule |> repo.preload(:created_by)
+
+      Todo.Operations.Participant.create_dyte_participant(
+        %{
+          schedule: schedule,
+          email: schedule_params["email"],
+          meeting_id: meeting.meeting_id,
+          participant_name: schedule_params["name"],
           preset_name: "basic-version-1"
         },
         repo
