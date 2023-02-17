@@ -11,6 +11,7 @@ processes = []
 [env]
   PHX_HOST = "one-to-one.app"
   PORT = "8080"
+  POOL_SIZE = "20"
 
 [mounts]
   source = "data"
