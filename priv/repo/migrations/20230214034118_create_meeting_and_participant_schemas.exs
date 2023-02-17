@@ -4,8 +4,8 @@ defmodule Todo.Repo.Migrations.CreateMeetingAndParticipantSchemas do
   alias Todo.Schedules.Schedule
   import Ecto.Query
 
-  @disable_migration_lock
-  @disable_ddl_transaction
+  @disable_migration_lock true
+  @disable_ddl_transaction true
 
   def change do
     create table(:meetings, primary_key: false) do
