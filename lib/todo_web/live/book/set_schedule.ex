@@ -2,12 +2,10 @@ defmodule TodoWeb.Book.SetSchedule do
   use TodoWeb, :live_component
 
   alias Todo.Schemas.Schedule
-  alias Todo.Schedules.Operation
-  alias Todo.Helpers.UserNotifier
-  alias Ecto.Multi
+  alias Todo.Operations.Schedule, as: Operation
 
   def mount(socket) do
-    changeset = Schedule.set_schedule_changeset(%Schedule{})
+    changeset = Schedule.changeset(%Schedule{})
     {:ok, assign(socket, changeset: changeset)}
   end
 
@@ -57,86 +55,40 @@ defmodule TodoWeb.Book.SetSchedule do
   def handle_event("validate", %{"schedule" => schedule_params} = _params, socket) do
     changeset =
       %Schedule{}
-      |> Schedule.set_schedule_changeset(schedule_params)
+      |> Schedule.changeset(schedule_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
   def handle_event("save", %{"schedule" => schedule_params} = _params, socket) do
-    case prepare_meeting(schedule_params) do
-      {:ok, %{create_schedule: schedule, participant: participant}} ->
-        schedule = Todo.Repo.preload(schedule, :created_by)
-
-        UserNotifier.deliver_schedule_instructions(
-          schedule,
-          TodoWeb.Router.Helpers.url(socket) <>
-            Routes.room_path(
-              socket,
-              :index,
-              schedule.id,
-              participant.participant_id,
-              participant.meeting_id
-            )
-        )
-
+    case Operation.prepare_session(schedule_params, socket) do
+      {:ok, %Schedule{}} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Schedule successfully booked.")
-         |> push_redirect(to: "/")}
+         |> put_flash(:info, "Schedule created.")
+         |> push_redirect(to: Routes.book_path(socket, :index, socket.assigns.book_with.slug))}
+
+      {:error, :email_cannot_be_the_same} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Invalid invitee email.")
+         |> push_redirect(to: Routes.book_path(socket, :index, socket.assigns.book_with.slug))}
+
+      {:error, :cannot_create_participant} ->
+        {:noreply, socket}
+
+      {:error, :cannot_create_meeting} ->
+        {:noreply, socket}
 
       {:error, _, changeset, _} ->
         {:noreply, assign(socket, :changeset, changeset)}
 
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
+
+      errors ->
+        {:noreply, socket}
     end
-  end
-
-  defp prepare_meeting(schedule_params) do
-    Multi.new()
-    |> Multi.run(:create_schedule, fn repo, _ ->
-      Todo.Operations.Schedule.create(schedule_params, repo)
-    end)
-    |> Multi.run(:create_meeting, fn repo, %{create_schedule: schedule} ->
-      Todo.Operations.Meeting.create_dyte_meeting(schedule, repo)
-    end)
-    |> Multi.run(:participant, fn repo,
-                                  %{
-                                    create_meeting: meeting,
-                                    create_schedule: schedule
-                                  } ->
-      schedule = schedule |> repo.preload(:created_by)
-
-      Todo.Operations.Participant.create_dyte_participant(
-        %{
-          schedule: schedule,
-          email: schedule_params["email"],
-          meeting_id: meeting.meeting_id,
-          participant_name: schedule_params["name"],
-          preset_name: "basic-version-1"
-        },
-        repo
-      )
-    end)
-    |> Multi.run(:meeting_owner, fn repo,
-                                    %{
-                                      create_meeting: meeting,
-                                      create_schedule: schedule
-                                    } ->
-      schedule = schedule |> repo.preload(:created_by)
-
-      Todo.Operations.Participant.create_dyte_participant(
-        %{
-          schedule: schedule,
-          email: schedule.created_by.email,
-          meeting_id: meeting.meeting_id,
-          participant_name: "#{schedule.created_by.first_name} #{schedule.created_by.last_name}",
-          preset_name: "basic-version-1"
-        },
-        repo
-      )
-    end)
-    |> Todo.Repo.transaction()
   end
 end

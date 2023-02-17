@@ -33,19 +33,6 @@ defmodule Todo.Schemas.User do
     |> build_slug()
   end
 
-  def availability_changeset(struct, attrs \\ %{}) do
-    struct
-    |> cast(attrs, [])
-    |> cast_assoc(:session_settings, with: &Todo.SessionSetting.changeset/2)
-  end
-
-  def changeset(user, attrs \\ %{}) do
-    user
-    |> cast(attrs, [:email, :password])
-    |> cast_assoc(:session_settings, with: &Todo.SessionSetting.changeset/2)
-    |> validate_required([:email, :password])
-  end
-
   @doc """
   A user changeset for registration.
 

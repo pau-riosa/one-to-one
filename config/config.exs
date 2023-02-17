@@ -22,8 +22,6 @@ config :todo, :dyte,
   org_id: System.get_env("DYTE_ORG_ID"),
   api_key: System.get_env("DYTE_API_KEY")
 
-config :todo, :api_modules, dyte: Todo.DyteIntegration
-
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

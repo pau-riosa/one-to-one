@@ -1,7 +1,6 @@
 defmodule TodoWeb.BookLive do
   use TodoWeb, :live_view
 
-  alias Todo.Events
   alias Todo.Schedules
   alias Todo.Schemas.Schedule
   alias Todo.Schemas.User
@@ -25,7 +24,7 @@ defmodule TodoWeb.BookLive do
 
   def handle_params(%{"slug" => slug, "schedule" => schedule} = params, _session, socket) do
     book_with = Todo.Accounts.get_user_by_slug(slug)
-    changeset = Schedule.set_schedule_changeset(%Schedule{})
+    changeset = Schedule.changeset(%Schedule{})
 
     {:noreply,
      socket
@@ -63,12 +62,5 @@ defmodule TodoWeb.BookLive do
 
   def handle_params(_params, _session, socket) do
     {:noreply, socket}
-  end
-
-  defp to_datetime(socket, date) do
-    case Timex.parse("#{date}", "{YYYY}-{0M}-{D}") do
-      {:ok, current} -> NaiveDateTime.to_date(current)
-      _ -> Timex.today(socket.assigns.timezone)
-    end
   end
 end

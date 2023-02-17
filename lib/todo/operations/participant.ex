@@ -26,7 +26,7 @@ defmodule Todo.Operations.Participant do
 
   def create_dyte_participant(
         %{
-          schedule: schedule,
+          created_by_id: created_by_id,
           email: email,
           meeting_id: meeting_id,
           participant_name: participant_name,
@@ -40,7 +40,7 @@ defmodule Todo.Operations.Participant do
           meeting_id: meeting_id,
           token: data["authResponse"]["authToken"],
           participant_id: data["authResponse"]["id"],
-          created_by_id: schedule.created_by_id,
+          created_by_id: created_by_id,
           email: email
         }
         |> create(repo)

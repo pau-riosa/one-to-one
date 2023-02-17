@@ -22,24 +22,12 @@ defmodule Todo.Schemas.Schedule do
     :created_by_id,
     :email,
     :name,
-    :date,
-    :time,
-    :timezone
+    :timezone,
+    :scheduled_for
   ]
 
-  @optional_attrs [:scheduled_for, :duration, :name, :comment, :start_at, :end_at]
+  @optional_attrs [:date, :time, :duration, :name, :comment, :start_at, :end_at]
 
-  @set_schedule_attrs [
-    :name,
-    :email,
-    :scheduled_for,
-    :created_by_id,
-    :duration
-  ]
-
-  @set_schedule_optional_attrs [
-    :comment
-  ]
   def changeset(struct, attrs \\ %{}) do
     struct
     |> cast(attrs, @required_attrs ++ @optional_attrs)
@@ -62,12 +50,4 @@ defmodule Todo.Schemas.Schedule do
   end
 
   defp insert_scheduled_for(changeset), do: changeset
-
-  def set_schedule_changeset(struct, attrs \\ %{}) do
-    struct
-    |> cast(attrs, @set_schedule_attrs ++ @set_schedule_optional_attrs)
-    |> validate_required(@set_schedule_attrs)
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
-    |> unique_constraint([:created_by_id, :scheduled_for], message: "schedule already exist.")
-  end
 end

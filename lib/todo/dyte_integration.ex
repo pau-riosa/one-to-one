@@ -10,6 +10,8 @@ defmodule Todo.DyteIntegration do
   defp organization_id(), do: Application.fetch_env!(:todo, :dyte)[:org_id]
   defp api_key(), do: Application.fetch_env!(:todo, :dyte)[:api_key]
 
+  def initialize(), do: :ok
+
   def create_meeting(meeting_title \\ "Meeting") do
     url = Enum.join([@base_url, "/organizations/#{organization_id()}", "/meeting"], "")
 

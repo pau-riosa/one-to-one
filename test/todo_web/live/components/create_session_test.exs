@@ -12,69 +12,52 @@ defmodule TodoWeb.Components.CreateSessionTest do
   alias Todo.Schemas.Participant
   alias Todo.Schemas.Meeting
   alias Todo.Repo
-  alias Swoosh.Email
   alias Todo.Fakes.DyteIntegration
 
   setup %{conn: conn}, do: register_and_log_in_user(%{conn: conn})
 
   test "render component", %{user: user} do
-    assert render_component(CreateSession, id: 123, timezone: "Asia/Manila", current_user: user) =~
+    assert render_component(CreateSession,
+             id: 123,
+             timezone: "Asia/Manila",
+             current_user: user,
+             active_url: "/users/dashboard"
+           ) =~
              "<div>\n  <div id=\"create-session\">\n\n</div>\n    </div>"
   end
 
   describe "create-session modal" do
     setup do
-      DyteIntegration.init()
+      DyteIntegration.initialize()
+    end
 
-      DyteIntegration.add_response(
-        {:ok,
-         %{
-           "data" => %{
-             "meeting" => %{
-               "createdAt" => "2023-02-14T02:33:13.982Z",
-               "id" => "4cbb10b3-cc1e-4ce8-9f0b-17ea6af63f70",
-               "liveStreamOnStart" => false,
-               "participants" => [],
-               "recordOnStart" => false,
-               "roomName" => "jtdilh-marnpv",
-               "status" => "LIVE",
-               "title" => "Meeting with Juan"
-             }
-           },
-           "message" => "",
-           "success" => true
-         }}
-      )
+    test "should not create schedule, if duplicate participant email found", %{conn: conn} do
+      user = Todo.AccountsFixtures.user_fixture(%{email: "sample@example.com"})
+      conn = log_in_user(conn, user)
 
-      DyteIntegration.add_response(
-        {:ok,
-         %{
-           "data" => %{
-             "authResponse" => %{
-               "authToken" => "authToken",
-               "id" => "26329cc3-55d6-4c9f-8c99-feedde77991e",
-               "userAdded" => true
-             }
-           },
-           "message" => "",
-           "success" => true
-         }}
-      )
+      {:ok, view, _html} = live(conn, "/users/dashboard")
 
-      DyteIntegration.add_response(
-        {:ok,
-         %{
-           "data" => %{
-             "authResponse" => %{
-               "authToken" => "authToken-participant-2",
-               "id" => Ecto.UUID.generate(),
-               "userAdded" => true
-             }
-           },
-           "message" => "",
-           "success" => true
-         }}
-      )
+      assert view
+             |> element("button#button-create-session")
+             |> render_click() =~ "Set up 1 to 1 session"
+
+      assert view
+             |> element("form")
+             |> render_submit(%{
+               schedule: %{
+                 email: "sample@example.com",
+                 name: "name",
+                 comment: "comment",
+                 created_by_id: user.id,
+                 duration: 15,
+                 timezone: "Asia/Manila",
+                 date: "2023-12-31",
+                 time: "12:00 AM"
+               }
+             })
+
+      assert schedules = Repo.all(Schedule)
+      assert Enum.count(schedules) == 0
     end
 
     test "should create schedule", %{conn: conn, user: user} do
