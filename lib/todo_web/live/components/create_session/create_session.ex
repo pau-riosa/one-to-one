@@ -28,11 +28,17 @@ defmodule TodoWeb.Components.CreateSession do
   end
 
   def handle_event("save", %{"schedule" => schedule_params} = _params, socket) do
-    case Operation.prepare_session(schedule_params, socket) do
-      {:ok, %Schedule{}} ->
+    with schedule_params <- insert_scheduled_for(schedule_params),
+         {:ok, %Schedule{}} <- Operation.prepare_session(schedule_params, socket) do
+      {:noreply,
+       socket
+       |> put_flash(:info, "Schedule created.")
+       |> push_redirect(to: socket.assigns.active_url)}
+    else
+      {:error, :date_and_time_required} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Schedule created.")
+         |> put_flash(:error, "Date and time is required.")
          |> push_redirect(to: socket.assigns.active_url)}
 
       {:error, :email_cannot_be_the_same} ->
@@ -59,8 +65,23 @@ defmodule TodoWeb.Components.CreateSession do
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
 
-      errors ->
+      _errors ->
         {:noreply, socket}
     end
   end
+
+  defp insert_scheduled_for(%{"date" => date, "time" => time, "timezone" => timezone} = params) do
+    case Timex.parse("#{date} #{time}", "{YYYY}-{0M}-{0D} {h12}:{m} {AM}") do
+      {:ok, datetime} ->
+        datetime = datetime |> Timex.to_datetime(timezone)
+        {:ok, datetime} = Ecto.Type.cast(:utc_datetime_usec, datetime)
+
+        params |> Map.put("scheduled_for", datetime)
+
+      _ ->
+        params
+    end
+  end
+
+  defp insert_scheduled_for(_params), do: {:error, :date_and_time_required}
 end

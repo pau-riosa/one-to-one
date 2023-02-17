@@ -20,10 +20,9 @@ defmodule TodoWeb.Book.SetSchedule do
       start_time =
         case DateTime.from_iso8601(assigns[:schedule]) do
           {:ok, schedule, _} ->
-            schedule =
-              schedule
-              |> Timex.to_datetime(assigns[:timezone])
-              |> Timex.format!("{WDfull} {Mfull} {D}, {YYYY} {h12}")
+            schedule
+            |> Timex.to_datetime(assigns[:timezone])
+            |> Timex.format!("{WDfull} {Mfull} {D}, {YYYY} {h12}")
 
           _ ->
             0
@@ -34,11 +33,10 @@ defmodule TodoWeb.Book.SetSchedule do
       end_time =
         case DateTime.from_iso8601(assigns[:schedule]) do
           {:ok, schedule, _} ->
-            schedule =
-              schedule
-              |> Timex.to_datetime(assigns[:timezone])
-              |> Timex.shift(minutes: duration)
-              |> Timex.format!("{h12}:{m} {AM}")
+            schedule
+            |> Timex.to_datetime(assigns[:timezone])
+            |> Timex.shift(minutes: duration)
+            |> Timex.format!("{h12}:{m} {AM}")
 
           _ ->
             0
@@ -87,7 +85,7 @@ defmodule TodoWeb.Book.SetSchedule do
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
 
-      errors ->
+      _errors ->
         {:noreply, socket}
     end
   end

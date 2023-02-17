@@ -15,7 +15,7 @@ defmodule Todo.Schemas.User do
     field :duration, :integer, default: 15
     field :booking_link, :string, virtual: true
     field :slug, :string, default: ""
-    has_many :schedules, Todo.Schemas.Schedule
+    has_many :schedules, Todo.Schemas.Schedule, foreign_key: :created_by_id
     has_many :user_tokens, Todo.Schemas.UserToken
     timestamps()
   end

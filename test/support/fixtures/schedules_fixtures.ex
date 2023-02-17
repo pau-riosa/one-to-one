@@ -17,7 +17,7 @@ defmodule Todo.SchedulesFixtures do
     {:ok, schedule} =
       attrs
       |> valid_schedule_attrs()
-      |> Todo.Operations.Schedule.create()
+      |> Todo.Operations.Schedule.create_schedule()
 
     schedule
   end

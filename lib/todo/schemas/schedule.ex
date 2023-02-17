@@ -34,20 +34,5 @@ defmodule Todo.Schemas.Schedule do
     |> validate_required(@required_attrs)
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
     |> unique_constraint([:created_by_id, :scheduled_for], message: "schedule already exist.")
-    |> insert_scheduled_for()
   end
-
-  defp insert_scheduled_for(%{changes: %{date: date, time: time, timezone: timezone}} = changeset) do
-    case Timex.parse("#{date} #{time}", "{YYYY}-{0M}-{0D} {h12}:{m} {AM}") do
-      {:ok, datetime} ->
-        datetime = datetime |> Timex.to_datetime(timezone)
-        {:ok, datetime} = Ecto.Type.cast(:utc_datetime_usec, datetime)
-        put_change(changeset, :scheduled_for, datetime)
-
-      _ ->
-        changeset
-    end
-  end
-
-  defp insert_scheduled_for(changeset), do: changeset
 end
