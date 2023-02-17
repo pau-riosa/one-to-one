@@ -1,3 +1,10 @@
+# Todo
+
+[ ] Unit testing
+[ ] Cron Job for deleting pass meetings since we are having problems with our storage.
+[ ] Testing with Video Conference
+[ ] Testing other important features
+
 # Running Locally
 
 ### macOS with Intel Processor
@@ -20,7 +27,7 @@ export PKG_CONFIG_PATH=/opt/homebrew/Cellar/openssl@1.1/1.1.1l_1/lib/pkgconfig/
 sudo apt-get install libsrtp2-dev libavcodec-dev libavformat-dev libavutil-dev
 ```
 
-### Compilation Troubleshooting
+# Compilation Troubleshooting
 
 If you encounter
 ```
@@ -37,12 +44,10 @@ run the following
 mix deps.get
 npm i --prefix=assets
 ```
-### Reference 
+# Reference 
 [Please see membrane_videoroom](https://github.com/membraneframework/membrane_videoroom)
 
-
-
-### Fly Commands
+# Fly Commands
 
 > flyctl checks list -a <app-name> 
 
