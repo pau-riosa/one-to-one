@@ -12,11 +12,13 @@ defmodule Todo.Schemas.User do
     field :avatar, :string
 
     # session settings
-    field :duration, :integer, default: 15
+    field :duration, :integer, default: 30
     field :booking_link, :string, virtual: true
     field :slug, :string, default: ""
+
     has_many :schedules, Todo.Schemas.Schedule, foreign_key: :created_by_id
     has_many :user_tokens, Todo.Schemas.UserToken
+
     timestamps()
   end
 

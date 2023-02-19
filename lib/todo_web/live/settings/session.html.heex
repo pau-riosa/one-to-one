@@ -15,13 +15,11 @@
     </div>
 
     <div class="my-2 space-y-5 w-1/2">
-
         <div class="flex flex-col">
         <label class="text-lg text-blue-900 font-semibold">Set Session Duration</label>
-
         <span class="text-xs text-blue-800 font-normal">Define how long your sessions will be, default to 15 minutes</span>
         </div>
-        <%= number_input f, :duration, class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
+        <%= number_input f, :duration, disabled: true, class: " appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
         <%= error_tag f, :duration %> 
     </div>
     <%= submit "Update", phx_disable_with: "Updating...", class: "py-2 px-10 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-blue-900" %> 

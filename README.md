@@ -5,13 +5,13 @@
 ✅ Don't ask for the email any more in the room link, Or maybe you can clarify why the email is being asked?
 ✅ Is there a way to switch cameras?
 ✅ Start `Free Button` from the bottom does not work.
-[ ] Needs to connect to my Calendar (GCal, maybe outlook and iCal as well) like Calendly so it doesn't suggsest blocked off times
+✅  Dropdown for time should start at 8AM instead of 12AM
+[ ] Needs to connect to my Calendar (GCal, maybe outlook and iCal as well) like Calendly so it doesn't suggest blocked off times
 [ ] If it can also check the calendar of my invitee (assuming she is also using one-to-one) that would be doubley awesome!
-[ ] Dropdown for time should start at 8AM instead of 12AM
 
 ### From Pau
-
-[ ] Cron Job for deleting pass meetings since we are having problems with our storage.
+[ ] Create a timer on video-conference based from user-duration.
+[ ] Cron Job for deleting pass meetings since we have limited storage.
 [ ] Send email to owner
 [ ] Sync with Google Calendar
 [ ] Add Review After meeting 
@@ -74,3 +74,13 @@ deploys an app
 > flyctl secrets set SECRET_NAME=SECRET_VALUE
 
 sets secret in your app
+
+
+        <%= if @is_label do %>
+          <label class="text-sm text-blue-900 font-normal"><%= @label %></label>
+        <% end %>
+        <div class="flex flex-row justify-between border border-gray-300 my-1 items-center rounded-md bg-white px-3 py-3">
+          <%= select @form, @field, @times, selected: @default_next_day_time, class: "appearance-none w-full text-blue-900 font-md focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm" %>
+          <i><%= Heroicons.icon("clock", type: "solid", class: "h-5 w-5 fill-blue-900") %></i>
+        </div>
+        <%= error_tag @form, @field %>
