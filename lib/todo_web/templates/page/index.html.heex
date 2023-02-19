@@ -5,7 +5,7 @@
       <p class="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-blue-900">if you are looking for a companion for your business meetings, one-to-one is a free online appointment scheduling platform that you can use to achieve your goals.</p>
       <div class="mt-10 flex justify-center">
         <div class="flex flex-col">
-          <%= link "Sign up", class: "bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-normal font-semibold", to: Routes.user_registration_path(@conn, :new) %>
+          <%= link "Sign up", class: "bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-2xl font-semibold", to: Routes.user_registration_path(@conn, :new) %>
           <p class="max-w-2xl text-sm tracking-tight text-gray-300 text-left mt-2">create your free account. no credit card required</p>
         </div> 
       </div>
@@ -47,13 +47,16 @@
     <div class="mx-auto text-center items-center space-y-10 p-20">
       <h1 class="text-center text-4xl font-bold tracking-tight text-blue-900 sm:text-4xl">Try one-to-one free</h1>
       <p class="max-w-2xl text-lg tracking-tight text-blue-900">And Be closely connected to your success</p>
-      <button class="bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-2xl font-semibold">Start Free</button>
+
+      <button class="bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-2xl font-semibold">
+        <%= link "Start Free", class: "bg-blue-900 text-white px-3 py-2.5 mx-5 rounded-md text-2xl font-semibold", to: Routes.user_registration_path(@conn, :new) %>
+      </button>
     </div>
   </div>
   <div class="flex flex-row justify-center items-center bg-blue-700">
     <div class="mx-auto flex flex-row text-center items-center content-center space-x-10 p-5">
       <a href="https://www.producthunt.com/posts/one-to-one?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-one&#0045;to&#0045;one" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=373787&theme=neutral" alt="One&#0045;to&#0045;One - An&#0032;online&#0032;appointment&#0032;scheduling&#0032;platform | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-      <p class="text-lg tracking-tight text-gray-400">All Right Reserved ❤️  Pau Riosa 2022</p>
+      <p class="text-lg tracking-tight text-gray-400">All Right Reserved © one-to-one 2023</p>
     </div>
   </div>
 </div>
