@@ -8,6 +8,7 @@ defmodule TodoWeb.Live.InitAssigns do
 
   def on_mount(:private, _params, %{"user_token" => user_token} = _session, socket) do
     timezone = get_connect_params(socket)["timezone"] || "Etc/UTC"
+
     current_user = Accounts.get_user_by_session_token(user_token)
 
     active_tab =
@@ -39,7 +40,12 @@ defmodule TodoWeb.Live.InitAssigns do
   end
 
   def on_mount(:default, _params, _session, socket) do
-    timezone = get_connect_params(socket)["timezone"] || "Etc/UTC"
+    timezone =
+      if connected?(socket) do
+        get_connect_params(socket)["timezone"]
+      else
+        "Etc/UTC"
+      end
 
     socket =
       socket

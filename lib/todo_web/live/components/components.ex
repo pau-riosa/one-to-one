@@ -21,14 +21,22 @@ defmodule TodoWeb.Components do
 
   def confirm_banner(assigns), do: ~H""
 
-  def schedule(%{schedule: schedule, timezone: timezone, slug: slug, socket: socket} = assigns) do
+  def schedule(
+        %{
+          booked_schedules: booked_schedules,
+          schedule: schedule,
+          timezone: timezone,
+          slug: slug,
+          socket: socket
+        } = assigns
+      ) do
     datetime =
       schedule
       |> Timex.to_datetime(timezone)
       |> DateTime.to_iso8601()
 
     path = Routes.book_path(socket, :set_schedule, slug, datetime) |> URI.decode()
-    hours = Timex.format!(schedule, "%l:%M %p", :strftime)
+    time = Timex.format!(schedule, "%I:%M %p", :strftime)
 
     class =
       class_list([
@@ -39,11 +47,14 @@ defmodule TodoWeb.Components do
     assigns =
       assigns
       |> assign(path: path)
-      |> assign(hours: hours)
+      |> assign(time: time)
       |> assign(class: class)
+      |> assign(booked_schedules: booked_schedules)
 
     ~H"""
-    <%= live_patch @hours, to: @path, class: @class  %>
+    <%= if @time not in @booked_schedules do %>
+      <%= live_patch @time, to: @path, class: @class  %>
+    <% end %>
     """
   end
 
@@ -211,8 +222,8 @@ defmodule TodoWeb.Components do
                       timezone={timezone}
                       current_path={current_path}
                       button_id={"button-#{date_index}-#{time_index}"}
-            selected_timeslots={selected_timeslots}
-            existing_timeslots={existing_timeslots}
+                      selected_timeslots={selected_timeslots}
+                      existing_timeslots={existing_timeslots}
                     />
                   <% end %>
               </div> 

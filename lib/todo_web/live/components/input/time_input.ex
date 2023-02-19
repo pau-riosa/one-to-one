@@ -37,7 +37,9 @@ defmodule TodoWeb.Components.TimeInput do
     ~H"""
     <div x-data="{open: false}" @click.away="open = false" class="flex flex-col w-full">
       <div>
-        <label class="block text-sm font-normal text-gray-700">Assigned to</label>
+        <%= if @is_label do %>
+          <label class="block text-sm font-normal text-gray-700"><%= @label %></label>
+        <% end %>
         <div class="relative mt-1">
           <%= hidden_input @form, @field, value: @selected_time %>
           <button @click="open = true" type="button" class="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
@@ -96,10 +98,12 @@ defmodule TodoWeb.Components.TimeInput do
         |> Tempo.list_of_times(timezone)
         |> Enum.map(&Timex.format!(&1, "%I:%M %p", :strftime))
 
-      selected_time = hd(times)
+      new_times = times -- assign.booked_schedules
+
+      selected_time = hd(new_times)
 
       assign
-      |> Map.put(:times, times)
+      |> Map.put(:times, new_times)
       |> Map.put(:selected_time, selected_time)
     end)
   end
@@ -110,11 +114,12 @@ defmodule TodoWeb.Components.TimeInput do
         Tempo.list_of_times(nil, timezone)
         |> Enum.map(&Timex.format!(&1, "%I:%M %p", :strftime))
 
-      selected_time = hd(times)
+      new_times = times -- assign.booked_schedules
+      selected_time = hd(new_times)
       date = DateTime.to_date(Tempo.now!(timezone))
 
       assign
-      |> Map.put(:times, times)
+      |> Map.put(:times, new_times)
       |> Map.put(:date, date)
       |> Map.put(:selected_time, selected_time)
     end)

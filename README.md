@@ -10,6 +10,7 @@
 [ ] If it can also check the calendar of my invitee (assuming she is also using one-to-one) that would be doubley awesome!
 
 ### From Pau
+[ ] Removed already selected time in time-input. 
 [ ] Create a timer on video-conference based from user-duration.
 [ ] Cron Job for deleting pass meetings since we have limited storage.
 [ ] Send email to owner

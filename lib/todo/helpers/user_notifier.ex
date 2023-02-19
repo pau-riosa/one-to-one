@@ -29,13 +29,13 @@ defmodule Todo.Helpers.UserNotifier do
 
       ==============================
 
-      Hi #{schedule.email},
+      Hi #{schedule.name},
 
       To enter the room kindly visit this url:
 
       #{url}
 
-      And enter the email you use to book.
+      Please do not share this link to others. Thank you.
 
       ==============================
       """

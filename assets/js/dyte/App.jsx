@@ -10,10 +10,12 @@ function App() {
 
   const socket = new Socket("/socket");
   socket.connect();
+  
   var channel = socket.channel(`meeting:${meeting_id}`, {participant_id: participant_id})
   const [roomName, setRoomName] = useState(); 
   const [authToken, setAuthToken] = useState(); 
   const [meeting, initMeeting] = useDyteClient();
+  
   const uiConfigOptions = {
     colors: {
       primary:         '#1D3557',
@@ -21,6 +23,7 @@ function App() {
       textPrimary:     '#FFFFFF',
       videoBackground: '#FFFFFF'
     }}
+    
     channel.join().receive("ignore", () => console.log("auth error"))
     .receive("ok", payload => console.log("join ok") )
 

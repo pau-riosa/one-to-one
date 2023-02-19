@@ -41,23 +41,6 @@ if (window.location.pathname.split("/").includes("room")) {
 
 let Hooks = {};
 
-// TodoWeb.Components.MultiSelectInput
-Hooks.CreateItem = {
-  mounted() {
-    this.el.addEventListener("keyup", (e) => {
-      if (e.code == "Comma") {
-        let tags = e.target.value.replace(/\s+/g, "");
-        tags.split(",").forEach((tag) => {
-          if (tag.length > 0) {
-            this.pushEvent("add-item", tag);
-          }
-        });
-        e.target.value = "";
-      }
-    });
-  },
-};
-
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");

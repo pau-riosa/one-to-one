@@ -75,7 +75,7 @@ defmodule Todo.Tempo do
   end
 
   defp do_list_of_times(false = _same_day, _timezone, step),
-    do: create_time_intervals(~D[2014-09-22], [days: 1], step)
+    do: create_time_intervals(~D[2000-01-01], [days: 1], step)
 
   defp do_list_of_times(true = _same_day, timezone, step) do
     %{minute: minute} = datetime_now = now!(timezone)

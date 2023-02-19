@@ -6,16 +6,26 @@ defmodule TodoWeb.Components.CreateSession do
   """
   alias Todo.Schemas.Schedule
   alias Todo.Operations.Schedule, as: Operation
+  alias Todo.Schedules
 
   def update(assigns, socket) do
     changeset = Operation.changeset(%Schedule{})
+
+    booked_schedules =
+      Schedules.get_schedules_by_created_by_id(assigns.current_user.id)
+      |> Enum.map(
+        &(&1.scheduled_for
+          |> Timex.to_datetime(assigns.timezone)
+          |> Timex.format!("%I:%M %p", :strftime))
+      )
 
     {:ok,
      socket
      |> assign(:current_user, assigns.current_user)
      |> assign(:timezone, assigns.timezone)
      |> assign(:changeset, changeset)
-     |> assign(:active_url, assigns.active_url)}
+     |> assign(:active_url, assigns.active_url)
+     |> assign(:booked_schedules, booked_schedules)}
   end
 
   def handle_event("validate", %{"schedule" => schedule_params} = _params, socket) do
@@ -29,7 +39,9 @@ defmodule TodoWeb.Components.CreateSession do
 
   def handle_event("save", %{"schedule" => schedule_params} = _params, socket) do
     with schedule_params <- insert_scheduled_for(schedule_params),
-         {:ok, %Schedule{}} <- Operation.prepare_session(schedule_params, socket) do
+         {:ok, %Schedule{} = schedule} <- Operation.prepare_session(schedule_params, socket) do
+      TodoWeb.Endpoint.broadcast("update_booked_schedules", "update", %{"reload" => true})
+
       {:noreply,
        socket
        |> put_flash(:info, "Schedule created.")
@@ -75,8 +87,7 @@ defmodule TodoWeb.Components.CreateSession do
       {:ok, datetime} ->
         datetime = datetime |> Timex.to_datetime(timezone)
         {:ok, datetime} = Ecto.Type.cast(:utc_datetime_usec, datetime)
-
-        params |> Map.put("scheduled_for", datetime)
+        Map.put(params, "scheduled_for", datetime)
 
       _ ->
         params

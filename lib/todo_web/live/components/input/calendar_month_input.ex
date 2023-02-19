@@ -31,10 +31,19 @@ defmodule TodoWeb.Components.CalendarMonthInput do
   end
 
   def handle_event("select-date", %{"selected-date" => selected_date}, socket) do
+    booked_schedules =
+      Schedules.get_schedules_by_created_by_id(socket.assigns.current_user.id)
+      |> Enum.map(
+        &(&1.scheduled_for
+          |> Timex.to_datetime(socket.assigns.timezone)
+          |> Timex.format!("%I:%M %p", :strftime))
+      )
+
     send_update(TodoWeb.Components.TimeInput,
       id: "time-input",
       selected_date: selected_date,
-      timezone: socket.assigns.timezone
+      timezone: socket.assigns.timezone,
+      booked_schedules: booked_schedules
     )
 
     socket =
