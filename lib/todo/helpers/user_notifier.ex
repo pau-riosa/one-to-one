@@ -2,6 +2,7 @@ defmodule Todo.Helpers.UserNotifier do
   import Swoosh.Email
 
   alias Todo.Mailer
+
   @support "support@one-to-one.app"
 
   # Delivers the email using the application mailer.
@@ -22,6 +23,11 @@ defmodule Todo.Helpers.UserNotifier do
   Deliver instructions to start schedule.
   """
   def deliver_schedule_instructions(schedule, url) do
+    scheduled_for =
+      schedule.scheduled_for
+      |> Timex.to_datetime(schedule.timezone)
+      |> Timex.format!("{WDfull} {Mfull} {D}, {YYYY} {h12}:{m} {AM}")
+
     deliver(
       schedule.email,
       "Upcoming Appointment with: #{schedule.created_by.first_name} #{schedule.created_by.last_name}",
@@ -30,6 +36,10 @@ defmodule Todo.Helpers.UserNotifier do
       ==============================
 
       Hi #{schedule.name},
+
+      You have a one-to-one session with #{schedule.created_by.first_name} #{schedule.created_by.last_name} 
+
+      this coming #{scheduled_for}
 
       To enter the room kindly visit this url:
 
