@@ -22,7 +22,7 @@ defmodule TodoWeb.Book.SetSchedule do
           {:ok, schedule, _} ->
             schedule
             |> Timex.to_datetime(assigns[:timezone])
-            |> Timex.format!("{WDfull} {Mfull} {D}, {YYYY} {h12}")
+            |> Timex.format!("{WDshort} {Mfull} {D}, {YYYY} {h12}:{m} {AM}")
 
           _ ->
             0

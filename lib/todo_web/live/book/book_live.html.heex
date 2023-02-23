@@ -1,5 +1,6 @@
-<div class="h-screen flex items-center justify-center content-center"> 
-    <div class="max-w-7xl rounded-md space-y-3 bg-gray-100 p-5 overflow-y-auto overflow-hidden">
+<div class="h-screen flex flex-col items-center justify-center content-center"> 
+    <h1 class="p-5 font-bold text-blue-900 text-lg">Book a Schedule</h1>
+    <div class="max-w-7xl shadow-xl">
         <%= case @live_action do %>
             <%  :set_schedule -> %>
                     <.live_component 
