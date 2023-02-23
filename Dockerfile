@@ -76,9 +76,7 @@ RUN npm install \
   postcss-import \
   postcss-nested \
   alpinejs@2 \
-  @membraneframework/membrane-webrtc-js \
   query-string \
-  webrtc-adapter \
   react \
   react-dom \
   @dytesdk/react-ui-kit \
