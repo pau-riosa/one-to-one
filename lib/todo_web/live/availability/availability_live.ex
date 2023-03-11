@@ -39,26 +39,28 @@ defmodule TodoWeb.AvailabilityLive do
 
   def day(assigns) do
     ~H"""
-    <div class="flex flex-row w-full">
-      <div class="w-2/12 font-bold">
+    <div class="flex flex-row w-96">
+      <div class="w-1/12 font-bold pt-2 mr-5">
         <%= Macro.camelize("#{@day}") %>
       </div>
-      <div class="flex flex-col w-3/12">
-      <%= if @hours == [] do %>
-        <div>Unavailable</div>
-      <% else %>
+      <div class="flex flex-col w-full">
         <%= for {hour_id, %{from: from, to: to}} <- @hours do %>
-        <div class="flex flex-row ">
+        <div class="flex flex-row justify-center">
           <div class="border p-2 mb-2 rounded-lg relative">
               <svg phx-click={JS.push("delete-hour", value: %{hour_id: hour_id, day: @day, user: assigns.user})}
               width="20" height="20" style="transform: translate(10px, -10px);" class="absolute top-0 right-0 cursor-pointer" aria-label="failed" viewBox="0 0 16 16" version="1.1" role="img"><path fill="red" fill-rule="evenodd" d="M2.343 13.657A8 8 0 1113.657 2.343 8 8 0 012.343 13.657zM6.03 4.97a.75.75 0 00-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 101.06 1.06L8 9.06l1.97 1.97a.75.75 0 101.06-1.06L9.06 8l1.97-1.97a.75.75 0 10-1.06-1.06L8 6.94 6.03 4.97z"></path></svg>
               <input type="time" value={from} readonly> - <input type="time" value={to} readonly>
             </div>
         </div>
-        <% end %>
       <% end %>
+        <div class="flex justify-center ">
+          <button type="button" class="w-24 text-center inline-block rounded bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_#332d2d] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#171717] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)]">
+            ADD
+          </button>
+        </div>
       </div>
     </div>
+    <div class="w-96"><hr></div>
     """
   end
 
