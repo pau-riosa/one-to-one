@@ -69,14 +69,14 @@ defmodule TodoWeb.AvailabilityLive do
       ) do
     params = %{hour_id: hour_id, user_id: user_id}
 
-    updated_availability =
+    new_availability =
       case Availability.delete_hour(params) do
-        {:error, :hour_not_found} ->
+        {:error, _error} ->
           socket.assigns.availability
 
-        _hour_id ->
+        hour ->
           atom_day = String.to_atom(day)
-          atom_hour_id = String.to_atom(hour_id)
+          atom_hour_id = String.to_atom(hour.id)
 
           {_val, updated_availability} =
             pop_in(socket.assigns.availability, [atom_day, atom_hour_id])
@@ -84,7 +84,7 @@ defmodule TodoWeb.AvailabilityLive do
           updated_availability
       end
 
-    socket = assign(socket, availability: updated_availability)
+    socket = assign(socket, availability: new_availability)
 
     {:noreply, socket}
   end

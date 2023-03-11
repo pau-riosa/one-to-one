@@ -38,13 +38,11 @@ defmodule Todo.Contexts.Availability do
   def delete_hour(%{hour_id: hour_id, user_id: user_id}) do
     with %Hour{} = hour <- fetch_hour_by_user(hour_id, user_id),
          {:ok, hour} <- Repo.delete(hour) do
-      hour.id
+      hour
     else
       nil -> {:error, :hour_not_found}
       {:error, changeset} -> {:error, changeset}
     end
-
-    []
   end
 
   defp fetch_hour_by_user(hour_id, user_id) do
