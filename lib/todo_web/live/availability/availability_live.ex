@@ -48,13 +48,35 @@ defmodule TodoWeb.AvailabilityLive do
         <div class="flex flex-row justify-center">
           <div class="border p-2 mb-2 rounded-lg relative">
               <svg phx-click={JS.push("delete-hour", value: %{hour_id: hour_id, day: @day, user: assigns.user})}
-              width="20" height="20" style="transform: translate(10px, -10px);" class="absolute top-0 right-0 cursor-pointer" aria-label="failed" viewBox="0 0 16 16" version="1.1" role="img"><path fill="red" fill-rule="evenodd" d="M2.343 13.657A8 8 0 1113.657 2.343 8 8 0 012.343 13.657zM6.03 4.97a.75.75 0 00-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 101.06 1.06L8 9.06l1.97 1.97a.75.75 0 101.06-1.06L9.06 8l1.97-1.97a.75.75 0 10-1.06-1.06L8 6.94 6.03 4.97z"></path></svg>
+              width="20" height="20" style="transform: translate(10px, -10px);" class="absolute top-0 right-0 cursor-pointer" aria-label="failed" viewBox="0 0 16 16" version="1.1" role="img"><path fill="red" fill-rule="evenodd" d="M2.343 13.657A8 8 0 1113.657 2.343 8 8 0 012.343 13.657zM6.03 4.97a.75.75 0 00-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 101.06 1.06L8 9.06l1.97 1.97a.75.75 0 101.06-1.06L9.06 8l1.97-1.97a.75.75 0 10-1.06-1.06L8 6.94 6.03 4.97z"></path>
+              </svg>
               <input type="time" value={from} readonly> - <input type="time" value={to} readonly>
-            </div>
+          </div>
         </div>
-      <% end %>
+        <% end %>
+        <div class="relative">
+          <div id={"modal-#{@day}"} style="width: 190px; margin-left: auto; margin-right: auto; display: none;">
+            <form phx-submit="add-hour">
+              <div class="border p-2 mb-2 rounded-lg relative">
+              <button class="flex" type="submit">
+                <svg
+                width="24" height="24" style="transform: translate(10px, -10px);" class="absolute top-0 right-0 cursor-pointer" aria-label="failed"
+                viewBox="0 0 24 24" version="1.1" role="img"><path fill="black" fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"></path>
+                </svg>
+                </button>
+                <input id={"input-#{@day}-1"} type="time" name="from" value="06:00">
+                -
+                <input id={"input-#{@day}-2"} type="time" name="to" value="06:22">
+                <input type="hidden" name="day" value={@day} >
+                <input type="hidden" name="user_id" value={@user.id} >
+              </div>
+            </form>
+          </div>
+        </div>
         <div class="flex justify-center ">
-          <button type="button" class="w-24 text-center inline-block rounded bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_#332d2d] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#171717] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)]">
+          <button phx-click={JS.toggle(to: "#modal-#{@day}")}
+          type="button"
+          class="w-24 text-center inline-block rounded bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_#332d2d] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.3),0_4px_18px_0_rgba(51,45,45,0.2)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#171717] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(27,27,27,0.3),0_4px_18px_0_rgba(27,27,27,0.2)]">
             ADD
           </button>
         </div>
@@ -62,6 +84,33 @@ defmodule TodoWeb.AvailabilityLive do
     </div>
     <div class="w-96"><hr></div>
     """
+  end
+
+  def handle_event(
+        "add-hour",
+        %{"day" => day, "from" => from, "to" => to, "user_id" => user_id},
+        socket
+      ) do
+    atom_day = String.to_atom(day)
+    hours = socket.assigns.availability[atom_day]
+    from_timeish = Time.from_iso8601!("#{from}:00")
+    to_timeish = Time.from_iso8601!("#{to}:00")
+
+    socket =
+      with :lt <- Time.compare(from_timeish, to_timeish),
+           :ok <- Availability.check_ovelaps(from_timeish, to_timeish, hours),
+           {:ok, _hour} <- Availability.insert_hour(from_timeish, to_timeish, day, user_id) do
+        :ok
+      else
+        diff when diff in [:eq, :gt] -> :add_more_time
+        :error -> :error_overlaps
+      end
+      |> case do
+        :ok -> assign(socket, availability: Availability.for(socket.assigns.current_user))
+        _some_error -> socket
+      end
+
+    {:noreply, socket}
   end
 
   def handle_event(
