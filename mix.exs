@@ -34,6 +34,7 @@ defmodule Todo.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 3.0"},
+      {:ecto_enum, "~> 1.4"},
       {:ecto_sql, "~> 3.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:ex_heroicons, "~> 2.0.0"},
