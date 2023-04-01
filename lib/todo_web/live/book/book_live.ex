@@ -7,6 +7,8 @@ defmodule TodoWeb.BookLive do
   alias Todo.Helpers.Tempo
   @topic "update_booked_schedules"
   @default_duration 20
+
+  @impl true
   def mount(%{"slug" => slug} = params, _session, socket) do
     TodoWeb.Endpoint.subscribe(@topic)
 
@@ -42,6 +44,7 @@ defmodule TodoWeb.BookLive do
     {:noreply, assign(socket, :booked_schedules, booked_schedules)}
   end
 
+  @impl true
   def handle_params(%{"slug" => slug, "schedule" => schedule} = params, _session, socket) do
     book_with = Todo.Accounts.get_user_by_slug(slug)
     changeset = Schedule.changeset(%Schedule{})
