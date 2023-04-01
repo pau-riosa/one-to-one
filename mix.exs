@@ -38,6 +38,7 @@ defmodule Todo.MixProject do
       {:ecto_sql, "~> 3.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:ex_heroicons, "~> 2.0.0"},
+      {:ex_machina, "~> 2.7.0", only: :test},
       {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.18"},
       {:hackney, "~> 1.18.0"},
