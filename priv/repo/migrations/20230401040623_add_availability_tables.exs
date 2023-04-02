@@ -20,7 +20,7 @@ defmodule Todo.Repo.Migrations.AddAvailabilityTables do
       add(:from, :time, null: false)
       add(:to, :time, null: false)
 
-      add(:availability_entry_id, references(:availability_days, type: :binary_id), null: false)
+      add(:availability_day_id, references(:availability_days, type: :binary_id), null: false)
 
       timestamps()
     end
