@@ -8,7 +8,7 @@ defmodule Todo.Schemas.AvailabilityDay do
 
     belongs_to :user, User
 
-    has_many :availability_hour, AvailabilityHour
+    has_many :availability_hours, AvailabilityHour
 
     timestamps()
   end
@@ -19,6 +19,6 @@ defmodule Todo.Schemas.AvailabilityDay do
     schema
     |> cast(params, @required_attributes)
     |> validate_required(@required_attributes)
-    |> cast_assoc(:availability_hour)
+    |> cast_assoc(:availability_hours)
   end
 end
