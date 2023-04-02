@@ -18,6 +18,7 @@ defmodule Todo.Schemas.User do
 
     has_many :schedules, Todo.Schemas.Schedule, foreign_key: :created_by_id
     has_many :user_tokens, Todo.Schemas.UserToken
+    has_many :availability_days, Todo.Schemas.AvailabilityDay
 
     timestamps()
   end
