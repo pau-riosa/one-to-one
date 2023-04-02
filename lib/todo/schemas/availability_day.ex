@@ -3,7 +3,7 @@ defmodule Todo.Schemas.AvailabilityDay do
   alias Todo.Schemas.{AvailabilityHour, User}
   import Ecto.Changeset
 
-  schema "availability_entries" do
+  schema "availability_days" do
     field :day, DayEnum
 
     belongs_to :user, User

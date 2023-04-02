@@ -3,7 +3,7 @@ defmodule Todo.Schemas.AvailabilityHour do
   alias Todo.Schemas.AvailabilityDay
   import Ecto.Changeset
 
-  schema "hours" do
+  schema "availability_hours" do
     field :from, :time
     field :to, :time
 
@@ -12,7 +12,7 @@ defmodule Todo.Schemas.AvailabilityHour do
     timestamps()
   end
 
-  @required_attributes ~w(from to)a
+  @required_attributes ~w(from to availability_day_id)a
 
   def changeset(schema, params) do
     schema
