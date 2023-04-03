@@ -1,8 +1,8 @@
 defmodule Todo.Contexts.Availability do
   import Ecto.Query, warn: false
-  alias Todo.Schemas.AvailabilityDay
   alias Todo.Repo
   alias Todo.Schemas.AvailabilityHour
+  alias Todo.Schemas.AvailabilityDay
   alias Todo.Schemas.User
 
   def for(%User{id: id} = _user) do
@@ -44,5 +44,44 @@ defmodule Todo.Contexts.Availability do
       where: u.id == ^user_id and ah.id == ^hour_id
     )
     |> Repo.one()
+  end
+
+  def check_ovelaps(from, to, other_hours) do
+    input_interval = Timex.Interval.new(from: time_to_datetime(from), until: time_to_datetime(to))
+
+    Enum.map(other_hours, fn %{from: from, to: to} ->
+      hour = Timex.Interval.new(from: time_to_datetime(from), until: time_to_datetime(to))
+      Timex.Interval.overlaps?(hour, input_interval)
+    end)
+    |> Enum.any?()
+    |> case do
+      true -> :error_overlap
+      false -> :ok
+    end
+  end
+
+  defp time_to_datetime(time) do
+    Timex.to_datetime({{2015, 1, 1}, {time.hour, time.minute, 0}}, "Etc/UTC")
+  end
+
+  def insert_hour(from, to, day, user_id) do
+    from(u in User,
+      join: ad in assoc(u, :availability_days),
+      where: u.id == ^user_id and ad.day == ^day,
+      select: ad
+    )
+    |> Repo.one()
+    |> case do
+      nil ->
+        AvailabilityDay.changeset(%AvailabilityDay{}, %{
+          day: day,
+          user_id: user_id,
+          hours: [%{from: from, to: to}]
+        })
+
+      availability_day ->
+        Ecto.build_assoc(availability_day, :availability_hours, %{from: from, to: to})
+    end
+    |> Repo.insert()
   end
 end

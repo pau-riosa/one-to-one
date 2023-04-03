@@ -81,6 +81,33 @@ defmodule TodoWeb.AvailabilityLive do
   end
 
   def handle_event(
+        "add-hour",
+        %{"day" => day, "from" => from, "to" => to, "user_id" => user_id},
+        socket
+      ) do
+    atom_day = String.to_existing_atom(day)
+    hours = socket.assigns.availability[atom_day]
+    from_timeish = Time.from_iso8601!("#{from}:00")
+    to_timeish = Time.from_iso8601!("#{to}:00")
+
+    socket =
+      with :lt <- Time.compare(from_timeish, to_timeish),
+           :ok <- Availability.check_ovelaps(from_timeish, to_timeish, hours),
+           {:ok, _hour} <- Availability.insert_hour(from_timeish, to_timeish, day, user_id) do
+        :ok
+      else
+        diff when diff in [:eq, :gt] -> :add_more_time
+        :error_overlap -> :error_overlaps
+      end
+      |> case do
+        :ok -> assign(socket, availability: Availability.for(socket.assigns.current_user))
+        _some_error -> socket
+      end
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
         "delete-hour",
         %{"day" => day, "hour_id" => hour_id, "user" => %{"id" => user_id}},
         socket
