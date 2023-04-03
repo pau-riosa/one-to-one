@@ -28,7 +28,7 @@ user =
 %AvailabilityDay{
   id: Ecto.UUID.generate(),
   user_id: user.id,
-  day: :sunday,
+  day: :wednesday,
   availability_hours: [
     %AvailabilityHour{
       id: Ecto.UUID.generate(),

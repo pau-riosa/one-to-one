@@ -1,6 +1,8 @@
 defmodule Todo.Schemas.User do
   use Todo.Schema
 
+  @derive {Jason.Encoder, only: [:id]}
+
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true

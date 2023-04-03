@@ -69,7 +69,7 @@ config :todo, version: System.get_env("VERSION", "unknown")
 
 config :logger, :console, metadata: [:room, :peer]
 
-config :logger, backends: []
+# config :logger, backends: []
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
