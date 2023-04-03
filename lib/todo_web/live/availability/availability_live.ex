@@ -37,14 +37,15 @@ defmodule TodoWeb.AvailabilityLive do
                 <div class="absolute">
                   <%= day %>
                 </div>
-                <div class="translate-x-[80px] flex items-center">
-                  <span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-200">
+                <div class="translate-x-[80px] flex items-center cursor-pointer">
+                  <span phx-click={JS.toggle(to: "#input-#{day}", in: "fade-in-scale", out: "fade-out-scale", time: 300)}
+                  class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-200">
                     ADD
                   </span>
                 </div>
               </div>
 
-              <form phx-submit="add-hour">
+              <form id={"input-#{day}"} phx-submit="add-hour" style="display: none;">
                <div class="border p-2 mb-2 rounded-lg relative">
                   <button class="flex" type="submit">
                     <svg
