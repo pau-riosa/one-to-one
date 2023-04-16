@@ -1,38 +1,39 @@
-    <div class="w-full rounded-xl bg-white flex flex-col">
-        <div class={"grid sm:grid-cols-1 md:grid-cols-3  items-center justify-center"}>
-            <div class="p-5 space-y-5">
-                <div class="flex flex-row items-center">
-                    <div class="flex flex-col">
-                        <i><%= Heroicons.icon("user-circle", type: "solid", class: "fill-blue-900 h-12 w-12 mr-2 rounded-full") %></i>
-                    </div>
-                    <div class="flex flex-col ml-2">
-                        <p class="text-md text-blue-900 font-semibold capitalize"><%= @book_with.first_name %> <%= @book_with.last_name %></p>
-                    </div>
-                </div> 
-            </div>
-            <div class="p-5 space-y-5">
-                <TodoWeb.Components.calendar_months
-                    id="calendar-months"
-                    current_path={@current_path}
-                    previous_month={@previous_month}
-                    next_month={@next_month}
-                    end_of_month={@end_of_month}
-                    beginning_of_month={@beginning_of_month}
-                    timezone={@timezone}
-                    current={@current}
+<div class="w-full rounded-xl bg-white flex flex-col">
+    
+    <div class="grid sm:grid-cols-1 md:grid-cols-3  items-center justify-center">
+        <div class="p-5 flex flex-col space-y-5">
+            <div class="flex flex-row items-center">
+                <div class="flex flex-col">
+                    <i><%= Heroicons.icon("user-circle", type: "solid", class: "fill-blue-900 h-12 w-12 mr-2 rounded-full") %></i>
+                </div>
+                <div class="flex flex-col ml-2">
+                    <p class="text-md text-blue-900 font-semibold capitalize"><%= @book_with.first_name %> <%= @book_with.last_name %></p>
+                </div>
+            </div> 
+        </div>
+        <div class="p-5 space-y-5">
+            <TodoWeb.Components.calendar_months
+                id="calendar-months"
+                current_path={@current_path}
+                previous_month={@previous_month}
+                next_month={@next_month}
+                end_of_month={@end_of_month}
+                beginning_of_month={@beginning_of_month}
+                timezone={@timezone}
+                current={@current}
+                socket={@socket}
+                />
+        </div>
+        <div class="h-[450px] py-10  flex flex-col items-center gap-4 w-full overflow-auto">
+            <%= for schedule <- @schedules do %> 
+                <TodoWeb.Components.schedule
+                    schedule={schedule}
                     socket={@socket}
+                    slug={@slug}
+                    timezone={@timezone}
+                    booked_schedules={@booked_schedules}
                     />
-            </div>
-            <div class="h-[450px] py-10  flex flex-col items-center gap-4 w-full overflow-auto">
-                <%= for schedule <- @schedules do %> 
-                    <TodoWeb.Components.schedule
-                        schedule={schedule}
-                        socket={@socket}
-                        slug={@slug}
-                        timezone={@timezone}
-                        booked_schedules={@booked_schedules}
-                        />
-                <% end %>
-            </div>
+            <% end %>
         </div>
     </div>
+</div>

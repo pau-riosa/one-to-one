@@ -67,6 +67,7 @@ defmodule Todo.Tempo do
 
   def list_of_times(selected_date, timezone, step) do
     selected_date = Date.from_iso8601!(selected_date)
+
     today_date = today_date(timezone)
 
     selected_date
@@ -75,7 +76,7 @@ defmodule Todo.Tempo do
   end
 
   defp do_list_of_times(false = _same_day, _timezone, step),
-    do: create_time_intervals(~D[2000-01-01], [days: 1], step)
+    do: create_time_intervals(~D[2000-01-22], [days: 1], step)
 
   defp do_list_of_times(true = _same_day, timezone, step) do
     %{minute: minute} = datetime_now = now!(timezone)

@@ -72,6 +72,7 @@ defmodule TodoWeb.Router do
     post "/register", UserRegistrationController, :create
     get "/log_in", UserSessionController, :new
     post "/log_in", UserSessionController, :create
+    get "/auth/callback", UserSessionController, :callback
     get "/reset_password", UserResetPasswordController, :new
     post "/reset_password", UserResetPasswordController, :create
     get "/reset_password/:token", UserResetPasswordController, :edit
@@ -80,8 +81,7 @@ defmodule TodoWeb.Router do
 
   live_session :default, on_mount: {TodoWeb.Live.InitAssigns, :default} do
     scope "/", TodoWeb do
-      pipe_through [:browser]
-
+      pipe_through [:browser, :store_return_to]
       live "/book/:slug", BookLive, :index
       live "/book/:slug/:schedule", BookLive, :set_schedule
     end

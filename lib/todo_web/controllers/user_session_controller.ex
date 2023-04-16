@@ -4,6 +4,14 @@ defmodule TodoWeb.UserSessionController do
   alias Todo.Accounts
   alias TodoWeb.UserAuth
 
+  def callback(conn, %{"code" => code}) do
+    client = Google.get_token!(code: code, response_type: "permission id_token")
+
+    conn
+    |> put_session(:token, client.token)
+    |> redirect(to: get_session(conn, :user_return_to))
+  end
+
   def new(conn, _params) do
     render(conn, "new.html", error_message: nil)
   end

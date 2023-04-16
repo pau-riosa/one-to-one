@@ -55,7 +55,9 @@ defmodule Todo.MixProject do
       {:inflex, "~> 2.1.0"},
       {:httpoison, "~> 2.0"},
       {:ex_heroicons, "~> 2.0.0"},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:google_calendar, "~> 0.1.0"},
+      {:poison, "~> 5.0"}
     ]
   end
 

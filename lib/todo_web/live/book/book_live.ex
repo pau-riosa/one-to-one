@@ -7,23 +7,62 @@ defmodule TodoWeb.BookLive do
   alias Todo.Helpers.Tempo
   @topic "update_booked_schedules"
   @default_duration 20
+
+  @impl true
+  def mount(%{"slug" => slug} = params, %{"token" => token} = _session, socket) do
+    TodoWeb.Endpoint.subscribe(@topic)
+
+    case Todo.Accounts.get_user_by_slug(slug) do
+      %User{} = book_with ->
+        socket =
+          socket
+          |> Schedules.assign_dates(params)
+          |> assign(:book_with, book_with)
+          |> assign(:slug, slug)
+          |> assign(:schedules, [])
+          |> assign(:local_timezone, "")
+          |> assign(:booked_schedules, [])
+          |> assign(:oauth_token, token)
+
+        {:ok, socket}
+
+      _ ->
+        {:ok, socket, layout: {TodoWeb.LayoutView, "not_found.html"}}
+    end
+  end
+
   def mount(%{"slug" => slug} = params, _session, socket) do
     TodoWeb.Endpoint.subscribe(@topic)
 
     case Todo.Accounts.get_user_by_slug(slug) do
       %User{} = book_with ->
-        {:ok,
-         socket
-         |> Schedules.assign_dates(params)
-         |> assign(:book_with, book_with)
-         |> assign(:slug, slug)
-         |> assign(:schedules, [])
-         |> assign(:local_timezone, "")
-         |> assign(:booked_schedules, [])}
+        socket =
+          socket
+          |> Schedules.assign_dates(params)
+          |> assign(:book_with, book_with)
+          |> assign(:slug, slug)
+          |> assign(:schedules, [])
+          |> assign(:local_timezone, "")
+          |> assign(:booked_schedules, [])
+          |> assign(:oauth_token, nil)
+
+        {:ok, socket}
 
       _ ->
         {:ok, socket, layout: {TodoWeb.LayoutView, "not_found.html"}}
     end
+  end
+
+  @impl true
+  def handle_event("unauthorize-google", session, socket) do
+    {:noreply, assign(socket, :oauth_token, nil)}
+  end
+
+  @impl true
+  def handle_event("authorize-google", session, socket) do
+    url = Google.authorize_url!(scope: "https://www.googleapis.com/auth/calendar profile email")
+
+    {:reply, session, redirect(socket, external: url)}
   end
 
   @impl true

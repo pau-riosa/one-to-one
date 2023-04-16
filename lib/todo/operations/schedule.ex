@@ -6,6 +6,7 @@ defmodule Todo.Operations.Schedule do
   alias Ecto.Multi
   alias Todo.Helpers.UserNotifier
   alias TodoWeb.Router.Helpers, as: Routes
+  require Logger
 
   def changeset(struct \\ %Schema{}, params \\ %{}) do
     Schema.changeset(struct, params)
@@ -24,8 +25,7 @@ defmodule Todo.Operations.Schedule do
     with _dyte_initialization <- dyte_integration_module().initialize(),
          {:ok, %{create_schedule: schedule, participant: participant}} <-
            dyte_integration(schedule_params) do
-      UserNotifier.deliver_schedule_instructions(
-        schedule,
+      url =
         TodoWeb.Router.Helpers.url(socket) <>
           Routes.room_path(
             socket,
@@ -34,7 +34,9 @@ defmodule Todo.Operations.Schedule do
             participant.participant_id,
             participant.meeting_id
           )
-      )
+
+      UserNotifier.deliver_schedule_instructions(schedule, url)
+      create_google_meeting(schedule, participant, socket.assigns.oauth_token, url)
 
       {:ok, schedule}
     else
@@ -46,6 +48,61 @@ defmodule Todo.Operations.Schedule do
 
       {:error, _, changeset, _} ->
         {:error, changeset}
+    end
+  end
+
+  defp create_google_meeting(_schedule, _participant, nil, url), do: :ok
+
+  defp create_google_meeting(schedule, participant, token, url) do
+    client = Map.merge(Google.client(), %{token: token})
+
+    start_time =
+      schedule.scheduled_for
+      |> Timex.to_datetime(schedule.timezone)
+      |> DateTime.to_iso8601()
+
+    end_time =
+      schedule.scheduled_for
+      |> Timex.shift(minutes: 15)
+      |> Timex.to_datetime(schedule.timezone)
+      |> DateTime.to_iso8601()
+
+    event = %{
+      calendar_id: "primary",
+      sendNotifications: true,
+      sendUpdates: "all",
+      description:
+        "kindly click this link to go straight to your video-conference <a href=#{url}>one-to-one link</a>",
+      visibility: "private",
+      summary: "Upcoming One-to-One meeting",
+      attendees: [
+        %{
+          email: schedule.created_by.email,
+          responseStatus: "needsAction",
+          comment: ""
+        },
+        %{
+          email: participant.email,
+          responseStatus: "needsAction",
+          comment: ""
+        }
+      ],
+      start: %{
+        dateTime: start_time,
+        timezone: schedule.timezone
+      },
+      end: %{
+        dateTime: end_time,
+        timezone: schedule.timezone
+      }
+    }
+
+    case GoogleCalendar.Event.insert(client, event) do
+      {:ok, action, result} ->
+        Logger.info("google meeting created")
+
+      {:error, code, error_message} ->
+        Logger.error("#{inspect(error_message)}")
     end
   end
 

@@ -79,6 +79,14 @@ if config_env() == :prod do
     api_key: System.get_env("MAILJET_API_KEY"),
     secret: System.get_env("MAILJET_SECRET")
 
+  config :google_calendar, :base_url, "https://www.googleapis.com/calendar/v3"
+  config :google_calendar, :content_type, [{"content-type", "application/json"}]
+
+  config :google_calendar, Google,
+    client_id: System.get_env("GOOGLE_CALENDAR_CLIENT_ID"),
+    client_secret: System.get_env("GOOGLE_CALENDAR_CLIENT_SECRET"),
+    redirect_uri: System.get_env("GOOGLE_CALENDAR_REDIRECT_URI")
+
   # Swoosh API client is needed for adapters other than SMTP.
   config :swoosh, :api_client, Swoosh.ApiClient.Hackney
 

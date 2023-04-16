@@ -139,6 +139,13 @@ defmodule TodoWeb.UserAuth do
     end
   end
 
+  @doc """
+  Used for routes that does not require authentication.
+  """
+  def store_return_to(conn, _opts) do
+    maybe_store_return_to(conn)
+  end
+
   defp maybe_store_return_to(%{method: "GET"} = conn) do
     put_session(conn, :user_return_to, current_path(conn))
   end

@@ -63,7 +63,8 @@ defmodule Todo.Helpers.Tempo do
   @spec list_of_times(Date.t() | nil, String.t(), Integer.t()) :: List.t()
   def list_of_times(selected_date \\ nil, timezone, step \\ @default_duration)
 
-  def list_of_times(nil, timezone, step), do: do_list_of_times(true, timezone, step)
+  def list_of_times(nil, timezone, step),
+    do: do_list_of_times(true, Timex.today(), timezone, step)
 
   def list_of_times(selected_date, timezone, step) do
     selected_date = Date.from_iso8601!(selected_date)
@@ -71,13 +72,16 @@ defmodule Todo.Helpers.Tempo do
 
     selected_date
     |> same_date?(today_date)
-    |> do_list_of_times(timezone, step)
+    |> do_list_of_times(selected_date, timezone, step)
   end
 
-  defp do_list_of_times(false = _same_day, _timezone, step),
-    do: create_time_intervals(~D[2014-09-22], [days: 1], step)
+  defp do_list_of_times(false = _same_day, selected_date, _timezone, step) do
+    start_of_day = Timex.to_datetime(selected_date)
+    end_of_day = Timex.end_of_day(start_of_day)
+    create_time_intervals(start_of_day, end_of_day, step)
+  end
 
-  defp do_list_of_times(true = _same_day, timezone, step) do
+  defp do_list_of_times(true = _same_day, _date, timezone, step) do
     %{minute: minute} = datetime_now = now!(timezone)
 
     minutes_ceil = fn minute, precision ->
@@ -90,7 +94,7 @@ defmodule Todo.Helpers.Tempo do
     dt_updated =
       datetime_now
       |> Timex.shift(minutes: minutes_ceil.(minute, step))
-      |> Timex.set(second: 0, microsecond: {000_000, 6})
+      |> Timex.set(second: 0, microsecond: {00, 6})
 
     dt_naive =
       dt_updated

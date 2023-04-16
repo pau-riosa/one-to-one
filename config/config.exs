@@ -22,6 +22,14 @@ config :todo, :dyte,
   org_id: System.get_env("DYTE_ORG_ID"),
   api_key: System.get_env("DYTE_API_KEY")
 
+config :google_calendar, :base_url, "https://www.googleapis.com/calendar/v3"
+config :google_calendar, :content_type, [{"content-type", "application/json"}]
+
+config :google_calendar, Google,
+  client_id: System.get_env("GOOGLE_CALENDAR_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CALENDAR_CLIENT_SECRET"),
+  redirect_uri: System.get_env("GOOGLE_CALENDAR_REDIRECT_URI")
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
