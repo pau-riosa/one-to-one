@@ -3,7 +3,6 @@ defmodule TodoWeb.AvailabilityLive do
   alias Todo.Contexts.Availability
 
   def mount(_params, _session, socket) do
-    # |> IO.inspect(label: "ASD")
     availability = Availability.for(socket.assigns.current_user)
 
     {:ok,

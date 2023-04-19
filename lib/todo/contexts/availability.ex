@@ -83,7 +83,7 @@ defmodule Todo.Contexts.Availability do
         AvailabilityDay.changeset(%AvailabilityDay{}, %{
           day: day,
           user_id: user_id,
-          hours: [%{from: from, to: to}]
+          availability_hours: [%{from: from, to: to}]
         })
 
       availability_day ->

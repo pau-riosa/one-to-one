@@ -12,10 +12,10 @@ defmodule Todo.Schemas.AvailabilityHour do
     timestamps()
   end
 
-  @required_attributes ~w(from to availability_day_id)a
+  @required_attributes ~w(from to)a
 
-  def changeset(schema, params) do
-    schema
+  def changeset(availability_hour, params) do
+    availability_hour
     |> cast(params, @required_attributes)
     |> validate_required(@required_attributes)
   end
