@@ -29,6 +29,8 @@ defmodule TodoWeb do
 
   def view do
     quote do
+      use Phoenix.LiveView
+
       use Phoenix.View,
         root: "lib/todo_web/templates",
         namespace: TodoWeb
@@ -46,8 +48,10 @@ defmodule TodoWeb do
     quote do
       alias Phoenix.LiveView.JS
 
+      use Phoenix.Component
+
       use Phoenix.LiveView,
-        layout: {TodoWeb.LayoutView, "live.html"}
+        layout: {TodoWeb.LayoutView, :live}
 
       unquote(view_helpers())
     end

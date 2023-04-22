@@ -1,11 +1,7 @@
 defmodule TodoWeb.Components do
   use TodoWeb, :component
 
-  alias Todo.Repo
-
-  def confirm_banner(
-        %{socket: socket, current_user: %{confirmed_at: confirmed_at} = _current_user} = assigns
-      )
+  def confirm_banner(%{current_user: %{confirmed_at: confirmed_at} = _current_user} = assigns)
       when is_nil(confirmed_at) do
     ~H"""
         <div class="bg-indigo-600">
@@ -73,7 +69,7 @@ defmodule TodoWeb.Components do
   """
   def calendar_months(
         %{
-          current: current,
+          current: _current,
           current_path: current_path,
           previous_month: previous_month,
           next_month: next_month
@@ -91,7 +87,7 @@ defmodule TodoWeb.Components do
     <div>
         <div class="flex items-center mb-8">
             <div class="flex-1 text-blue-900 font-semibold">
-                <%= Timex.format!(@current, "%B %Y", :strftime)%> 
+                <%= Timex.format!(@current, "%B %Y", :strftime)%>
             </div>
             <div class="flex justify-end flex-1 text-right">
                 <%= live_patch to: @previous_month_path do %>
@@ -126,7 +122,7 @@ defmodule TodoWeb.Components do
         </div>
         <div class="flex items-center gap-x-1 text-blue">
             <i><%= Heroicons.icon("globe-asia-australia", type: "solid", class: "h-7 w-7 fill-blue-900") %></i>
-            <%= @timezone %> 
+            <%= @timezone %>
         </div>
     </div>
     """
@@ -165,7 +161,7 @@ defmodule TodoWeb.Components do
 
     ~H"""
     <%= live_patch to: @date_path, class: @class, disabled: @disabled  do %>
-      <%= @text %> 
+      <%= @text %>
     <% end %>
     """
   end
@@ -173,7 +169,6 @@ defmodule TodoWeb.Components do
   def calendar_weeks(
         %{
           id: id,
-          socket: socket,
           current_path: current_path,
           previous_week: previous_week,
           next_week: next_week,
@@ -191,10 +186,13 @@ defmodule TodoWeb.Components do
       |> assign(next_week_path: next_week_path)
       |> assign(id: id)
       |> assign(selected_timeslots: selected_timeslots)
+      |> assign(existing_timeslots: existing_timeslots)
+      |> assign(timezone: timezone)
+      |> assign(current_path: current_path)
 
     ~H"""
         <div class="flex flex-row px-6 justify-center align-center gap-x-5">
-          <%= live_patch to: @previous_week_path do %> 
+          <%= live_patch to: @previous_week_path do %>
         <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
                     <i><%= Heroicons.icon("chevron-left", type: "solid", class: "h-10 w-10 fill-blue-900") %></i>
         </button>
@@ -202,7 +200,7 @@ defmodule TodoWeb.Components do
             <div class="flex flex-row items-center mb-2 text-gray-500 gap-2">
                 <h1 class="my-3 text-xl text-black"><%= Timex.format!(@beginning_of_week, "%B %d", :strftime) %> - <%= Timex.format!(@end_of_week, "%d %Y", :strftime)%></h1>
             </div>
-          <%= live_patch to: @next_week_path do %> 
+          <%= live_patch to: @next_week_path do %>
             <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
                 <i><%= Heroicons.icon("chevron-right", type: "solid", class: "h-10 w-10 fill-blue-900") %></i>
             </button>
@@ -210,24 +208,24 @@ defmodule TodoWeb.Components do
         </div>
 
         <div class="py-2 px-5 text-center grid grid-cols-8 gap-2" id={@id}>
-          <%= for {{date, list_of_time}, date_index} <- Enum.with_index(@current_week) do %>
-              <div class="flex flex-col gap-2">
+          <div
+            class="flex flex-col gap-2"
+            :for={{{date, list_of_time}, date_index} <- Enum.with_index(@current_week)}
+            >
                 <div class="text-xs font-semibold text-blue-900"><%= if date == "time", do: "-", else: Timex.format!(date, "%a %m-%d", :strftime) %></div>
-                  <%= for {time, time_index} <- Enum.with_index(list_of_time) do %>
                     <.live_component module={TodoWeb.Components.Time}
+                      :for={{time, time_index} <- Enum.with_index(list_of_time)}
                       id={"time-#{date_index}-#{time_index}"}
                       parent_id={@id}
                       date={date}
                       datetime={time}
-                      timezone={timezone}
-                      current_path={current_path}
+                      timezone={@timezone}
+                      current_path={@current_path}
                       button_id={"button-#{date_index}-#{time_index}"}
-                      selected_timeslots={selected_timeslots}
-                      existing_timeslots={existing_timeslots}
+                      selected_timeslots={@selected_timeslots}
+                      existing_timeslots={@existing_timeslots}
                     />
-                  <% end %>
-              </div> 
-          <% end %>
+              </div>
         </div>
     """
   end

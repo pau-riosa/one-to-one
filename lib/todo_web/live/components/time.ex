@@ -3,9 +3,6 @@ defmodule TodoWeb.Components.Time do
 
   def render(
         %{
-          id: id,
-          socket: socket,
-          current_path: current_path,
           timezone: timezone,
           date: date,
           datetime: datetime,
@@ -29,7 +26,6 @@ defmodule TodoWeb.Components.Time do
       Timex.compare(datetime, Timex.today(timezone)) == -1 or
         (formatted_datetime in existing_timeslots and date != "time")
 
-    weekday = Timex.weekday(datetime, :monday)
     pointer = if date == "time", do: "pointer-events-none", else: ""
 
     selected = Enum.member?(selected_timeslots, slot_string)
@@ -56,7 +52,7 @@ defmodule TodoWeb.Components.Time do
 
     ~H"""
     <button  phx-value-id={@id} id={@id} class={@class} disabled={@disabled} phx-click="select-time" phx-value-timeslot={@datetime} phx-target={"##{@parent_id}"} >
-      <%= @text %> 
+      <%= @text %>
     </button>
     """
   end

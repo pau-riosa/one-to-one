@@ -1,5 +1,5 @@
 <div class="w-full flex flex-col">
-    <.form let={f} for={@changeset} phx-change="validate" phx-submit="save" phx-target={@myself} class="space-y-10">
+    <.form :let={f} for={@changeset} phx-change="validate" phx-submit="save" phx-target={@myself} class="space-y-10">
     <div class=" my-2 space-y-5 w-1/2">
         <div class="flex flex-col">
             <label class="text-lg text-blue-900 font-semibold">Profile</label>
@@ -9,22 +9,22 @@
             <label class="text-sm text-blue-900 font-normal">First Name</label>
             <%= text_input f, :first_name, value: input_value(f, :first_name), class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
 
-            <%= error_tag f, :first_name %> 
-        </div> 
-        
+            <%= error_tag f, :first_name %>
+        </div>
+
         <div class="flex flex-col space-y-3">
             <label class="text-sm text-blue-900 font-normal">Middle Name</label>
             <%= text_input f, :middle_name, value: input_value(f, :middle_name), class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
 
-            <%= error_tag f, :middle_name %> 
+            <%= error_tag f, :middle_name %>
         </div>
 <div class="flex flex-col space-y-3">
             <label class="text-sm text-blue-900 font-normal">Last Name</label>
             <%= text_input f, :last_name, value: input_value(f, :last_name), class: "appearance-none rounded w-full px-3 py-3 my-1 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue focus:border-blue focus:z-10 sm:text-sm "%>
 
-            <%= error_tag f, :last_name %> 
+            <%= error_tag f, :last_name %>
         </div>
-    </div> 
-    <%= submit "Update", phx_disable_with: "Updating...", class: "py-2 px-10 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-blue-900" %> 
+    </div>
+    <%= submit "Update", phx_disable_with: "Updating...", class: "py-2 px-10 rounded rounded-md bg-blue-900 text-white border border-blue hover:bg-white hover:text-blue-900 hover:border-blue-900" %>
     </.form>
 </div>

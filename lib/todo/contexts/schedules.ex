@@ -3,7 +3,7 @@ defmodule Todo.Schedules do
   The Schedules context
   """
   import Ecto.Query
-  import Phoenix.LiveView, only: [assign: 2, assign: 3]
+  import Phoenix.Component, only: [assign: 2, assign: 3]
   alias Timex
   alias Timex.Duration
   alias Todo.Schemas.Schedule
@@ -99,7 +99,7 @@ defmodule Todo.Schedules do
 
   def get_schedules_by_created_by_id(
         created_by_id,
-        current_date \\ Timex.now(),
+        _current_date \\ Timex.now(),
         timezone \\ "Etc/UTC"
       )
       when is_binary(created_by_id) do

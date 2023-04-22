@@ -2,8 +2,9 @@ defmodule TodoWeb.Live.InitAssigns do
   @moduledoc """
   To setup initial assigns
   """
-  use TodoWeb, :live_view
-
+  use Phoenix.Component
+  alias TodoWeb.Router.Helpers, as: Routes
+  import Phoenix.LiveView
   alias Todo.Accounts
 
   def on_mount(:private, _params, %{"user_token" => user_token} = _session, socket) do

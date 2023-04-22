@@ -1,8 +1,6 @@
 defmodule TodoWeb.AvailabilityLive do
   use TodoWeb, :live_view
 
-  alias Todo.Schemas.User
-
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket,

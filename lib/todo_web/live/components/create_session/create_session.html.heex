@@ -6,7 +6,7 @@
   modal_content_class="bg-white my-[15vh] mx-5 lg:mx-auto w-90 lg:w-5/12 border-2 border-blue-700 rounded-md p-[20px] transition fade-in-scale">
     <div class="w-full flex lg:flex-row flex-col">
       <div class="w-full bg-gray-100 rounded-md p-5 border-gray-300">
-        <.form let={f} for={@changeset} phx-submit="save" phx-target={@myself} class="w-full space-y-10">
+        <.form :let={f} for={@changeset} phx-submit="save" phx-target={@myself} class="w-full space-y-10">
           <%= hidden_input f, :created_by_id, value: @current_user.id %>
           <%= hidden_input f, :duration, value: @current_user.duration %>
           <%= hidden_input f, :timezone, value: @timezone %>

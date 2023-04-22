@@ -1,8 +1,6 @@
 defmodule TodoWeb.SettingsLive do
   use TodoWeb, :live_view
 
-  alias Todo.Schemas.User
-
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket, page_title: "Settings", view: :profile, active_url: socket.assigns.active_url)}

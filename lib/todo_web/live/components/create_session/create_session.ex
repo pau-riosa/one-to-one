@@ -39,7 +39,7 @@ defmodule TodoWeb.Components.CreateSession do
 
   def handle_event("save", %{"schedule" => schedule_params} = _params, socket) do
     with schedule_params <- insert_scheduled_for(schedule_params),
-         {:ok, %Schedule{} = schedule} <- Operation.prepare_session(schedule_params, socket) do
+         {:ok, %Schedule{} = _schedule} <- Operation.prepare_session(schedule_params, socket) do
       TodoWeb.Endpoint.broadcast("update_booked_schedules", "update", %{"reload" => true})
 
       {:noreply,

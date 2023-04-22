@@ -73,7 +73,7 @@ defmodule Todo.Schemas.User do
     |> unique_constraint(:email)
   end
 
-  defp validate_password(changeset, opts \\ [required: [:password]]) do
+  defp validate_password(changeset, opts) do
     required = Keyword.get(opts, :required, [:password])
 
     changeset

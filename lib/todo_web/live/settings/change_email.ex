@@ -14,8 +14,8 @@ defmodule TodoWeb.Settings.ChangeEmail do
      )}
   end
 
-  def handle_event("validate", %{"user" => user_params} = params, socket) do
-    %{"current_password" => password, "email" => email} = user_params
+  def handle_event("validate", %{"user" => user_params} = _params, socket) do
+    %{"current_password" => password, "email" => _email} = user_params
 
     changeset =
       socket.assigns.current_user
@@ -26,8 +26,8 @@ defmodule TodoWeb.Settings.ChangeEmail do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("save", %{"user" => user_params} = params, socket) do
-    %{"current_password" => password, "email" => email} = user_params
+  def handle_event("save", %{"user" => user_params} = _params, socket) do
+    %{"current_password" => password, "email" => _email} = user_params
     user = socket.assigns.current_user
 
     case Accounts.apply_user_email(user, password, user_params) do

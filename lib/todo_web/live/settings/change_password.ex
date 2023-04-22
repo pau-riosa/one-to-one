@@ -13,7 +13,7 @@ defmodule TodoWeb.Settings.ChangePassword do
      )}
   end
 
-  def handle_event("validate", %{"user" => user} = params, socket) do
+  def handle_event("validate", %{"user" => user} = _params, socket) do
     changeset =
       socket.assigns.current_user
       |> User.password_changeset(user)
@@ -22,11 +22,11 @@ defmodule TodoWeb.Settings.ChangePassword do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("save", %{"user" => user_params} = params, socket) do
+  def handle_event("save", %{"user" => user_params} = _params, socket) do
     user = socket.assigns.current_user
 
     case Todo.Accounts.reset_user_password(user, user_params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         {:noreply,
          socket
          |> put_flash(:info, "Password updated.")

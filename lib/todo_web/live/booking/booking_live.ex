@@ -1,15 +1,12 @@
 defmodule TodoWeb.BookingLive do
   use TodoWeb, :live_view
 
-  alias __MODULE__
   alias Todo.Schedules
   alias TodoWeb.Components.CalendarMonths
   alias TodoWeb.Presence
   alias Todo.PubSub
 
-  @presence "todo:dashboard"
-
-  @impl true
+  @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     if connected?(socket) do
       TodoWeb.Endpoint.subscribe("events")
@@ -18,7 +15,7 @@ defmodule TodoWeb.BookingLive do
     {:ok, assign(socket, page_title: "Bookings", active_url: socket.assigns.active_url)}
   end
 
-  @impl true
+  @impl Phoenix.LiveView
   def handle_params(params, _uri, socket) do
     socket =
       socket
@@ -30,7 +27,7 @@ defmodule TodoWeb.BookingLive do
     {:noreply, socket}
   end
 
-  @impl true
+  @impl Phoenix.LiveView
   def handle_info(%{event: "new_schedule", payload: %{event_id: _event_id}}, socket) do
     {:noreply, Schedules.get_current_schedules(socket, %{})}
   end

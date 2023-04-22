@@ -13,7 +13,7 @@ defmodule TodoWeb.Settings.Profile do
      )}
   end
 
-  def handle_event("validate", %{"user" => user} = params, socket) do
+  def handle_event("validate", %{"user" => user} = _params, socket) do
     changeset =
       socket.assigns.current_user
       |> Todo.Accounts.change_user_profile(user)
@@ -22,7 +22,7 @@ defmodule TodoWeb.Settings.Profile do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("save", %{"user" => user_params} = params, socket) do
+  def handle_event("save", %{"user" => user_params} = _params, socket) do
     socket.assigns.current_user
     |> Todo.Accounts.change_user_profile(user_params)
     |> Map.put(:action, :update)

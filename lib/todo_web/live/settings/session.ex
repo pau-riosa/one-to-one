@@ -20,7 +20,7 @@ defmodule TodoWeb.Settings.Session do
     |> User.session_changeset(params)
     |> Todo.Repo.update()
     |> case do
-      {:ok, user} ->
+      {:ok, _user} ->
         {:noreply,
          socket
          |> put_flash(:info, "Session settings updated.")
