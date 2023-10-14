@@ -1,8 +1,6 @@
-<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
-<TodoWeb.Components.confirm_banner current_user={@current_user} socket={@socket} />
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl min-h-screen flex flex-row py-5">
-        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} /> 
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} />
         <div class="w-full flex flex-col rounded-md space-y-8 px-10 overflow-y-auto overflow-hidden">
             <div class="flex flex-col w-full space-y-2 pb-7">
                 <h1 class="text-2xl text-blue-900 font-bold">Settings</h1>
@@ -16,16 +14,15 @@
             </div>
 
             <%= case @view do %>
-                <% :change_password -> %> 
+                <% :change_password -> %>
                     <.live_component module={TodoWeb.Settings.ChangePassword} id="change-password"  current_user={@current_user} />
-                <% :change_email -> %> 
+                <% :change_email -> %>
                     <.live_component module={TodoWeb.Settings.ChangeEmail} id="change-email"  current_user={@current_user} />
-                <% :session_setting -> %> 
+                <% :session_setting -> %>
                     <.live_component module={TodoWeb.Settings.Session} id="session-setting" current_user={@current_user} />
-                <% _ -> %> 
+                <% _ -> %>
                     <.live_component module={TodoWeb.Settings.Profile} id="profile"  current_user={@current_user} />
             <% end %>
-        </div> 
+        </div>
     </div>
 </div>
-<.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} active_url={@active_url} />

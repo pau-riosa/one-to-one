@@ -1,8 +1,6 @@
-<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
-<TodoWeb.Components.confirm_banner current_user={@current_user} socket={@socket} />
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl min-h-screen flex flex-row py-5">
-        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} /> 
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} />
         <div class="w-full flex flex-col rounded-md space-y-8 px-10">
             <div class="flex flex-col w-full space-y-2 pb-7">
                 <h1 class="text-2xl text-blue-900 font-bold">Availability</h1>
@@ -10,10 +8,24 @@
                 <p class="text-blue-900">In your local timezone <span class="text-md text-blue-900 font-bold"><%= @timezone %></span></p>
             </div>
             <div class="flex flex-row space-x-10 border-b-2">
-                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :availability_hours, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-available-hours">Available Hours</h1>
+                <h1 class={"text-md font-semibold mb-3 cursor-pointer #{if @view == :availability_hours, do: "text-blue-900", else: "text-blue-800"}"} phx-click="show-available-hours">Set Available Hours</h1>
             </div>
-            <.live_component module={TodoWeb.AvailabilityLive.Hours} id="hours" />
-        </div> 
+            <div class="flex flex-col space-y-3">
+                <div :for={day <- ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]} class="w-full grid grid-cols-4 items-center justify-end">
+                    <label for="sunday" class="flex cursor-pointer select-none items-center">
+                        <div class="relative">
+                            <input type="checkbox" id="sunday" class="sr-only" />
+                            <div class="block h-8 w-14 rounded-full bg-[#E5E7EB]"></div>
+                            <div class="dot absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition"></div>
+                        </div>
+                    </label>
+                    <p class="text-md font-semibold"><%= String.capitalize(day) %></p>
+                    <p class="text-md font-semibold">Unavailable</p>
+                    <div class="w-full flex justify-end">
+                        <%= Heroicons.icon("plus-circle", type: "outline", class: "h-7 w-7 stroke-blue-900") %>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} active_url={@active_url} />

@@ -105,6 +105,7 @@ defmodule TodoWeb do
 
       import TodoWeb.ErrorHelpers
       import TodoWeb.Gettext
+      alias TodoWeb.Components
       alias TodoWeb.Router.Helpers, as: Routes
 
       def render_shared(template, assigns \\ []) do

@@ -1,4 +1,5 @@
 defmodule TodoWeb.AvailabilityLive do
+  @moduledoc false
   use TodoWeb, :live_view
 
   def mount(_params, _session, socket) do

@@ -1,8 +1,6 @@
-<.live_component module={TodoWeb.Components.Navigation} id="navigation" socket={@socket} current_user={@current_user} />
-<TodoWeb.Components.confirm_banner current_user={@current_user} socket={@socket} />
 <div class="flex justify-center align-center">
     <div class="w-full max-w-7xl min-h-screen flex flex-row py-5">
-        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} /> 
+        <.live_component module={TodoWeb.Components.SideNav} id="side-nav" active_tab={@active_tab} current_user={@current_user} />
         <div class="w-full flex flex-col rounded-md space-y-8 px-10">
             <div class="flex flex-col w-full space-y-2 pb-7">
                 <h1 class="text-2xl text-blue-900 font-bold">Bookings</h1>
@@ -27,13 +25,13 @@
                                     <div class="flex flex-row align-center text-blue-900 items-center">
                                         <i><%= Heroicons.icon("clock", type: "outline", class: "h-5 w-5") %></i>
                                         <p class="text-md mx-2"><%= handle_scheduled_for(schedule.scheduled_for, @timezone) %></p>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="flex flex-row justify-between items-center relative">
                                     <div class="flex flex-row align-center text-blue-900 items-center">
                                         <i><%= Heroicons.icon("envelope", type: "outline", class: "h-5 w-5") %></i>
                                         <p class="text-md mx-2"><%= schedule.email %></p>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <p class="text-sm text-blue-800 truncate"><%= schedule.comment %></p>
                                 <div class="flex justify-end space-x-3">
@@ -48,7 +46,6 @@
                         </div>
                     <% end %>
             <% end %>
-        </div> 
+        </div>
     </div>
 </div>
-<.live_component module={TodoWeb.Components.CreateSession} id="create-session" timezone={@timezone} current_user={@current_user} active_url={@active_url} />
